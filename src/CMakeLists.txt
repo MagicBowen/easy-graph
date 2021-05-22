@@ -1,5 +1,7 @@
 # ---- Collect all src files except main.c ----
 
+set(CMAKE_CXX_STANDARD 14)
+
 file(GLOB_RECURSE MAIN_FILE 
     "main.cc" "main.cpp"
 )
@@ -25,7 +27,7 @@ target_include_directories(${TARGET_LIB}
     PUBLIC ${PROJECT_SOURCE_DIR}/include
 )
 
-set_target_properties(${TARGET_LIB} PROPERTIES CXX_STANDARD 17)
+# set_target_properties(${TARGET_LIB} PROPERTIES CXX_STANDARD 17)
 
 # ---- Add target dependencies ----
 

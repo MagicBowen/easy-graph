@@ -4,6 +4,7 @@
 #include "easy_graph/eg.h"
 #include "edge_type.h"
 #include "cmp_helper.h"
+#include <string>
 
 EG_NS_BEGIN
 
@@ -13,9 +14,7 @@ struct Edge {
 	Edge(const EdgeType type, const Node& src, const Node& dst);
 	__DECL_COMP(Edge);
 
-	EdgeType getType() const;
-	const Node& getSrcNode() const;
-	const Node& getDstNode() const;
+	std::string getLayout() const;
 
 private:
 	EdgeType type;

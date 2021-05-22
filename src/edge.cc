@@ -20,16 +20,9 @@ __DEF_COMP(Edge)
 	return false;
 }
 
-EdgeType Edge::getType() const {
-	return type;
-}
-
-const Node& Edge::getSrcNode() const {
-	return src;
-}
-
-const Node& Edge::getDstNode() const {
-	return dst;
+std::string Edge::getLayout() const {
+	std::string arrow = (type == DATA_EDGE) ? "-->" : "..>";
+	return src.getLayout() + arrow + dst.getLayout();
 }
 
 EG_NS_END

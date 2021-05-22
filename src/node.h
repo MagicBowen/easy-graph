@@ -11,7 +11,7 @@ struct Node {
     Node(const std::string name);
     __DECL_COMP(Node);
 
-    std::string getName() const;
+    std::string getLayout() const;
 
 private:
     std::string name;

@@ -16,8 +16,8 @@ __DEF_COMP(Node)
 	return name < rhs.name;
 }
 
-std::string Node::getName() const {
-	return name;
+std::string Node::getLayout() const {
+	return std::string("[") + name + std::string("]");
 }
 
 EG_NS_END

@@ -26,8 +26,4 @@ void Graph::accept(EdgeVisitor& visitor) const {
 	std::for_each(edges.begin(), edges.end(), [&visitor](auto edge){visitor.visit(edge);});
 }
 
-std::string Graph::formatToStr() const {
-	return "[a]->[b]->[c]";
-}
-
 EG_NS_END

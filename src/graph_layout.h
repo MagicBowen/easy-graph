@@ -9,11 +9,7 @@ EG_NS_BEGIN
 struct Graph;
 
 struct GraphLayout {
-	GraphLayout(const Graph& graph);
-	Status layout() const;
-
-private:
-	const Graph& graph;
+	static Status layout(const Graph& graph);
 };
 
 EG_NS_END

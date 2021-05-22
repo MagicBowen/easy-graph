@@ -21,8 +21,6 @@ struct Graph {
 	void accept(NodeVisitor&) const;
 	void accept(EdgeVisitor&) const;
 
-	std::string formatToStr() const;
-
 private:
 	std::string name;
 	std::set<Node> nodes;
