@@ -8,7 +8,8 @@
 EG_NS_BEGIN
 
 struct Node {
-    Node(const std::string name);
+    Node(const char* name);
+    explicit Node(const std::string name);
     __DECL_COMP(Node);
 
     std::string getLayout() const;

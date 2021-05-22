@@ -4,6 +4,8 @@
 #include "easy_graph/eg.h"
 #include <string>
 #include <set>
+#include "node.h"
+#include "edge.h"
 
 EG_NS_BEGIN
 
