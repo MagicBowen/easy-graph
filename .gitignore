@@ -1,0 +1,61 @@
+# python
+*.pyc
+
+# python venv
+venv/
+
+# vs code
+.vscode/
+
+# tmp
+*~
+*.swp
+.DS_Store
+dep
+
+# latex
+*.aux
+*.fdb_latexmk
+*.fls
+
+# clion
+cmake-build/
+cmake-build-debug/
+cmake-build-release/
+
+# gradle
+.gradle/
+.gradletasknamecache
+
+# eclipse
+.cproject
+.project
+.classpath
+.settings/
+
+# idea
+.settings/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# bin
+output/
+tmp/
+build/
+target/
+out/
+
+# bazel
+bazel-*
+
+# log
+*.log
+.pydevproject
+
+# ccup
+deps/
+
+# MACOS
+.DS_Store
