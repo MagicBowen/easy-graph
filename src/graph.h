@@ -4,20 +4,19 @@
 #include "easy_graph/eg.h"
 #include <string>
 #include <set>
+#include <map>
 #include "node.h"
 #include "edge.h"
 
 EG_NS_BEGIN
 
-struct Node;
-struct Edge;
 struct NodeVisitor;
 struct EdgeVisitor;
 
 struct Graph {
 	Graph(const std::string name);
 
-	void addNode(const Node&);
+	Node* addNode(const Node&);
 	void addEdge(const Edge&);
 
 	void accept(NodeVisitor&) const;
@@ -25,7 +24,7 @@ struct Graph {
 
 private:
 	std::string name;
-	std::set<Node> nodes;
+	std::map<std::string, Node> nodes;
 	std::set<Edge> edges;
 };
 

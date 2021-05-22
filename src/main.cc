@@ -1,30 +1,30 @@
-#include "chain_builder.h"
+#include "graph_builder.h"
 #include "graph_layout.h"
-#include "graph.h"
-#include "node.h"
+#include "log.h"
 
 USING_EG_NS
 
 int main() {
+	Graph g1 = GRAPH("graph_1") {
+		DATA_CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
+	});
 
-//	auto g = [](const char* name) {
-//		Graph g(name);
-//		Node a("a");
-//		Node b("b");
-//		Node c("c");
-//
-//		DATA_CHAIN(g, NODE(a) -> NODE(b) -> NODE(c) -> NODE("d") -> NODE("e"));
-//		CTRL_CHAIN(g, NODE(a) -> NODE(c) -> NODE("f") -> NODE("d"));
-//		return std::move(g);
-//	}("graph");
+	GraphLayout::layout(g1);
 
-	Graph g("graph");
-	Node a("a");
-	Node b("b");
-	Node c("c");
+	Graph g2 = GRAPH("graph_2") {
+		DATA_CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
+		CTRL_CHAIN(NODE("a") -> NODE("c"));
+	});
 
-	DATA_CHAIN(g, NODE(a) -> NODE(b) -> NODE(c) -> NODE("d") -> NODE("e"));
-	CTRL_CHAIN(g, NODE(a) -> NODE(c) -> NODE("f") -> NODE("d"));
+	GraphLayout::layout(g2);
 
-	return GraphLayout::layout(g);
+	Graph g3 = GRAPH("graph_3") {
+		Node a("a"), b("b"), c("c");
+
+		DATA_CHAIN(NODE(a) -> NODE(b) -> NODE(c) -> NODE("d") -> NODE("e"));
+		CTRL_CHAIN(NODE(a) -> NODE("e"));
+		DATA_CHAIN(NODE(b) -> NODE("d"));
+	});
+
+	GraphLayout::layout(g3);
 }

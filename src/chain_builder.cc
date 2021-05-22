@@ -14,11 +14,11 @@ ChainBuilder::ChainNodeBuilder* ChainBuilder::operator->() {
 }
 
 ChainBuilder& ChainBuilder::addDstNodeOnEdge(const Node& node, EdgeType type) {
-	graph.addNode(node);
+	Node* current_node = graph.addNode(node);
 	if (lastNode) {
-		graph.addEdge(Edge(type, *lastNode, node));
+		graph.addEdge(Edge(type, *lastNode, *current_node));
 	}
-	lastNode = const_cast<Node*>(&node);
+	lastNode = current_node;
 	return *this;
 }
 

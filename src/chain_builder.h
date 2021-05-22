@@ -31,8 +31,8 @@ private:
 	Graph& graph;
 };
 
-#define DATA_CHAIN(GR, ...) ChainBuilder(GR, DATA_EDGE) -> __VA_ARGS__
-#define CTRL_CHAIN(GR, ...) ChainBuilder(GR, CTRL_EDGE) -> __VA_ARGS__
+#define DATA_CHAIN(...) ChainBuilder(GR, DATA_EDGE) -> __VA_ARGS__
+#define CTRL_CHAIN(...) ChainBuilder(GR, CTRL_EDGE) -> __VA_ARGS__
 
 EG_NS_END
 

@@ -10,8 +10,9 @@ Graph::Graph(const std::string name)
 : name(name) {
 }
 
-void Graph::addNode(const Node& node) {
-	nodes.insert(node);
+Node* Graph::addNode(const Node& node) {
+	nodes.emplace(std::make_pair(node.getName(), node));
+	return &(nodes.find(node.getName())->second);
 }
 
 void Graph::addEdge(const Edge& edge) {
@@ -19,7 +20,7 @@ void Graph::addEdge(const Edge& edge) {
 }
 
 void Graph::accept(NodeVisitor& visitor) const {
-	std::for_each(nodes.begin(), nodes.end(), [&visitor](auto node){visitor.visit(node);});
+	std::for_each(nodes.begin(), nodes.end(), [&visitor](auto& node){visitor.visit(node.second);});
 }
 
 void Graph::accept(EdgeVisitor& visitor) const {
