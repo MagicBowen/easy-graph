@@ -11,12 +11,13 @@ EG_NS_BEGIN
 struct Node;
 
 struct Edge {
-	Edge(const EdgeType type, const Node& src, const Node& dst);
+	Edge(const EdgeType type, const std::string& label, const Node& src, const Node& dst);
 	__DECL_COMP(Edge);
 
 	std::string getLayout() const;
 
 private:
+	std::string label;
 	EdgeType type;
 	const Node& src;
 	const Node& dst;

@@ -12,8 +12,8 @@ int main() {
 	g1.layout();
 
 	GRAPH(g2) {
-		CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
-		CHAIN(NODE("a") -> NODE("c"));
+		CHAIN(NODE("a") -> C_EDGE() -> NODE("b") -> NODE("c") -> D_EDGE("5") -> NODE("d") -> NODE("e"));
+		CHAIN(NODE("a") -> C_EDGE("condition") -> NODE("c"));
 	});
 
 	g2.layout();
@@ -38,11 +38,11 @@ int main() {
 
 	g4.layout();
 
-	GRAPH(compute_graph) {
+	GRAPH(g5) {
 		DATA_CHAIN(NODE("const_1") -> NODE("add") -> NODE("unique") -> NODE("softmax"));
 		DATA_CHAIN(NODE("const_2") -> NODE("add"));
 		CTRL_CHAIN(NODE("case") -> NODE("unique"));
 	});
 
-	compute_graph.layout();
+	g5.layout();
 }

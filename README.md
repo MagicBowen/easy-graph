@@ -1,6 +1,12 @@
-## Usage
 
-Download this project template, and rename folder name `ccup-cc-template` to your project name.
+## TODO
+
+- [x]: support edge attribute set and disply
+- [ ]: support joint anchor
+- [ ]: support subgraph
+- [ ]: translate to another graph
+
+## Cli Usage
 
 ```sh
 $ chmod a+x ./ccup.sh

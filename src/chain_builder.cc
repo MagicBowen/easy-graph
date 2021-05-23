@@ -6,28 +6,45 @@ EG_NS_BEGIN
 
 ChainBuilder::ChainBuilder(Graph& graph, EdgeType type)
 : graph(graph),
-  nodeFromEgde(*this, type) {
+  linker(*this, type) {
 }
 
-ChainBuilder::ChainNodeBuilder* ChainBuilder::operator->() {
-	return &nodeFromEgde;
+ChainBuilder::LinkBuilder* ChainBuilder::operator->() {
+	return &linker;
 }
 
-ChainBuilder& ChainBuilder::addDstNodeOnEdge(const Node& node, EdgeType type) {
+ChainBuilder& ChainBuilder::addDstNodeOnEdge(const Node& node, EdgeType type, const std::string& label) {
 	Node* current_node = graph.addNode(node);
-	if (lastNode) {
-		graph.addEdge(Edge(type, *lastNode, *current_node));
+	if (prevNode) {
+		graph.addEdge(Edge(type, label, *prevNode, *current_node));
 	}
-	lastNode = current_node;
+	prevNode = current_node;
 	return *this;
 }
 
-ChainBuilder::ChainNodeBuilder::ChainNodeBuilder(ChainBuilder& chain, EdgeType edgeType)
-: chain(chain), edgeType(edgeType) {
+ChainBuilder::LinkBuilder::LinkBuilder(ChainBuilder& chain, EdgeType edgeType)
+: chain(chain), defaultEdgeType(edgeType), currentEdgeType(edgeType) {
 }
 
-ChainBuilder& ChainBuilder::ChainNodeBuilder::NODE(const Node& node) {
-	return chain.addDstNodeOnEdge(node, edgeType);
+ChainBuilder& ChainBuilder::LinkBuilder::NODE(const Node& node) {
+	chain.addDstNodeOnEdge(node, currentEdgeType, currentEdgeLabel);
+	this->currentEdgeType = defaultEdgeType;
+	this->currentEdgeLabel = "";
+	return chain;
+}
+
+ChainBuilder& ChainBuilder::LinkBuilder::EDGE(EdgeType edgeType, const std::string& label) {
+	this->currentEdgeType = edgeType;
+	this->currentEdgeLabel = label;
+	return chain;
+}
+
+ChainBuilder& ChainBuilder::LinkBuilder::C_EDGE(const std::string& label) {
+	return this->EDGE(CTRL_EDGE, label);
+}
+
+ChainBuilder& ChainBuilder::LinkBuilder::D_EDGE(const std::string& label) {
+	return this->EDGE(DATA_EDGE, label);
 }
 
 EG_NS_END
