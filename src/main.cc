@@ -6,14 +6,14 @@ USING_EG_NS
 
 int main() {
 	Graph g1 = GRAPH("graph_1") {
-		DATA_CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
+		CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
 	});
 
 	GraphLayout::layout(g1);
 
 	Graph g2 = GRAPH("graph_2") {
-		DATA_CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
-		CTRL_CHAIN(NODE("a") -> NODE("c"));
+		CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
+		CHAIN(NODE("a") -> NODE("c"));
 	});
 
 	GraphLayout::layout(g2);
