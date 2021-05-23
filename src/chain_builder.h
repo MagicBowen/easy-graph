@@ -16,10 +16,13 @@ struct ChainBuilder {
 
 	struct LinkBuilder {
 		LinkBuilder(ChainBuilder& chain, EdgeType edgeType);
+
 		ChainBuilder& NODE(const Node& node);
-		ChainBuilder& EDGE(EdgeType edgeType = DATA_EDGE, const std::string& label = "");
-		ChainBuilder& C_EDGE(const std::string& label = "");
-		ChainBuilder& D_EDGE(const std::string& label = "");
+		ChainBuilder& CTRL(const std::string& label = "");
+		ChainBuilder& DATA(const std::string& label = "");
+
+	private:
+		ChainBuilder& addEdge(EdgeType edgeType, const std::string& label);
 	private:
 		ChainBuilder& chain;
 		EdgeType defaultEdgeType;

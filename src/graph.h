@@ -14,12 +14,15 @@ struct NodeVisitor;
 struct EdgeVisitor;
 
 struct Graph {
-	Graph(const std::string& name);
+	explicit Graph(const std::string& name);
 
 	std::string getName() const;
 
 	Node* addNode(const Node&);
 	void addEdge(const Edge&);
+
+	Node* findNode(const NodeId&);
+	const Node* findNode(const NodeId&) const;
 
 	void accept(NodeVisitor&) const;
 	void accept(EdgeVisitor&) const;
@@ -28,7 +31,7 @@ struct Graph {
 
 private:
 	std::string name;
-	std::map<std::string, Node> nodes;
+	std::map<NodeId, Node> nodes;
 	std::set<Edge> edges;
 };
 

@@ -8,9 +8,9 @@ EG_NS_BEGIN
 
 namespace detail {
 	template<typename GRAPH_BUILDER>
-	Graph build_graph(const char* name, GRAPH_BUILDER graph_builder) {
+	Graph build_graph(const char* name, GRAPH_BUILDER buildGraph) {
 		Graph g(name);
-		graph_builder(g);
+		buildGraph(g);
 		return g;
 	}
 }

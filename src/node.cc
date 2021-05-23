@@ -2,30 +2,30 @@
 
 EG_NS_BEGIN
 
-Node::Node(const std::string& name)
-: name(name) {
+Node::Node(const NodeId& id)
+: id(id) {
 }
 
-Node::Node(const char* name)
-: Node(std::string(name)) {
+Node::Node(const char* id)
+: Node(NodeId(id)) {
 }
 
 __DEF_EQUALS(Node)
 {
-	return name == rhs.name;
+	return id == rhs.id;
 }
 
 __DEF_COMP(Node)
 {
-	return name < rhs.name;
+	return id < rhs.id;
 }
 
-std::string Node::getName() const {
-	return name;
+NodeId Node::getId() const {
+	return id;
 }
 
 std::string Node::getLayout() const {
-	return std::string("[") + name + std::string("]");
+	return std::string("[") + id + std::string("]");
 }
 
 EG_NS_END

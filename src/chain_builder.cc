@@ -1,4 +1,5 @@
 #include "chain_builder.h"
+#include "node.h"
 #include "graph.h"
 #include "edge.h"
 
@@ -16,7 +17,7 @@ ChainBuilder::LinkBuilder* ChainBuilder::operator->() {
 ChainBuilder& ChainBuilder::addDstNodeOnEdge(const Node& node, EdgeType type, const std::string& label) {
 	Node* current_node = graph.addNode(node);
 	if (prevNode) {
-		graph.addEdge(Edge(type, label, *prevNode, *current_node));
+		graph.addEdge(Edge(type, label, NodePort(*prevNode, 0), NodePort(*current_node, 0)));
 	}
 	prevNode = current_node;
 	return *this;
@@ -33,18 +34,18 @@ ChainBuilder& ChainBuilder::LinkBuilder::NODE(const Node& node) {
 	return chain;
 }
 
-ChainBuilder& ChainBuilder::LinkBuilder::EDGE(EdgeType edgeType, const std::string& label) {
+ChainBuilder& ChainBuilder::LinkBuilder::addEdge(EdgeType edgeType, const std::string& label) {
 	this->currentEdgeType = edgeType;
 	this->currentEdgeLabel = label;
 	return chain;
 }
 
-ChainBuilder& ChainBuilder::LinkBuilder::C_EDGE(const std::string& label) {
-	return this->EDGE(CTRL_EDGE, label);
+ChainBuilder& ChainBuilder::LinkBuilder::CTRL(const std::string& label) {
+	return this->addEdge(CTRL_EDGE, label);
 }
 
-ChainBuilder& ChainBuilder::LinkBuilder::D_EDGE(const std::string& label) {
-	return this->EDGE(DATA_EDGE, label);
+ChainBuilder& ChainBuilder::LinkBuilder::DATA(const std::string& label) {
+	return this->addEdge(DATA_EDGE, label);
 }
 
 EG_NS_END

@@ -1,17 +1,19 @@
 #ifndef HE62943BF_1F7C_4EF9_B306_D9C94634EA74
 #define HE62943BF_1F7C_4EF9_B306_D9C94634EA74
 
-#include "easy_graph/eg.h"
 #include "edge_type.h"
+#include "node_port.h"
 #include "cmp_helper.h"
 #include <string>
 
 EG_NS_BEGIN
 
-struct Node;
-
 struct Edge {
-	Edge(const EdgeType type, const std::string& label, const Node& src, const Node& dst);
+	Edge(const EdgeType type,
+		 const std::string& label,
+		 const NodePort& src,
+		 const NodePort& dst);
+
 	__DECL_COMP(Edge);
 
 	std::string getLayout() const;
@@ -19,8 +21,9 @@ struct Edge {
 private:
 	std::string label;
 	EdgeType type;
-	const Node& src;
-	const Node& dst;
+
+	NodePort src;
+	NodePort dst;
 };
 
 EG_NS_END

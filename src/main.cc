@@ -12,8 +12,8 @@ int main() {
 	g1.layout();
 
 	GRAPH(g2) {
-		CHAIN(NODE("a") -> C_EDGE() -> NODE("b") -> NODE("c") -> D_EDGE("5") -> NODE("d") -> NODE("e"));
-		CHAIN(NODE("a") -> C_EDGE("condition") -> NODE("c"));
+		CHAIN(NODE("a") -> CTRL("omit") -> NODE("b") -> NODE("c") -> DATA("copy") -> NODE("d") -> NODE("e"));
+		CHAIN(NODE("a") -> CTRL("condition") -> NODE("c"));
 	});
 
 	g2.layout();

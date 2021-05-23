@@ -1,23 +1,22 @@
 #ifndef HF37ACE88_F726_4AA3_8599_ED7A888AA623
 #define HF37ACE88_F726_4AA3_8599_ED7A888AA623
 
-#include "easy_graph/eg.h"
+#include "node_id.h"
 #include "cmp_helper.h"
-#include <string>
 
 EG_NS_BEGIN
 
 struct Node {
-    explicit Node(const std::string& name);
-    Node(const char* name);
+    explicit Node(const NodeId& id);
+    Node(const char* id);
 
     __DECL_COMP(Node);
 
-    std::string getName() const;
+    NodeId getId() const;
     std::string getLayout() const;
 
 private:
-    std::string name;
+    NodeId id;
 };
 
 EG_NS_END

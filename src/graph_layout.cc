@@ -21,19 +21,19 @@ namespace {
 	}
 
 	struct NodeLayoutVisitor : NodeVisitor {
-		std::string layout;
-
 		OVERRIDE(void visit(const Node& node)) {
 			layout += node.getLayout();
 		}
+
+		std::string layout;
 	};
 
 	struct EdgeLayoutVisitor : EdgeVisitor {
-		std::string layout;
-
 		OVERRIDE(void visit(const Edge& edge)) {
 			layout += edge.getLayout();
 		}
+
+		std::string layout;
 	};
 }
 
