@@ -15,11 +15,11 @@ ChainBuilder::LinkBuilder* ChainBuilder::operator->() {
 }
 
 ChainBuilder& ChainBuilder::addDstNodeOnEdge(const Node& node, EdgeType type, const std::string& label) {
-	Node* current_node = graphBuilder.getGraph().addNode(node);
+	Node* currentNode = graphBuilder.addNode(node);
 	if (prevNode) {
-		graphBuilder.getGraph().addEdge(Edge(type, label, NodePort(*prevNode, 0), NodePort(*current_node, 0)));
+		graphBuilder.addEdge(type, label, *prevNode, *currentNode);
 	}
-	prevNode = current_node;
+	prevNode = currentNode;
 	return *this;
 }
 
