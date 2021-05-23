@@ -5,20 +5,30 @@
 USING_EG_NS
 
 int main() {
-	Graph g1 = GRAPH("graph_1") {
+	GRAPH(g1) {
 		CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
 	});
 
-	GraphLayout::layout(g1);
+	g1.layout();
 
-	Graph g2 = GRAPH("graph_2") {
+	GRAPH(g2) {
 		CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
 		CHAIN(NODE("a") -> NODE("c"));
 	});
 
-	GraphLayout::layout(g2);
+	g2.layout();
 
-	Graph g3 = GRAPH("graph_3") {
+	GRAPH(g3) {
+		CHAIN(NODE("a") -> NODE("b") -> NODE("d") -> NODE("f"));
+		CHAIN(NODE("a") -> NODE("c") -> NODE("e") -> NODE("f"));
+		CHAIN(NODE("a") -> NODE("d") -> NODE("e"));
+		CHAIN(NODE("a") -> NODE("e"));
+		CHAIN(NODE("a") -> NODE("f"));
+	});
+
+	g3.layout(FLOW_TB);
+
+	GRAPH(g4) {
 		Node a("a"), b("b"), c("c");
 
 		DATA_CHAIN(NODE(a) -> NODE(b) -> NODE(c) -> NODE("d") -> NODE("e"));
@@ -26,5 +36,13 @@ int main() {
 		DATA_CHAIN(NODE(b) -> NODE("d"));
 	});
 
-	GraphLayout::layout(g3);
+	g4.layout();
+
+	GRAPH(compute_graph) {
+		DATA_CHAIN(NODE("const_1") -> NODE("add") -> NODE("unique") -> NODE("softmax"));
+		DATA_CHAIN(NODE("const_2") -> NODE("add"));
+		CTRL_CHAIN(NODE("case") -> NODE("unique"));
+	});
+
+	compute_graph.layout();
 }

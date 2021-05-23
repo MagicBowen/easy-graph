@@ -15,7 +15,7 @@ namespace detail {
 	}
 }
 
-#define GRAPH(NAME) ::EG_NS::detail::build_graph("NAME", [](Graph& GR)
+#define GRAPH(G) Graph G = ::EG_NS::detail::build_graph(#G, [](Graph& GR)
 
 EG_NS_END
 

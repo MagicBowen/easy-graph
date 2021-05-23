@@ -2,7 +2,7 @@
 
 EG_NS_BEGIN
 
-Node::Node(const std::string name)
+Node::Node(const std::string& name)
 : name(name) {
 }
 

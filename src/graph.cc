@@ -3,11 +3,16 @@
 #include "edge.h"
 #include "node_visitor.h"
 #include "edge_visitor.h"
+#include "graph_layout.h"
 
 EG_NS_BEGIN
 
-Graph::Graph(const std::string name)
+Graph::Graph(const std::string& name)
 : name(name) {
+}
+
+std::string Graph::getName() const {
+	return name;
 }
 
 Node* Graph::addNode(const Node& node) {
@@ -25,6 +30,10 @@ void Graph::accept(NodeVisitor& visitor) const {
 
 void Graph::accept(EdgeVisitor& visitor) const {
 	std::for_each(edges.begin(), edges.end(), [&visitor](auto edge){visitor.visit(edge);});
+}
+
+void Graph::layout(FlowDirection dir) const {
+	GraphLayout::layout(*this, dir);
 }
 
 EG_NS_END

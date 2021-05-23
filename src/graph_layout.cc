@@ -15,6 +15,11 @@ namespace {
 		return ShellExecutor::execute(script);
 	}
 
+	std::string getGraphTitle (const std::string graphName, FlowDirection direction) {
+		std::string flow_layout = (direction == FLOW_LR) ? "east" : "down";
+		return std::string("graph { label : ") + graphName +  "; flow : " + flow_layout + " } \n";
+	}
+
 	struct NodeLayoutVisitor : NodeVisitor {
 		std::string layout;
 
@@ -32,12 +37,18 @@ namespace {
 	};
 }
 
-Status GraphLayout::layout(const Graph& graph) {
+Status GraphLayout::layout(const Graph& graph, FlowDirection direction) {
 	NodeLayoutVisitor nodeLayoutVisitor;
-	EdgeLayoutVisitor edgeLayoutVisitor;
 	graph.accept(nodeLayoutVisitor);
+
+	EdgeLayoutVisitor edgeLayoutVisitor;
 	graph.accept(edgeLayoutVisitor);
-	return GraphEasyLayoutInShell(nodeLayoutVisitor.layout + edgeLayoutVisitor.layout);
+
+	std::string layout = getGraphTitle(graph.getName(), direction)
+			           + nodeLayoutVisitor.layout
+					   + edgeLayoutVisitor.layout;
+
+	return GraphEasyLayoutInShell(layout);
 }
 
 EG_NS_END
