@@ -6,16 +6,21 @@
 
 EG_NS_BEGIN
 
-namespace detail {
-	template<typename GRAPH_BUILDER>
-	Graph build_graph(const char* name, GRAPH_BUILDER buildGraph) {
-		Graph g(name);
-		buildGraph(g);
-		return g;
-	}
-}
+struct GraphBuilder {
+	GraphBuilder(const std::string& name);
 
-#define GRAPH(G) Graph G = ::EG_NS::detail::build_graph(#G, [](Graph& GR)
+	struct NodeInfo {
+		size_t jointInNum{0};
+		size_t jointOutNum{0};
+	};
+
+	Graph& getGraph();
+	const Graph& getGraph() const;
+
+private:
+	std::map<NodeId, NodeInfo> nodes;
+	Graph graph;
+};
 
 EG_NS_END
 

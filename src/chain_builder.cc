@@ -1,12 +1,12 @@
 #include "chain_builder.h"
+#include "graph_builder.h"
 #include "node.h"
-#include "graph.h"
 #include "edge.h"
 
 EG_NS_BEGIN
 
-ChainBuilder::ChainBuilder(Graph& graph, EdgeType type)
-: graph(graph),
+ChainBuilder::ChainBuilder(GraphBuilder& graphBuilder, EdgeType type)
+: graphBuilder(graphBuilder),
   linker(*this, type) {
 }
 
@@ -15,9 +15,9 @@ ChainBuilder::LinkBuilder* ChainBuilder::operator->() {
 }
 
 ChainBuilder& ChainBuilder::addDstNodeOnEdge(const Node& node, EdgeType type, const std::string& label) {
-	Node* current_node = graph.addNode(node);
+	Node* current_node = graphBuilder.getGraph().addNode(node);
 	if (prevNode) {
-		graph.addEdge(Edge(type, label, NodePort(*prevNode, 0), NodePort(*current_node, 0)));
+		graphBuilder.getGraph().addEdge(Edge(type, label, NodePort(*prevNode, 0), NodePort(*current_node, 0)));
 	}
 	prevNode = current_node;
 	return *this;

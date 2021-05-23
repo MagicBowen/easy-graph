@@ -1,18 +1,17 @@
 #ifndef HDF50E564_F050_476A_A479_F82B20F35C84
 #define HDF50E564_F050_476A_A479_F82B20F35C84
 
-#include "easy_graph/eg.h"
 #include "edge_type.h"
 #include <string>
 
 EG_NS_BEGIN
 
-struct Graph;
+struct GraphBuilder;
 struct Node;
 struct Edge;
 
 struct ChainBuilder {
-	ChainBuilder(Graph& graph, EdgeType type);
+	ChainBuilder(GraphBuilder& graphBuilder, EdgeType type);
 
 	struct LinkBuilder {
 		LinkBuilder(ChainBuilder& chain, EdgeType edgeType);
@@ -37,13 +36,8 @@ private:
 
 private:
 	Node* prevNode{nullptr};
-	Graph& graph;
+	GraphBuilder& graphBuilder;
 };
-
-
-#define DATA_CHAIN(...) ::EG_NS::ChainBuilder(GR, DATA_EDGE) -> __VA_ARGS__
-#define CTRL_CHAIN(...) ::EG_NS::ChainBuilder(GR, CTRL_EDGE) -> __VA_ARGS__
-#define CHAIN(...) DATA_CHAIN(__VA_ARGS__)
 
 EG_NS_END
 

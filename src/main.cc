@@ -1,10 +1,9 @@
-#include "graph_builder.h"
-#include "graph_layout.h"
-#include "log.h"
+#include "graph_dsl.h"
 
 USING_EG_NS
 
 int main() {
+
 	GRAPH(g1) {
 		CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
 	});
@@ -38,11 +37,15 @@ int main() {
 
 	g4.layout();
 
-	GRAPH(g5) {
+//	GRAPH(g5) {
+////		CHAIN(NODE("a") -> JOINT(0, 1) -> NODE("b"));
+//	});
+
+	GRAPH(graph) {
 		DATA_CHAIN(NODE("const_1") -> NODE("add") -> NODE("unique") -> NODE("softmax"));
 		DATA_CHAIN(NODE("const_2") -> NODE("add"));
 		CTRL_CHAIN(NODE("case") -> NODE("unique"));
 	});
 
-	g5.layout();
+	graph.layout();
 }
