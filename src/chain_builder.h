@@ -2,6 +2,7 @@
 #define HDF50E564_F050_476A_A479_F82B20F35C84
 
 #include "edge_type.h"
+#include "port_id.h"
 #include <string>
 
 EG_NS_BEGIN
@@ -19,9 +20,13 @@ struct ChainBuilder {
 		ChainBuilder& NODE(const Node& node);
 		ChainBuilder& CTRL(const std::string& label = "");
 		ChainBuilder& DATA(const std::string& label = "");
+		ChainBuilder& DATA(PortId srcId, PortId dstId, const std::string& label = "");
 
 	private:
-		ChainBuilder& addEdge(EdgeType edgeType, const std::string& label);
+		ChainBuilder& addEdge(EdgeType edgeType,
+				              const std::string& label,
+							  PortId srcPort,
+							  PortId dstPort);
 	private:
 		ChainBuilder& chain;
 		EdgeType defaultEdgeType;

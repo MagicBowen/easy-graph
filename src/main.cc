@@ -36,10 +36,10 @@ int main() {
 	});
 
 	g4.layout();
-
-//	GRAPH(g5) {
-////		CHAIN(NODE("a") -> JOINT(0, 1) -> NODE("b"));
-//	});
+//
+	GRAPH(g5) {
+		CHAIN(NODE("a") -> NODE("b"));
+	});
 
 	GRAPH(graph) {
 		DATA_CHAIN(NODE("const_1") -> NODE("add") -> NODE("unique") -> NODE("softmax"));

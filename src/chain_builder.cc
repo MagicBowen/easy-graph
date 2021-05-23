@@ -34,18 +34,25 @@ ChainBuilder& ChainBuilder::LinkBuilder::NODE(const Node& node) {
 	return chain;
 }
 
-ChainBuilder& ChainBuilder::LinkBuilder::addEdge(EdgeType edgeType, const std::string& label) {
+ChainBuilder& ChainBuilder::LinkBuilder::addEdge(EdgeType edgeType,
+		                                         const std::string& label,
+												 PortId srcPort,
+												 PortId dstPort) {
 	this->currentEdgeType = edgeType;
 	this->currentEdgeLabel = label;
 	return chain;
 }
 
 ChainBuilder& ChainBuilder::LinkBuilder::CTRL(const std::string& label) {
-	return this->addEdge(CTRL_EDGE, label);
+	return this->addEdge(CTRL_EDGE, label, UNDEFINED_PORT_ID, UNDEFINED_PORT_ID);
 }
 
 ChainBuilder& ChainBuilder::LinkBuilder::DATA(const std::string& label) {
-	return this->addEdge(DATA_EDGE, label);
+	return this->addEdge(DATA_EDGE, label, UNDEFINED_PORT_ID, UNDEFINED_PORT_ID);
+}
+
+ChainBuilder& ChainBuilder::LinkBuilder::DATA(PortId srcPort, PortId dstPort, const std::string& label) {
+	return this->addEdge(DATA_EDGE, label, srcPort, dstPort);
 }
 
 EG_NS_END
