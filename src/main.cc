@@ -18,16 +18,6 @@ int main() {
 	g2.layout();
 
 	GRAPH(g3) {
-		CHAIN(NODE("a") -> NODE("b") -> NODE("d") -> NODE("f"));
-		CHAIN(NODE("a") -> NODE("c") -> NODE("e") -> NODE("f"));
-		CHAIN(NODE("a") -> NODE("d") -> NODE("e"));
-		CHAIN(NODE("a") -> NODE("e"));
-		CHAIN(NODE("a") -> NODE("f"));
-	});
-
-	g3.layout(FLOW_TB);
-
-	GRAPH(g4) {
 		Node a("a"), b("b"), c("c");
 
 		DATA_CHAIN(NODE(a) -> NODE(b) -> NODE(c) -> NODE("d") -> NODE("e"));
@@ -35,8 +25,18 @@ int main() {
 		DATA_CHAIN(NODE(b) -> NODE("d"));
 	});
 
-	g4.layout();
-//
+	g3.layout();
+
+	GRAPH(g4) {
+		CHAIN(NODE("a") -> NODE("b") -> NODE("d") -> NODE("f"));
+		CHAIN(NODE("a") -> NODE("c") -> NODE("e") -> NODE("f"));
+		CHAIN(NODE("a") -> NODE("d") -> NODE("e"));
+		CHAIN(NODE("a") -> NODE("e"));
+		CHAIN(NODE("a") -> NODE("f"));
+	});
+
+	g4.layout(FLOW_TB);
+
 	GRAPH(g5) {
 		CHAIN(NODE("a") -> NODE("b"));
 	});

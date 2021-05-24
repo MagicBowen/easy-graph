@@ -12,10 +12,32 @@ struct Node;
 struct Edge;
 
 struct ChainBuilder {
-	ChainBuilder(GraphBuilder& graphBuilder, EdgeType type);
+	ChainBuilder(GraphBuilder& graphBuilder, EdgeType defaultEdgeType);
+
+	struct EdgeInfo {
+		explicit EdgeInfo(EdgeType type) : type(type) {
+			reset(type);
+		}
+
+		EdgeInfo(EdgeType type, const std::string& label, PortId srcPortId, PortId dstPortId)
+		: type(type), label(label), srcPortId(srcPortId), dstPortId(dstPortId){
+		}
+
+		void reset(EdgeType type) {
+			this->type = type;
+			this->label = "";
+			this->srcPortId = UNDEFINED_PORT_ID;
+			this->dstPortId = UNDEFINED_PORT_ID;
+		}
+
+		EdgeType type;
+		std::string label;
+		PortId srcPortId;
+		PortId dstPortId;
+	};
 
 	struct LinkBuilder {
-		LinkBuilder(ChainBuilder& chain, EdgeType edgeType);
+		LinkBuilder(ChainBuilder& chain, EdgeType defaultEdgeType);
 
 		ChainBuilder& NODE(const Node& node);
 		ChainBuilder& CTRL(const std::string& label = "");
@@ -23,21 +45,18 @@ struct ChainBuilder {
 		ChainBuilder& DATA(PortId srcId, PortId dstId, const std::string& label = "");
 
 	private:
-		ChainBuilder& addEdge(EdgeType edgeType,
-				              const std::string& label,
-							  PortId srcPort,
-							  PortId dstPort);
+		ChainBuilder& addEdge(const EdgeInfo& edge);
+
 	private:
 		ChainBuilder& chain;
 		EdgeType defaultEdgeType;
-		EdgeType currentEdgeType;
-		std::string currentEdgeLabel;
+		EdgeInfo currentEdge;
 	} linker;
 
 	LinkBuilder* operator->();
 
 private:
-	ChainBuilder& addDstNodeOnEdge(const Node&, EdgeType, const std::string&);
+	ChainBuilder& addDstNodeOnEdge(const Node&, const EdgeInfo&);
 
 private:
 	Node* prevNode{nullptr};
