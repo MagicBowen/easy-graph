@@ -51,7 +51,7 @@ void GraphBuilder::buildEdge(const Node& src, const Node& dst, const Link& link)
 	PortId srcPortId = getPortIdBy(link.type, link.srcPortId, srcInfo->outPortMax);
 	PortId dstPortId = getPortIdBy(link.type, link.dstPortId, dstInfo->inPortMax);
 
-//	EG_DBG("link edge(%d) from (%s:%d) to (%s:%d)", link.type, src.getId().c_str(), srcPortId, dst.getId().c_str(), dstPortId);
+	EG_DBG("link edge(%d) from (%s:%d) to (%s:%d)", link.type, src.getId().c_str(), srcPortId, dst.getId().c_str(), dstPortId);
 
 	return graph.addEdge(Edge(link.type, link.label, NodePort(src, srcPortId), NodePort(dst, dstPortId)));
 }
