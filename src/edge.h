@@ -4,11 +4,13 @@
 #include "edge_type.h"
 #include "node_port.h"
 #include "cmp_helper.h"
+#include "layoutable.h"
 #include <string>
 
 EG_NS_BEGIN
 
-struct Edge {
+struct Edge : Layoutable
+{
 	Edge(const EdgeType type,
 		 const std::string& label,
 		 const NodePort& src,
@@ -16,7 +18,8 @@ struct Edge {
 
 	__DECL_COMP(Edge);
 
-	std::string getLayout() const;
+private:
+	std::string getLayout(const LayoutOption&) const override;
 
 private:
 	std::string label;

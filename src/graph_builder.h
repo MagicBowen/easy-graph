@@ -5,19 +5,19 @@
 
 EG_NS_BEGIN
 
+struct Link;
+
 struct GraphBuilder {
 	GraphBuilder(const std::string& name);
 
-	Node* addNode(const Node&);
-	void addEdge(EdgeType, const std::string& label, Node& src, Node& dst);
-
-	Graph& getGraph();
-	const Graph& getGraph() const;
+	Node*  buildNode(const Node&);
+	void   buildEdge(const Node& src, const Node& dst, const Link&);
+	Graph& buildGraphDone();
 
 private:
 	struct NodeInfo {
-		size_t jointInNum{0};
-		size_t jointOutNum{0};
+		PortId inPortMax{0};
+		PortId outPortMax{0};
 	};
 
 	NodeInfo* findNode(const NodeId&);

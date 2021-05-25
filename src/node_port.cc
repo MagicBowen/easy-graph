@@ -19,4 +19,12 @@ __DEF_COMP(NodePort)
 	return false;
 }
 
+const Node& NodePort::getNode() const {
+	return node;
+}
+
+PortId NodePort::getPortId() const {
+	return portId;
+}
+
 EG_NS_END

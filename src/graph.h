@@ -1,7 +1,6 @@
 #ifndef H813EC8C1_3850_4320_8AC0_CE071C89B871
 #define H813EC8C1_3850_4320_8AC0_CE071C89B871
 
-#include "flow_direction.h"
 #include "node.h"
 #include "edge.h"
 #include <string>
@@ -12,14 +11,14 @@ EG_NS_BEGIN
 
 struct NodeVisitor;
 struct EdgeVisitor;
+struct LayoutOption;
 
-struct Graph {
+struct Graph : Layoutable
+{
 	explicit Graph(const std::string& name);
 
-	std::string getName() const;
-
 	Node* addNode(const Node&);
-	void addEdge(const Edge&);
+	void  addEdge(const Edge&);
 
 	Node* findNode(const NodeId&);
 	const Node* findNode(const NodeId&) const;
@@ -27,7 +26,10 @@ struct Graph {
 	void accept(NodeVisitor&) const;
 	void accept(EdgeVisitor&) const;
 
-	void layout(FlowDirection dir = FLOW_LR) const;
+	void layout(const LayoutOption* option = nullptr) const;
+
+private:
+	std::string getLayout(const LayoutOption&) const override;
 
 private:
 	std::string name;

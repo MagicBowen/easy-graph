@@ -8,10 +8,10 @@ EG_NS_BEGIN
 
 namespace detail {
 	template<typename GRAPH_BUILDER>
-	Graph build_graph(const char* name, GRAPH_BUILDER buildGraphBy) {
+	Graph build_graph(const char* name, GRAPH_BUILDER userBuildGraphWith) {
 		GraphBuilder builder(name);
-		buildGraphBy(builder);
-		return std::move(builder.getGraph());
+		userBuildGraphWith(builder);
+		return std::move(builder.buildGraphDone());
 	}
 }
 

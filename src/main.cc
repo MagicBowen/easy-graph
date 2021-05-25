@@ -1,8 +1,12 @@
 #include "graph_dsl.h"
+#include "graph_layout.h"
+#include "layout_option.h"
 
 USING_EG_NS
 
 int main() {
+
+	GraphLayout::config(LayoutOption{.dir = FlowDir::LR, .type = LayoutType::FREE, .scale = 1});
 
 	GRAPH(g1) {
 		CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
@@ -27,6 +31,7 @@ int main() {
 
 	g3.layout();
 
+
 	GRAPH(g4) {
 		CHAIN(NODE("a") -> NODE("b") -> NODE("d") -> NODE("f"));
 		CHAIN(NODE("a") -> NODE("c") -> NODE("e") -> NODE("f"));
@@ -35,11 +40,17 @@ int main() {
 		CHAIN(NODE("a") -> NODE("f"));
 	});
 
-	g4.layout(FLOW_TB);
+	g4.layout();
 
 	GRAPH(g5) {
-		CHAIN(NODE("a") -> NODE("b"));
+		CHAIN(NODE("a") -> DATA("to") -> NODE("b") -> CTRL("condition") -> NODE("c") -> NODE("d") -> DATA(1, 1) -> NODE("e"));
+		CHAIN(NODE("a") -> DATA(0, 1) -> NODE("c") -> CTRL() -> NODE("e"));
+		CHAIN(NODE("a") -> DATA(1, 0) -> NODE("d"));
+		CHAIN(NODE("b") -> NODE("e"));
+		CHAIN(NODE("c") -> NODE("e"));
 	});
+
+	g5.layout();
 
 	GRAPH(graph) {
 		DATA_CHAIN(NODE("const_1") -> NODE("add") -> NODE("unique") -> NODE("softmax"));

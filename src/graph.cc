@@ -4,15 +4,12 @@
 #include "node_visitor.h"
 #include "edge_visitor.h"
 #include "graph_layout.h"
+#include "layout_option.h"
 
 EG_NS_BEGIN
 
 Graph::Graph(const std::string& name)
 : name(name) {
-}
-
-std::string Graph::getName() const {
-	return name;
 }
 
 Node* Graph::addNode(const Node& node) {
@@ -21,7 +18,7 @@ Node* Graph::addNode(const Node& node) {
 }
 
 void Graph::addEdge(const Edge& edge) {
-	edges.insert(edge);
+	edges.emplace(edge);
 }
 
 Node* Graph::findNode(const NodeId& id) {
@@ -44,8 +41,13 @@ void Graph::accept(EdgeVisitor& visitor) const {
 	std::for_each(edges.begin(), edges.end(), [&visitor](auto edge){visitor.visit(edge);});
 }
 
-void Graph::layout(FlowDirection dir) const {
-	GraphLayout::layout(*this, dir);
+void Graph::layout(const LayoutOption* option) const {
+	GraphLayout::layout(*this, option);
+}
+
+std::string Graph::getLayout(const LayoutOption& options) const {
+	std::string flowDirection = (options.dir == FlowDir::LR) ? "east" : "down";
+	return std::string("graph { label : ") + name +  "; flow : " + flowDirection + " }";
 }
 
 EG_NS_END

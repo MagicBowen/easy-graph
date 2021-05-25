@@ -24,8 +24,8 @@ NodeId Node::getId() const {
 	return id;
 }
 
-std::string Node::getLayout() const {
-	return std::string("[") + id + std::string("]");
+std::string Node::getLayout(const LayoutOption&) const {
+	return std::string("[") + id + "]";
 }
 
 EG_NS_END

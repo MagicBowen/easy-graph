@@ -17,12 +17,15 @@ enum EgLogLevel
 	EG_TOTAL_LEVEL = 0xFF
 };
 
+// define log level
+
+#define EG_LOG_LEVELS (EG_FATAL_LEVEL | EG_ERR_LEVEL | EG_WARN_LEVEL)
+
+/////////////////////////////////////////////////////////////////
+
 void eg_log(int level , const char* levelstr , const char* file, unsigned int line, const char* fmt, ...);
 
-
 #define EG_LOG_OUTPUT eg_log
-
-#define EG_LOG_LEVELS EG_TOTAL_LEVEL
 
 #define __EG_LOG_TITLE(level, levelstr, fmt, ...) 		\
 do {													\

@@ -13,7 +13,11 @@ struct NodePort {
 
 	__DECL_COMP(NodePort);
 
-	const Node&  node;
+	const Node& getNode() const;
+	PortId getPortId() const;
+
+private:
+	const Node& node;
 	PortId portId;
 };
 

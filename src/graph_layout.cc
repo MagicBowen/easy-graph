@@ -6,45 +6,48 @@
 #include "shell_executor.h"
 #include "node_visitor.h"
 #include "edge_visitor.h"
+#include "layout_option.h"
 
 EG_NS_BEGIN
 
 namespace {
+	LayoutOption globalLayoutOptions;
+
 	Status GraphEasyLayoutInShell(const std::string& graph_str) {
 		std::string script =  std::string("echo \"") + graph_str + std::string("\"|graph-easy");
 		return ShellExecutor::execute(script);
 	}
 
-	std::string getGraphTitle (const std::string graphName, FlowDirection direction) {
-		std::string flow_layout = (direction == FLOW_LR) ? "east" : "down";
-		return std::string("graph { label : ") + graphName +  "; flow : " + flow_layout + " } \n";
-	}
+	template<typename VISITOR, typename ITEM>
+	struct GraphItemVisitor : VISITOR {
+		GraphItemVisitor(const LayoutOption& options)
+		: options(options) {
+		}
 
-	struct NodeLayoutVisitor : NodeVisitor {
-		OVERRIDE(void visit(const Node& node)) {
-			layout += node.getLayout();
+		OVERRIDE(void visit(const ITEM& item)) {
+			const Layoutable& layoutable = item;
+			layout += layoutable.getLayout(options);
 		}
 
 		std::string layout;
-	};
-
-	struct EdgeLayoutVisitor : EdgeVisitor {
-		OVERRIDE(void visit(const Edge& edge)) {
-			layout += edge.getLayout();
-		}
-
-		std::string layout;
+		const LayoutOption& options;
 	};
 }
 
-Status GraphLayout::layout(const Graph& graph, FlowDirection direction) {
-	NodeLayoutVisitor nodeLayoutVisitor;
+void GraphLayout::config(const LayoutOption& options) {
+	globalLayoutOptions = options;
+}
+
+Status GraphLayout::layout(const Graph& graph, const LayoutOption* opts) {
+	const LayoutOption& options = opts ? *opts : globalLayoutOptions;
+
+	GraphItemVisitor<NodeVisitor, Node> nodeLayoutVisitor(options);
 	graph.accept(nodeLayoutVisitor);
 
-	EdgeLayoutVisitor edgeLayoutVisitor;
+	GraphItemVisitor<EdgeVisitor, Edge> edgeLayoutVisitor(options);
 	graph.accept(edgeLayoutVisitor);
 
-	std::string layout = getGraphTitle(graph.getName(), direction)
+	std::string layout = ((Layoutable&)graph).getLayout(options)
 			           + nodeLayoutVisitor.layout
 					   + edgeLayoutVisitor.layout;
 

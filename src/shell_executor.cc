@@ -4,10 +4,13 @@
 #include <cstdlib>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include "log.h"
 
 EG_NS_BEGIN
 
 Status ShellExecutor::execute(const std::string& script) {
+	EG_DBG("%s", script.c_str());
+
 	pid_t status = system(script.c_str());
 	if (-1 == status)
 	{

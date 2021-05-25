@@ -3,17 +3,21 @@
 
 #include "node_id.h"
 #include "cmp_helper.h"
+#include "layoutable.h"
 
 EG_NS_BEGIN
 
-struct Node {
+struct Node  : Layoutable
+{
     explicit Node(const NodeId& id);
     Node(const char* id);
 
     __DECL_COMP(Node);
 
     NodeId getId() const;
-    std::string getLayout() const;
+
+private:
+    std::string getLayout(const LayoutOption&) const override;
 
 private:
     NodeId id;
