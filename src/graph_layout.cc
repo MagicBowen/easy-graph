@@ -19,8 +19,8 @@ namespace {
 	}
 
 	template<typename VISITOR, typename ITEM>
-	struct GraphItemVisitor : VISITOR {
-		GraphItemVisitor(const LayoutOption& options)
+	struct LayoutVisitor : VISITOR {
+		LayoutVisitor(const LayoutOption& options)
 		: options(options) {
 		}
 
@@ -41,10 +41,10 @@ void GraphLayout::config(const LayoutOption& options) {
 Status GraphLayout::layout(const Graph& graph, const LayoutOption* opts) {
 	const LayoutOption& options = opts ? *opts : globalLayoutOptions;
 
-	GraphItemVisitor<NodeVisitor, Node> nodeLayoutVisitor(options);
+	LayoutVisitor<NodeVisitor, Node> nodeLayoutVisitor(options);
 	graph.accept(nodeLayoutVisitor);
 
-	GraphItemVisitor<EdgeVisitor, Edge> edgeLayoutVisitor(options);
+	LayoutVisitor<EdgeVisitor, Edge> edgeLayoutVisitor(options);
 	graph.accept(edgeLayoutVisitor);
 
 	std::string layout = ((Layoutable&)graph).getLayout(options)
