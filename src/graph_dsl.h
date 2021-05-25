@@ -15,7 +15,7 @@ namespace detail {
 	}
 }
 
-#define GRAPH(G) Graph G = ::EG_NS::detail::build_graph(#G, [](GraphBuilder& BUILDER)
+#define GRAPH(G) Graph G = ::EG_NS::detail::build_graph(#G, [&](GraphBuilder& BUILDER)
 
 #define DATA_CHAIN(...) ::EG_NS::ChainBuilder(BUILDER, DATA_EDGE) -> __VA_ARGS__
 #define CTRL_CHAIN(...) ::EG_NS::ChainBuilder(BUILDER, CTRL_EDGE) -> __VA_ARGS__

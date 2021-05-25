@@ -52,8 +52,17 @@ int main() {
 
 	g5.layout();
 
+	GRAPH(Cond) {
+		CTRL_CHAIN(NODE("a") -> NODE("b"));
+	});
+
+	GRAPH(Body) {
+		CHAIN(NODE("a") -> NODE("b") -> NODE("c"));
+	});
+
 	GRAPH(graph) {
-		DATA_CHAIN(NODE("const_1") -> NODE("add") -> NODE("unique") -> NODE("softmax"));
+		Node loop("loop", Cond, Body);
+		DATA_CHAIN(NODE("const_1") -> NODE("loop") -> NODE("unique") -> NODE("softmax"));
 		DATA_CHAIN(NODE("const_2") -> NODE("add"));
 		CTRL_CHAIN(NODE("case") -> NODE("unique"));
 	});

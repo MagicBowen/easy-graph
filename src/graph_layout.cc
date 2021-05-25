@@ -1,5 +1,4 @@
 #include "graph_layout.h"
-#include <string>
 #include "graph.h"
 #include "node.h"
 #include "edge.h"
@@ -7,6 +6,7 @@
 #include "node_visitor.h"
 #include "edge_visitor.h"
 #include "layout_option.h"
+#include "layout_visitor.h"
 
 EG_NS_BEGIN
 
@@ -17,21 +17,6 @@ namespace {
 		std::string script =  std::string("echo \"") + graph_str + std::string("\"|graph-easy");
 		return ShellExecutor::execute(script);
 	}
-
-	template<typename VISITOR, typename ITEM>
-	struct LayoutVisitor : VISITOR {
-		LayoutVisitor(const LayoutOption& options)
-		: options(options) {
-		}
-
-		OVERRIDE(void visit(const ITEM& item)) {
-			const Layoutable& layoutable = item;
-			layout += layoutable.getLayout(options);
-		}
-
-		std::string layout;
-		const LayoutOption& options;
-	};
 }
 
 void GraphLayout::config(const LayoutOption& options) {
