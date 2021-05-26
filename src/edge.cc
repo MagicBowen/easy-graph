@@ -1,6 +1,7 @@
 #include "edge.h"
 #include "node.h"
 #include "layout_option.h"
+#include "layout_context.h"
 
 EG_NS_BEGIN
 
@@ -26,17 +27,17 @@ __DEF_COMP(Edge)
 
 namespace {
 	INTERFACE(EdgeLayout) {
-		EdgeLayout(const LayoutOption& options,
+		EdgeLayout(const LayoutContext& context,
 				   const std::string& label,
 				   const NodePort& src,
 				   const NodePort& dst)
-		: options(options), label(label), src(src), dst(dst){
+		: context(context), options(context.getOptions()), label(label), src(src), dst(dst){
 		}
 
 		std::string getLayout() const {
 			const Layoutable& srcLayoutable = src.getNode();
 			const Layoutable& dstLayoutable = dst.getNode();
-			return srcLayoutable.getLayout(options) + getArrowLayout() + getAttrLayout() + dstLayoutable.getLayout(options);
+			return srcLayoutable.getLayout(context) + getArrowLayout() + getAttrLayout() + dstLayoutable.getLayout(context);
 		}
 
 	private:
@@ -44,6 +45,7 @@ namespace {
 		ABSTRACT(std::string getArrowLayout() const);
 
 	protected:
+		const LayoutContext& context;
 		const LayoutOption& options;
 		const std::string& label;
 		const NodePort& src;
@@ -97,10 +99,11 @@ namespace {
 	};
 }
 
-std::string Edge::getLayout(const LayoutOption& options) const {
-	auto makeEdgeLayout = [this, &options]() -> const EdgeLayout*{
-		if (type == CTRL_EDGE) return new CtrlEdgeLayout(options, label, src, dst);
-		return new DataEdgeLayout(options, label, src, dst);
+std::string Edge::getLayout(const LayoutContext& context) const {
+
+	auto makeEdgeLayout = [this, &context]() -> const EdgeLayout*{
+		if (type == CTRL_EDGE) return new CtrlEdgeLayout(context, label, src, dst);
+		return new DataEdgeLayout(context, label, src, dst);
 	};
 
 	std::unique_ptr<const EdgeLayout> layout(makeEdgeLayout());

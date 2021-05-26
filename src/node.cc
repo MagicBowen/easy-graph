@@ -2,6 +2,7 @@
 #include "graph.h"
 #include "layout_visitor.h"
 #include "node_visitor.h"
+#include "layout_context.h"
 
 EG_NS_BEGIN
 
@@ -27,12 +28,13 @@ NodeId Node::getId() const {
 	return id;
 }
 
-std::string Node::getLayout(const LayoutOption& options) const {
+std::string Node::getLayout(const LayoutContext& context) const {
+
 	if (subgraphs.empty()) return std::string("[") + id + "]";
 
 	std::string layout = std::string("( ") + id + " : [" + id + "]";
-	std::for_each(subgraphs.begin(), subgraphs.end(), [&layout, &options](auto& g) {
-		LayoutVisitor<NodeVisitor, Node> nodeLayoutVisitor(options);
+	std::for_each(subgraphs.begin(), subgraphs.end(), [&layout, &context](auto& g) {
+		LayoutVisitor<NodeVisitor, Node> nodeLayoutVisitor(context);
 		g->accept(nodeLayoutVisitor);
 		layout += nodeLayoutVisitor.layout;
 	});

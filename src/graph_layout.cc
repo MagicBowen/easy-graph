@@ -7,6 +7,7 @@
 #include "edge_visitor.h"
 #include "layout_option.h"
 #include "layout_visitor.h"
+#include "layout_context.h"
 
 EG_NS_BEGIN
 
@@ -24,15 +25,17 @@ void GraphLayout::config(const LayoutOption& options) {
 }
 
 Status GraphLayout::layout(const Graph& graph, const LayoutOption* opts) {
-	const LayoutOption& options = opts ? *opts : globalLayoutOptions;
+	const LayoutOption options = opts ? *opts : globalLayoutOptions;
 
-	LayoutVisitor<NodeVisitor, Node> nodeLayoutVisitor(options);
+	LayoutContext context(graph.getName(), options);
+
+	LayoutVisitor<NodeVisitor, Node> nodeLayoutVisitor(context);
 	graph.accept(nodeLayoutVisitor);
 
-	LayoutVisitor<EdgeVisitor, Edge> edgeLayoutVisitor(options);
+	LayoutVisitor<EdgeVisitor, Edge> edgeLayoutVisitor(context);
 	graph.accept(edgeLayoutVisitor);
 
-	std::string layout = ((Layoutable&)graph).getLayout(options)
+	std::string layout = ((Layoutable&)graph).getLayout(context)
 			           + nodeLayoutVisitor.layout
 					   + edgeLayoutVisitor.layout;
 

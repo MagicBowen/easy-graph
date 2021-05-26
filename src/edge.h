@@ -19,7 +19,7 @@ struct Edge : Layoutable
 	__DECL_COMP(Edge);
 
 private:
-	std::string getLayout(const LayoutOption&) const override;
+	std::string getLayout(const LayoutContext&) const override;
 
 private:
 	std::string label;

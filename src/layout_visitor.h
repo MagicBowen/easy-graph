@@ -7,12 +7,12 @@
 
 EG_NS_BEGIN
 
-struct LayoutOption;
+struct LayoutContext;
 
 template<typename VISITOR, typename ITEM>
 struct LayoutVisitor : VISITOR {
-	LayoutVisitor(const LayoutOption& options)
-	: options(options) {
+	LayoutVisitor(const LayoutContext& context)
+	: context(context) {
 	}
 
 	std::string layout;
@@ -20,11 +20,11 @@ struct LayoutVisitor : VISITOR {
 private:
 	OVERRIDE(void visit(const ITEM& item)) {
 		const Layoutable& layoutable = item;
-		layout += layoutable.getLayout(options);
+		layout += layoutable.getLayout(context);
 	}
 
 private:
-	const LayoutOption& options;
+	const LayoutContext& context;
 };
 
 EG_NS_END

@@ -17,6 +17,8 @@ struct Graph : Layoutable
 {
 	explicit Graph(const std::string& name);
 
+	std::string getName() const;
+
 	Node* addNode(const Node&);
 	void  addEdge(const Edge&);
 
@@ -29,7 +31,7 @@ struct Graph : Layoutable
 	void layout(const LayoutOption* option = nullptr) const;
 
 private:
-	std::string getLayout(const LayoutOption&) const override;
+	std::string getLayout(const LayoutContext&) const override;
 
 private:
 	std::string name;

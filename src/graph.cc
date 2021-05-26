@@ -5,11 +5,16 @@
 #include "edge_visitor.h"
 #include "graph_layout.h"
 #include "layout_option.h"
+#include "layout_context.h"
 
 EG_NS_BEGIN
 
 Graph::Graph(const std::string& name)
 : name(name) {
+}
+
+std::string Graph::getName() const {
+	return name;
 }
 
 Node* Graph::addNode(const Node& node) {
@@ -45,8 +50,8 @@ void Graph::layout(const LayoutOption* option) const {
 	GraphLayout::layout(*this, option);
 }
 
-std::string Graph::getLayout(const LayoutOption& options) const {
-	std::string flowDirection = (options.dir == FlowDir::LR) ? "east" : "down";
+std::string Graph::getLayout(const LayoutContext& context) const {
+	std::string flowDirection = (context.getOptions().dir == FlowDir::LR) ? "east" : "down";
 	return std::string("graph { label : ") + name +  "; flow : " + flowDirection + " }";
 }
 
