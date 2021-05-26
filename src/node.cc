@@ -36,7 +36,7 @@ std::string Node::getLayout(LayoutContext& context) const {
 
 	std::string layout = std::string("( ") + id + ": " + nodeBox;
 	std::for_each(subgraphs.begin(), subgraphs.end(), [&](auto& g) {
-		layout += (std::string(" -- [") + id + "/" + g->getName() + "]" + "{class : subgraph} ");
+		layout += (std::string(" -- [") + id + "/" + g->getName() + "]" + "{class : subgraph; label : " + g->getName() + ";}");
 	});
 	return layout + ")";
 }

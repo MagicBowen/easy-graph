@@ -14,8 +14,36 @@ EG_NS_BEGIN
 namespace {
 	LayoutOption globalLayoutOptions;
 
-	Status GraphEasyLayoutInShell(const std::string& graph_str) {
-		std::string script =  std::string("echo \"") + graph_str + std::string("\"|graph-easy");
+	std::string getLayoutFormat(const LayoutOption& option) {
+		switch(option.format) {
+		case LayoutFormat::ASCII: return "ascii";
+		case LayoutFormat::BOXART: return "boxart";
+		case LayoutFormat::SVG: return "svg";
+		case LayoutFormat::DOT: return "dot";
+		case LayoutFormat::HTML: return "html";
+		}
+		return "ascii";
+	}
+
+	std::string getLayoutFilePostfix(const LayoutOption& option) {
+		switch(option.format) {
+		case LayoutFormat::ASCII: return "txt";
+		case LayoutFormat::BOXART: return "txt";
+		case LayoutFormat::SVG: return "svg";
+		case LayoutFormat::DOT: return "dot";
+		case LayoutFormat::HTML: return "html";
+		}
+		return "txt";
+	}
+
+	std::string getLayoutOutput(const LayoutOption& options, const std::string& graphName) {
+		if (options.output == LayoutOutput::CONSOLE) return "";
+		return std::string(" --output ") + options.outputPath + graphName + "." + getLayoutFilePostfix(options);
+
+	}
+
+	Status GraphEasyLayoutInShell(const std::string& graphName, const std::string& graphEasyText, const LayoutOption& options) {
+		std::string script =  std::string("echo \"") + graphEasyText + "\"|graph-easy --as=" + getLayoutFormat(options) + getLayoutOutput(options, graphName);
 		return ShellExecutor::execute(script);
 	}
 }
@@ -39,7 +67,7 @@ Status GraphLayout::layout(const Graph& graph, const LayoutOption* opts) {
 			           + nodeLayoutVisitor.layout
 					   + edgeLayoutVisitor.layout;
 
-	return GraphEasyLayoutInShell(layout);
+	return GraphEasyLayoutInShell(graph.getName(), layout, options);
 }
 
 EG_NS_END

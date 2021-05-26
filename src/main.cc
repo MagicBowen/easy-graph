@@ -9,7 +9,11 @@ int main() {
 	///////////////////////////////////////////////////////////////
 	// global layout config
 
-	GraphLayout::config(LayoutOption{.dir = FlowDir::LR, .type = LayoutType::FREE, .scale = 1});
+	GraphLayout::config(LayoutOption{.format = LayoutFormat::BOXART,
+		                             .output = LayoutOutput::CONSOLE,
+									 .dir = FlowDir::LR,
+									 .type = LayoutType::FREE,
+									 .scale = 1});
 
 	///////////////////////////////////////////////////////////////
 	// basic graph
@@ -17,6 +21,8 @@ int main() {
 	GRAPH(g1) {
 		CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
 	});
+
+	g1.layout();
 
 	///////////////////////////////////////////////////////////////
 	// graph with ctrl and data edge

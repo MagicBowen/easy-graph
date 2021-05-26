@@ -4,11 +4,11 @@
 - [x]: edge attribute set and disply
 - [x]: joint anchor and notation
 - [x]: support subgraphs and base layout
-- [ ]: multiple level subgraphs layout
-- [ ]: refactoring folder
-- [ ]: refactoring layout, could inject
 - [ ]: support more layout format config
-- [ ]: translate to another graph
+- [ ]: refactoring layout, could inject
+- [ ]: independent tests
+- [ ]: refactoring folder
+- [ ]: inject API for translating to another graph
 
 ## Cli Usage
 
