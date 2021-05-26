@@ -30,7 +30,7 @@ NodeId Node::getId() const {
 std::string Node::getLayout(const LayoutOption& options) const {
 	if (subgraphs.empty()) return std::string("[") + id + "]";
 
-	std::string layout = std::string("( ") + id + "[" + id + "]";
+	std::string layout = std::string("( ") + id + " : [" + id + "]";
 	std::for_each(subgraphs.begin(), subgraphs.end(), [&layout, &options](auto& g) {
 		LayoutVisitor<NodeVisitor, Node> nodeLayoutVisitor(options);
 		g->accept(nodeLayoutVisitor);

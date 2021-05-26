@@ -17,7 +17,7 @@ struct Node  : Layoutable
 
     template<typename ...GRAPHS>
     Node(const NodeId& id, const GRAPHS&... graphs)
-	: subgraphs{&graphs...}{
+	: id(id), subgraphs{&graphs...}{
     }
 
     __DECL_COMP(Node);

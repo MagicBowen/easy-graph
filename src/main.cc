@@ -6,13 +6,20 @@ USING_EG_NS
 
 int main() {
 
+	///////////////////////////////////////////////////////////////
+	// global layout config
+
 	GraphLayout::config(LayoutOption{.dir = FlowDir::LR, .type = LayoutType::FREE, .scale = 1});
+
+	///////////////////////////////////////////////////////////////
+	// basic graph
 
 	GRAPH(g1) {
 		CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
 	});
 
-	g1.layout();
+	///////////////////////////////////////////////////////////////
+	// graph with ctrl and data edge
 
 	GRAPH(g2) {
 		CHAIN(NODE("a") -> CTRL("omit") -> NODE("b") -> NODE("c") -> DATA("copy") -> NODE("d") -> NODE("e"));
@@ -20,6 +27,9 @@ int main() {
 	});
 
 	g2.layout();
+
+	///////////////////////////////////////////////////////////////
+	// specified ctrl or data chain type and use pre-defined nodes
 
 	GRAPH(g3) {
 		Node a("a"), b("b"), c("c");
@@ -30,6 +40,9 @@ int main() {
 	});
 
 	g3.layout();
+
+	///////////////////////////////////////////////////////////////
+	// graph with multiple nodes
 
 
 	GRAPH(g4) {
@@ -42,6 +55,9 @@ int main() {
 
 	g4.layout();
 
+	///////////////////////////////////////////////////////////////
+	// specify the out&in port id of edge
+
 	GRAPH(g5) {
 		CHAIN(NODE("a") -> DATA("to") -> NODE("b") -> CTRL("condition") -> NODE("c") -> NODE("d") -> DATA(1, 1) -> NODE("e"));
 		CHAIN(NODE("a") -> DATA(0, 1) -> NODE("c") -> CTRL() -> NODE("e"));
@@ -51,6 +67,9 @@ int main() {
 	});
 
 	g5.layout();
+
+	///////////////////////////////////////////////////////////////
+	// node with subgraphs
 
 	GRAPH(Cond) {
 		CTRL_CHAIN(NODE("a") -> NODE("b"));
@@ -62,8 +81,8 @@ int main() {
 
 	GRAPH(graph) {
 		Node loop("loop", Cond, Body);
-		DATA_CHAIN(NODE("const_1") -> NODE("loop") -> NODE("unique") -> NODE("softmax"));
-		DATA_CHAIN(NODE("const_2") -> NODE("add"));
+		DATA_CHAIN(NODE("const_1") -> NODE(loop) -> NODE("unique") -> NODE("softmax"));
+		DATA_CHAIN(NODE("const_2") -> NODE("while", Cond, Body));
 		CTRL_CHAIN(NODE("case") -> NODE("unique"));
 	});
 
