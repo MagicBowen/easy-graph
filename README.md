@@ -1,16 +1,7 @@
 
-## TODO
+## Easy Graph
 
-- [x]: edge attribute set and disply
-- [x]: joint anchor and notation
-- [x]: support subgraphs and base layout
-- [x]: support more layout format config
-- [ ]: refactoring layout, could inject
-- [ ]: independent tests
-- [ ]: refactoring folder
-- [ ]: inject API for translating to another graph
-
-## Cli Usage
+### Cli Usage
 
 ```sh
 $ chmod a+x ./ccup.sh

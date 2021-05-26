@@ -130,7 +130,7 @@ function update() {
 		exit 1
 	} 
     export GIT_SSL_NO_VERIFY=1
-    cmake -H. "$cmake_generate_type" -B$build -DPROJECT_NAME=${project_name} -DENABLE_TEST=on -DCPM_SOURCE_CACHE="$cpm_cache" "$cmake_extra_definations"
+    cmake -H. "$cmake_generate_type" -B$build -DPROJECT_NAME=${project_name} -DENABLE_TEST=off -DCPM_SOURCE_CACHE="$cpm_cache" "$cmake_extra_definations"
     if [ $? -ne 0 ]; then
         failed_exec "update"
         exit 1

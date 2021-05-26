@@ -25,19 +25,8 @@ add_library(${TARGET_LIB} ${LIB_TYPE} ${SOURCES})
 
 target_include_directories(${TARGET_LIB}
     PUBLIC ${PROJECT_SOURCE_DIR}/include
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
 )
-
-# set_target_properties(${TARGET_LIB} PROPERTIES CXX_STANDARD 17)
-
-# ---- Add target dependencies ----
-
-# CPMAddPackage(
-#     NAME mcl
-#     GITHUB_REPOSITORY ccup/mcl
-#     GIT_TAG master
-# )
-
-# target_link_libraries(${TARGET_LIB} PUBLIC mcl)
 
 # ---- Add executable target ----
 

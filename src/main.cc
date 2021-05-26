@@ -1,7 +1,7 @@
-#include "graph_dsl.h"
-#include "graph_layout.h"
-#include "graph_easy_option.h"
-#include "graph_easy_executor.h"
+#include "easy_graph/builder/graph_dsl.h"
+#include "easy_graph/layout/graph_layout.h"
+#include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
+#include "easy_graph/layout/engines/graph_easy/graph_easy_executor.h"
 
 USING_EG_NS
 
