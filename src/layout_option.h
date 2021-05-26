@@ -21,7 +21,7 @@ enum class LayoutFormat {
 	BOXART,
 	SVG,
 	DOT,
-	HTML
+	HTML,
 };
 
 enum class LayoutOutput {
@@ -30,10 +30,8 @@ enum class LayoutOutput {
 };
 
 struct LayoutOption {
-	static const LayoutOption& getDefault() {
-		static LayoutOption option;
-		return option;
-	}
+	static const LayoutOption& getDefault();
+	std::string getLayoutCmdArgs(const std::string& graphName) const;
 
 	LayoutFormat format{LayoutFormat::ASCII};
 	LayoutOutput output{LayoutOutput::CONSOLE};

@@ -4,7 +4,7 @@
 - [x]: edge attribute set and disply
 - [x]: joint anchor and notation
 - [x]: support subgraphs and base layout
-- [ ]: support more layout format config
+- [x]: support more layout format config
 - [ ]: refactoring layout, could inject
 - [ ]: independent tests
 - [ ]: refactoring folder
