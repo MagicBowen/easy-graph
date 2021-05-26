@@ -8,17 +8,17 @@ EG_NS_BEGIN
 
 namespace detail {
 	template<typename GRAPH_BUILDER>
-	Graph build_graph(const char* name, GRAPH_BUILDER userBuildGraphWith) {
+	Graph build_graph(const char* name, GRAPH_BUILDER builderInDSL) {
 		GraphBuilder builder(name);
-		userBuildGraphWith(builder);
+		builderInDSL(builder);
 		return std::move(builder.buildGraphDone());
 	}
 }
 
 #define GRAPH(G) Graph G = ::EG_NS::detail::build_graph(#G, [&](GraphBuilder& BUILDER)
 
-#define DATA_CHAIN(...) ::EG_NS::ChainBuilder(BUILDER, DATA_EDGE) -> __VA_ARGS__
-#define CTRL_CHAIN(...) ::EG_NS::ChainBuilder(BUILDER, CTRL_EDGE) -> __VA_ARGS__
+#define DATA_CHAIN(...) ::EG_NS::ChainBuilder(BUILDER, EdgeType::DATA_EDGE) -> __VA_ARGS__
+#define CTRL_CHAIN(...) ::EG_NS::ChainBuilder(BUILDER, EdgeType::CTRL_EDGE) -> __VA_ARGS__
 #define CHAIN(...) DATA_CHAIN(__VA_ARGS__)
 
 EG_NS_END

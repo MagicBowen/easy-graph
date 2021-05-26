@@ -5,7 +5,7 @@
 
 EG_NS_BEGIN
 
-enum EdgeType {
+enum class EdgeType {
 	CTRL_EDGE = 0,
 	DATA_EDGE,
 };

@@ -9,11 +9,10 @@
 
 EG_NS_BEGIN
 
-struct NodeVisitor;
-struct EdgeVisitor;
+struct GraphVisitor;
 struct LayoutOption;
 
-struct Graph : Layoutable
+struct Graph
 {
 	explicit Graph(const std::string& name);
 
@@ -25,13 +24,9 @@ struct Graph : Layoutable
 	Node* findNode(const NodeId&);
 	const Node* findNode(const NodeId&) const;
 
-	void accept(NodeVisitor&) const;
-	void accept(EdgeVisitor&) const;
+	void accept(GraphVisitor&) const;
 
 	void layout(const LayoutOption* option = nullptr) const;
-
-private:
-	std::string getLayout(LayoutContext&) const override;
 
 private:
 	std::string name;

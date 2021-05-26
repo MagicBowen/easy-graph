@@ -1,6 +1,7 @@
 #include "graph_dsl.h"
 #include "graph_layout.h"
-#include "layout_option.h"
+#include "graph_easy_option.h"
+#include "graph_easy_executor.h"
 
 USING_EG_NS
 
@@ -9,11 +10,16 @@ int main() {
 	///////////////////////////////////////////////////////////////
 	// global layout config
 
-	GraphLayout::config(LayoutOption{.format = LayoutFormat::BOXART,
-		                             .output = LayoutOutput::CONSOLE,
-									 .dir = FlowDir::LR,
-									 .type = LayoutType::FREE,
-									 .scale = 1});
+	GraphEasyExecutor executor;
+
+	GraphEasyOption options;
+	options.format = LayoutFormat::BOXART;
+    options.output = LayoutOutput::CONSOLE;
+	options.dir = FlowDir::LR;
+	options.type = LayoutType::FREE;
+	options.scale = 1;
+
+	GraphLayout::getInstance().config(executor, &options);
 
 	///////////////////////////////////////////////////////////////
 	// basic graph

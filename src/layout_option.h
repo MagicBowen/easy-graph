@@ -1,44 +1,11 @@
-#ifndef H37156CC2_92BD_44DA_8DA7_A11629E762BE
-#define H37156CC2_92BD_44DA_8DA7_A11629E762BE
+#ifndef H9491820D_4371_4C88_804E_4C77613F80C1
+#define H9491820D_4371_4C88_804E_4C77613F80C1
 
-#include "easy_graph/eg.h"
-#include <string>
+#include "keywords.h"
 
 EG_NS_BEGIN
 
-enum class FlowDir {
-	LR = 0,
-	TB,
-};
-
-enum class LayoutType {
-	FREE = 0,
-	REGULAR,
-};
-
-enum class LayoutFormat {
-	ASCII = 0,
-	BOXART,
-	SVG,
-	DOT,
-	HTML,
-};
-
-enum class LayoutOutput {
-	CONSOLE = 0,
-	FILE,
-};
-
-struct LayoutOption {
-	static const LayoutOption& getDefault();
-	std::string getLayoutCmdArgs(const std::string& graphName) const;
-
-	LayoutFormat format{LayoutFormat::ASCII};
-	LayoutOutput output{LayoutOutput::CONSOLE};
-	FlowDir dir{FlowDir::LR};
-	LayoutType type{LayoutType::FREE};
-	size_t scale{1};
-	std::string outputPath{"./"};
+INTERFACE(LayoutOption) {
 };
 
 EG_NS_END

@@ -7,10 +7,10 @@
 
 EG_NS_BEGIN
 
-struct LayoutOption;
+struct GraphEasyOption;
 
-struct LayoutContext {
-	LayoutContext(const std::string& root, const LayoutOption&);
+struct GraphEasyLayoutContext {
+	GraphEasyLayoutContext(const GraphEasyOption&);
 
 	void enterGroup(const std::string&);
 	void exitGroup();
@@ -20,12 +20,11 @@ struct LayoutContext {
 	bool inLinking() const;
 
 	std::string getGroupPath() const;
-	const LayoutOption& getOptions() const;
+	const GraphEasyOption& getOptions() const;
 
 private:
 	std::deque<std::string> groups;
-	const LayoutOption& options;
-	std::string root;
+	const GraphEasyOption& options;
 	bool isLinking{false};
 };
 

@@ -1,8 +1,5 @@
 #include "node.h"
-#include "graph.h"
-#include "layout_visitor.h"
-#include "node_visitor.h"
-#include "layout_context.h"
+#include "graph_visitor.h"
 
 EG_NS_BEGIN
 
@@ -28,17 +25,12 @@ NodeId Node::getId() const {
 	return id;
 }
 
-std::string Node::getLayout(LayoutContext& context) const {
-	std::string nodeBox = std::string("[") + id + "]";
+bool Node::hasSubgraph() const {
+	return !subgraphs.empty();
+}
 
-	if (subgraphs.empty()) return nodeBox;
-	if (context.inLinking()) return nodeBox;
-
-	std::string layout = std::string("( ") + id + ": " + nodeBox;
-	std::for_each(subgraphs.begin(), subgraphs.end(), [&](auto& g) {
-		layout += (std::string(" -- [") + id + "/" + g->getName() + "]" + "{class : subgraph; label : " + g->getName() + ";}");
-	});
-	return layout + ")";
+void Node::accept(GraphVisitor& visitor) const {
+	std::for_each(subgraphs.begin(), subgraphs.end(),  [&visitor](auto graph){visitor.visit(*graph);});
 }
 
 EG_NS_END

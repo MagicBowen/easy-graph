@@ -3,14 +3,14 @@
 
 #include "node_id.h"
 #include "cmp_helper.h"
-#include "layoutable.h"
 #include <vector>
 
 EG_NS_BEGIN
 
 struct Graph;
+struct GraphVisitor;
 
-struct Node  : Layoutable
+struct Node
 {
     explicit Node(const NodeId& id);
     Node(const char* id);
@@ -24,8 +24,8 @@ struct Node  : Layoutable
 
     NodeId getId() const;
 
-private:
-    std::string getLayout(LayoutContext&) const override;
+    bool hasSubgraph() const;
+    void accept(GraphVisitor&) const;
 
 private:
     NodeId id;

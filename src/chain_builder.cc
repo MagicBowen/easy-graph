@@ -37,15 +37,15 @@ ChainBuilder& ChainBuilder::LinkBuilder::startLink(const Link& link) {
 }
 
 ChainBuilder& ChainBuilder::LinkBuilder::CTRL(const std::string& label) {
-	return this->startLink(Link(CTRL_EDGE, label, UNDEFINED_PORT_ID, UNDEFINED_PORT_ID));
+	return this->startLink(Link(EdgeType::CTRL_EDGE, label, UNDEFINED_PORT_ID, UNDEFINED_PORT_ID));
 }
 
 ChainBuilder& ChainBuilder::LinkBuilder::DATA(const std::string& label) {
-	return this->startLink(Link(DATA_EDGE, label, UNDEFINED_PORT_ID, UNDEFINED_PORT_ID));
+	return this->startLink(Link(EdgeType::DATA_EDGE, label, UNDEFINED_PORT_ID, UNDEFINED_PORT_ID));
 }
 
 ChainBuilder& ChainBuilder::LinkBuilder::DATA(PortId srcPort, PortId dstPort, const std::string& label) {
-	return this->startLink(Link(DATA_EDGE, label, srcPort, dstPort));
+	return this->startLink(Link(EdgeType::DATA_EDGE, label, srcPort, dstPort));
 }
 
 EG_NS_END

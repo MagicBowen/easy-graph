@@ -6,7 +6,7 @@ EG_NS_BEGIN
 
 namespace {
 	PortId getPortIdBy(const EdgeType& type, const PortId& specifiedPortId, PortId& reservedPortId) {
-		if (type == CTRL_EDGE) return 0;
+		if (type == EdgeType::CTRL_EDGE) return 0;
 		if (specifiedPortId == UNDEFINED_PORT_ID) return reservedPortId++;
 		if (specifiedPortId < reservedPortId) return specifiedPortId;
 		reservedPortId = specifiedPortId;
