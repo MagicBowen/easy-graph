@@ -31,7 +31,7 @@ struct Graph : Layoutable
 	void layout(const LayoutOption* option = nullptr) const;
 
 private:
-	std::string getLayout(const LayoutContext&) const override;
+	std::string getLayout(LayoutContext&) const override;
 
 private:
 	std::string name;

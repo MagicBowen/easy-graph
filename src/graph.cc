@@ -50,9 +50,9 @@ void Graph::layout(const LayoutOption* option) const {
 	GraphLayout::layout(*this, option);
 }
 
-std::string Graph::getLayout(const LayoutContext& context) const {
+std::string Graph::getLayout(LayoutContext& context) const {
 	std::string flowDirection = (context.getOptions().dir == FlowDir::LR) ? "east" : "down";
-	return std::string("graph { label : ") + name +  "; flow : " + flowDirection + " }";
+	return std::string("graph { label : ") + name +  "; flow : " + flowDirection + " ; } node.subgraph { border : dotted; }";
 }
 
 EG_NS_END

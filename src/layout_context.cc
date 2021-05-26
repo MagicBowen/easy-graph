@@ -8,15 +8,32 @@ LayoutContext::LayoutContext(const std::string& root, const LayoutOption& option
 }
 
 void LayoutContext::enterGroup(const std::string& groupName) {
-	namespaces.push(groupName);
+	groups.push_back(groupName);
 }
 
 void LayoutContext::exitGroup() {
-	namespaces.pop();
+	groups.pop_back();
 }
 
-std::string LayoutContext::getNamespace() const {
-	return root;
+void LayoutContext::linkBegin() {
+	isLinking = true;
+}
+
+void LayoutContext::linkEnd(){
+	isLinking = false;
+}
+
+bool LayoutContext::inLinking() const {
+	return isLinking;
+}
+
+std::string LayoutContext::getGroupPath() const {
+	if (groups.empty()) return "";
+	std::string result("");
+	std::for_each(groups.begin(), groups.end(), [&result](const auto& group) {
+		result += (std::string("/") + group);
+	});
+	return (result + "/");
 }
 
 const LayoutOption& LayoutContext::getOptions() const {

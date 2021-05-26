@@ -28,15 +28,15 @@ NodeId Node::getId() const {
 	return id;
 }
 
-std::string Node::getLayout(const LayoutContext& context) const {
+std::string Node::getLayout(LayoutContext& context) const {
+	std::string nodeBox = std::string("[") + id + "]";
 
-	if (subgraphs.empty()) return std::string("[") + id + "]";
+	if (subgraphs.empty()) return nodeBox;
+	if (context.inLinking()) return nodeBox;
 
-	std::string layout = std::string("( ") + id + " : [" + id + "]";
-	std::for_each(subgraphs.begin(), subgraphs.end(), [&layout, &context](auto& g) {
-		LayoutVisitor<NodeVisitor, Node> nodeLayoutVisitor(context);
-		g->accept(nodeLayoutVisitor);
-		layout += nodeLayoutVisitor.layout;
+	std::string layout = std::string("( ") + id + ": " + nodeBox;
+	std::for_each(subgraphs.begin(), subgraphs.end(), [&](auto& g) {
+		layout += (std::string(" -- [") + id + "/" + g->getName() + "]" + "{class : subgraph} ");
 	});
 	return layout + ")";
 }

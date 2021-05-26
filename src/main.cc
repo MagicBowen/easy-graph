@@ -81,9 +81,11 @@ int main() {
 
 	GRAPH(graph) {
 		Node loop("loop", Cond, Body);
+		Node foreach("foreach", Cond, Body);
 		DATA_CHAIN(NODE("const_1") -> NODE(loop) -> NODE("unique") -> NODE("softmax"));
 		DATA_CHAIN(NODE("const_2") -> NODE("while", Cond, Body));
 		CTRL_CHAIN(NODE("case") -> NODE("unique"));
+		CTRL_CHAIN(NODE(loop) -> NODE(foreach));
 	});
 
 	graph.layout();

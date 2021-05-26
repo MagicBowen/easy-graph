@@ -17,7 +17,11 @@ enum EgLogLevel
 	EG_TOTAL_LEVEL = 0xFF
 };
 
-#define EG_LOG_LEVELS (EG_FATAL_LEVEL | EG_ERR_LEVEL | EG_WARN_LEVEL)
+#define EG_LOG_LEVELS  (\
+	    EG_FATAL_LEVEL |\
+		EG_ERR_LEVEL   |\
+		EG_WARN_LEVEL  |\
+		EG_INFO_LEVEL  )
 
 /////////////////////////////////////////////////////////////////
 

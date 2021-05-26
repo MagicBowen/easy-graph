@@ -1,6 +1,6 @@
 # ---- Collect all src files except main.c ----
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 file(GLOB_RECURSE MAIN_FILE 
     "main.cc" "main.cpp"

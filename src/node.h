@@ -25,7 +25,7 @@ struct Node  : Layoutable
     NodeId getId() const;
 
 private:
-    std::string getLayout(const LayoutContext&) const override;
+    std::string getLayout(LayoutContext&) const override;
 
 private:
     NodeId id;

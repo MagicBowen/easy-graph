@@ -3,15 +3,14 @@
 
 #include "layoutable.h"
 #include "keywords.h"
+#include "layout_context.h"
 #include <string>
 
 EG_NS_BEGIN
 
-struct LayoutContext;
-
 template<typename VISITOR, typename ITEM>
 struct LayoutVisitor : VISITOR {
-	LayoutVisitor(const LayoutContext& context)
+	LayoutVisitor(LayoutContext& context)
 	: context(context) {
 	}
 
@@ -19,12 +18,18 @@ struct LayoutVisitor : VISITOR {
 
 private:
 	OVERRIDE(void visit(const ITEM& item)) {
+	    if constexpr (std::is_same<ITEM, Edge>::value) {
+	    	context.linkBegin();
+	    }
+	    else {
+	    	context.linkEnd();
+	    }
 		const Layoutable& layoutable = item;
 		layout += layoutable.getLayout(context);
 	}
 
 private:
-	const LayoutContext& context;
+	LayoutContext& context;
 };
 
 EG_NS_END

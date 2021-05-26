@@ -3,7 +3,7 @@
 
 #include "easy_graph/eg.h"
 #include <string>
-#include <stack>
+#include <deque>
 
 EG_NS_BEGIN
 
@@ -15,14 +15,18 @@ struct LayoutContext {
 	void enterGroup(const std::string&);
 	void exitGroup();
 
-	std::string getNamespace() const;
+	void linkBegin();
+	void linkEnd();
+	bool inLinking() const;
 
+	std::string getGroupPath() const;
 	const LayoutOption& getOptions() const;
 
 private:
-	std::stack<std::string> namespaces;
+	std::deque<std::string> groups;
 	const LayoutOption& options;
 	std::string root;
+	bool isLinking{false};
 };
 
 EG_NS_END

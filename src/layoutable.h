@@ -9,7 +9,7 @@ EG_NS_BEGIN
 struct LayoutContext;
 
 INTERFACE(Layoutable) {
-	ABSTRACT(std::string getLayout(const LayoutContext&) const);
+	ABSTRACT(std::string getLayout(LayoutContext&) const);
 };
 
 EG_NS_END

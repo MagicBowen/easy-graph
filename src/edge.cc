@@ -27,7 +27,7 @@ __DEF_COMP(Edge)
 
 namespace {
 	INTERFACE(EdgeLayout) {
-		EdgeLayout(const LayoutContext& context,
+		EdgeLayout(LayoutContext& context,
 				   const std::string& label,
 				   const NodePort& src,
 				   const NodePort& dst)
@@ -45,7 +45,7 @@ namespace {
 		ABSTRACT(std::string getArrowLayout() const);
 
 	protected:
-		const LayoutContext& context;
+		LayoutContext& context;
 		const LayoutOption& options;
 		const std::string& label;
 		const NodePort& src;
@@ -99,7 +99,7 @@ namespace {
 	};
 }
 
-std::string Edge::getLayout(const LayoutContext& context) const {
+std::string Edge::getLayout(LayoutContext& context) const {
 
 	auto makeEdgeLayout = [this, &context]() -> const EdgeLayout*{
 		if (type == CTRL_EDGE) return new CtrlEdgeLayout(context, label, src, dst);
