@@ -9,7 +9,7 @@
 EG_NS_BEGIN
 
 Status ShellExecutor::execute(const std::string& script) {
-	EG_INFO("%s", script.c_str());
+	EG_DBG("%s", script.c_str());
 
 	pid_t status = system(script.c_str());
 	if (-1 == status)

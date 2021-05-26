@@ -1,9 +1,13 @@
 
 ## TODO
 
-- [x]: support edge attribute set and disply
-- [ ]: support joint anchor
-- [ ]: support subgraph
+- [x]: edge attribute set and disply
+- [x]: joint anchor and notation
+- [x]: support subgraphs and base layout
+- [ ]: multiple level subgraphs layout
+- [ ]: refactoring folder
+- [ ]: refactoring layout, could inject
+- [ ]: support more layout format config
 - [ ]: translate to another graph
 
 ## Cli Usage
