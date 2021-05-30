@@ -35,6 +35,7 @@ static inline bool eg_status_is_fail(Status status)
 }
 
 #define __EG_FAILED(result)   eg_status_is_fail(result)
+#define __EG_OK(result)       eg_status_is_ok(result)
 
 EG_NS_END
 

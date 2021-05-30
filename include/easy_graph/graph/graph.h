@@ -3,6 +3,7 @@
 
 #include "easy_graph/graph/node.h"
 #include "easy_graph/graph/edge.h"
+#include "easy_graph/infra/status.h"
 #include <string>
 #include <set>
 #include <map>
@@ -26,7 +27,7 @@ struct Graph
 
 	void accept(GraphVisitor&) const;
 
-	void layout(const LayoutOption* option = nullptr) const;
+	Status layout(const LayoutOption* option = nullptr) const;
 
 private:
 	std::string name;

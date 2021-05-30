@@ -39,8 +39,8 @@ void Graph::accept(GraphVisitor& visitor) const {
 	std::for_each(edges.begin(), edges.end(), [&visitor](auto edge){visitor.visit(edge);});
 }
 
-void Graph::layout(const LayoutOption* option) const {
-	GraphLayout::getInstance().layout(*this, option);
+Status Graph::layout(const LayoutOption* option) const {
+	return GraphLayout::getInstance().layout(*this, option);
 }
 
 EG_NS_END

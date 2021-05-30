@@ -9,11 +9,14 @@ EG_NS_BEGIN
 
 struct Graph;
 struct GraphVisitor;
+struct Box;
 
 struct Node
 {
     explicit Node(const NodeId& id);
     Node(const char* id);
+
+    Node(const Box& box);
 
     template<typename ...GRAPHS>
     Node(const NodeId& id, const GRAPHS&... graphs)
@@ -24,11 +27,14 @@ struct Node
 
     NodeId getId() const;
 
+    const Box* getBox() const;
+
     bool hasSubgraph() const;
     void accept(GraphVisitor&) const;
 
 private:
     NodeId id;
+    const Box* box{nullptr};
     std::vector<const Graph*> subgraphs;
 };
 

@@ -11,7 +11,7 @@ struct LayoutOption;
 struct Graph;
 
 SINGLETON(GraphLayout) {
-	void config(layoutExecutor&, const LayoutOption*);
+	void config(layoutExecutor&, const LayoutOption* = nullptr);
 	Status layout(const Graph&, const LayoutOption* options = nullptr);
 
 private:
