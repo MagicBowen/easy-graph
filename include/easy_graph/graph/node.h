@@ -2,7 +2,7 @@
 #define HF37ACE88_F726_4AA3_8599_ED7A888AA623
 
 #include "easy_graph/graph/node_id.h"
-#include "easy_graph/infra/cmp_helper.h"
+#include "easy_graph/infra/operator.h"
 #include <vector>
 
 EG_NS_BEGIN

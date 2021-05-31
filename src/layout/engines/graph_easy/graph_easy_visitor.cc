@@ -1,7 +1,7 @@
 #include "easy_graph/layout/engines/graph_easy/graph_easy_visitor.h"
 #include "layout/engines/graph_easy/utils/shell_executor.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
-#include "easy_graph/infra/auto_switch.h"
+#include "easy_graph/infra/scope_guard.h"
 #include "easy_graph/graph/graph.h"
 #include "easy_graph/graph/edge.h"
 #include "easy_graph/graph/node.h"
@@ -126,7 +126,7 @@ Status GraphEasyVisitor::visit(const Node& node) {
 }
 
 Status GraphEasyVisitor::visit(const Edge& edge) {
-	AutoSwitch autoSwitch([this](){ctxt.linkBegin();}, [this](){ctxt.linkEnd();});
+	ScopeGuard guard([this](){ctxt.linkBegin();}, [this](){ctxt.linkEnd();});
 
 	auto makeEdgeLayout = [this, &edge]() -> const EdgeLayout*{
 		if (edge.getType() == EdgeType::CTRL_EDGE) return new CtrlEdgeLayout(ctxt, edge);

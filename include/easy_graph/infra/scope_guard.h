@@ -6,13 +6,13 @@
 EG_NS_BEGIN
 
 template<typename BEGIN, typename END>
-struct AutoSwitch {
-	AutoSwitch(BEGIN begin, END end)
+struct ScopeGuard {
+	ScopeGuard(BEGIN begin, END end)
 	: begin(begin), end(end) {
 		begin();
 	}
 
-	~AutoSwitch() {
+	~ScopeGuard() {
 		end();
 	}
 

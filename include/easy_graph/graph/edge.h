@@ -3,7 +3,7 @@
 
 #include "easy_graph/graph/edge_type.h"
 #include "easy_graph/graph/node_port.h"
-#include "easy_graph/infra/cmp_helper.h"
+#include "easy_graph/infra/operator.h"
 #include <string>
 
 EG_NS_BEGIN
