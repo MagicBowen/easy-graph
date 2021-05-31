@@ -42,8 +42,8 @@ namespace {
 		float value;
 	};
 
-	struct Charactor : Box {
-		Charactor(char c) : c(c) {
+	struct Character : Box {
+		Character(char c) : c(c) {
 		}
 
 	private:
@@ -69,12 +69,12 @@ FIXTURE(GraphBuildTest) {
 		GRAPH(g1) {
 			Node a{BOX(Integer, 2)};
 			Node b{BOX(Label, "double")};
-			Node c{Charactor('c')};
+			Node c{Character('c')};
 			Node f{F_BOX(5)};
 
 			CHAIN(NODE(a) -> NODE(b) -> NODE(c));
 			CHAIN(NODE(a) -> NODE(f));
-			CHAIN(NODE(b) -> NODE(BOX(Label, "trible")) -> NODE(Charactor('t')));
+			CHAIN(NODE(b) -> NODE(BOX(Label, "trible")) -> NODE(Character('t')));
 		});
 
 		ASSERT_TRUE(__EG_OK(g1.layout()));

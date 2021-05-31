@@ -3,7 +3,6 @@
 
 #include "easy_graph/graph/box.h"
 #include <type_traits>
-#include <string>
 
 EG_NS_BEGIN
 
@@ -18,7 +17,7 @@ struct BoxBuilder : CONTENT, Box {
 private:
 	NodeId getId() const override {
 		using RESULT_TYPE = typename std::decay<RET>::type;
-		if constexpr (std::is_convertible<RESULT_TYPE, std::string>::value) {
+		if constexpr (std::is_convertible<RESULT_TYPE, NodeId>::value) {
 			return (this->*(func))();
 		} else {
 			return std::to_string((this->*(func))());
