@@ -1,6 +1,14 @@
 
 ## Easy Graph
 
+### TODO
+
+- [ ]: example project
+- [ ]: test project and test injection
+- [ ]: test scenario design
+- [ ]: support box in node with subgraph
+- [ ]: support edge with more information
+
 ### Cli Usage
 
 ```sh

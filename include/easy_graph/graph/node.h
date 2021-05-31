@@ -13,10 +13,8 @@ struct Box;
 
 struct Node
 {
-    explicit Node(const NodeId& id);
-    Node(const char* id);
-
-    Node(const Box& box);
+	Node(const NodeId& id);
+	Node(const Box& box);
 
     template<typename ...GRAPHS>
     Node(const NodeId& id, const GRAPHS&... graphs)
@@ -27,9 +25,9 @@ struct Node
 
     NodeId getId() const;
 
-    const Box* getBox() const;
-
     bool hasSubgraph() const;
+    void addSubgraph(const Graph&);
+
     void accept(GraphVisitor&) const;
 
 private:

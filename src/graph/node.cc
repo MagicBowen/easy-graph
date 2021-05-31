@@ -5,15 +5,12 @@
 EG_NS_BEGIN
 
 Node::Node(const NodeId& id)
-: id(id) {
-}
-
-Node::Node(const char* id)
-: Node(NodeId(id)) {
+: id(id){
 }
 
 Node::Node(const Box& box)
-: id(box.getId()), box(&box) {
+: id(box.getId()), box(&box){
+
 }
 
 __DEF_EQUALS(Node)
@@ -30,12 +27,12 @@ NodeId Node::getId() const {
 	return id;
 }
 
-const Box* Node::getBox() const {
-	return box;
-}
-
 bool Node::hasSubgraph() const {
 	return !subgraphs.empty();
+}
+
+void Node::addSubgraph(const Graph& graph) {
+	subgraphs.push_back(&graph);
 }
 
 void Node::accept(GraphVisitor& visitor) const {

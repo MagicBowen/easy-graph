@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 
 # ---- Project ----
 
-project(${PROJECT_NAME} VERSION 1.0.0)
+project(easy_graph VERSION 1.0.0)
 
 set(TARGET_LIB ${PROJECT_NAME})
 
@@ -18,7 +18,7 @@ endif()
 # ---- Options for project ----
 
 option(SHARED      "Generate shared library otherwise static" OFF)
-option(EXECUTABLE  "Generate executable target" ON)
+option(EXAMPLE     "Generate examples of target" ON)
 option(ENABLE_TEST "Build tests" OFF)
 option(ENABLE_TEST_COVERAGE "Enable test coverage" OFF)
 
@@ -30,6 +30,12 @@ CPMUsePackageLock(package-lock.cmake)
 # ---- Add source folder for project ----
 
 add_subdirectory("src")
+
+# ---- Add example for project ----
+
+if(EXAMPLE)
+    add_subdirectory(example)
+endif()
 
 # ---- Add test for project ----
 

@@ -7,8 +7,8 @@
 EG_NS_BEGIN
 
 struct GraphBuilder;
-struct Node;
 struct Graph;
+struct Node;
 
 struct ChainBuilder {
 	ChainBuilder(GraphBuilder& graphBuilder, EdgeType defaultEdgeType);

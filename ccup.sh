@@ -101,7 +101,7 @@ Options:
     -b, Build project
     -t, Execute testing
     -i, Install project
-    -r, Run executable
+    -r, Run examples
     -d, Document generation
     -c, Clean the build
     -C, Clean the build and dependent codes
@@ -130,7 +130,7 @@ function update() {
 		exit 1
 	} 
     export GIT_SSL_NO_VERIFY=1
-    cmake -H. "$cmake_generate_type" -B$build -DPROJECT_NAME=${project_name} -DENABLE_TEST=on -DCPM_SOURCE_CACHE="$cpm_cache" "$cmake_extra_definations"
+    cmake -H. "$cmake_generate_type" -B$build -DEXAMPLE=on -DENABLE_TEST=on -DCPM_SOURCE_CACHE="$cpm_cache" "$cmake_extra_definations"
     if [ $? -ne 0 ]; then
         failed_exec "update"
         exit 1
@@ -179,7 +179,7 @@ function install() {
 
 function run() {
     start_exec "run"
-    ./$build/src/${project_name}_service
+    ./$build/example/${project_name}_example
 }
 
 function doc() {
