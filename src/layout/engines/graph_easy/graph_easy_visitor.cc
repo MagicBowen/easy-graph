@@ -128,7 +128,7 @@ Status GraphEasyVisitor::visit(const Node& node) {
 Status GraphEasyVisitor::visit(const Edge& edge) {
 	ScopeGuard guard([this](){ctxt.linkBegin();}, [this](){ctxt.linkEnd();});
 
-	auto makeEdgeLayout = [this, &edge]() -> const EdgeLayout*{
+	auto makeEdgeLayout = [this, &edge]() -> const EdgeLayout* {
 		if (edge.getType() == EdgeType::CTRL_EDGE) return new CtrlEdgeLayout(ctxt, edge);
 		return new DataEdgeLayout(ctxt, edge);
 	};
