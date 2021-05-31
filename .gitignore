@@ -56,6 +56,3 @@ bazel-*
 
 # ccup
 deps/
-
-# MACOS
-.DS_Store

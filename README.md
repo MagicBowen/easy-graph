@@ -3,7 +3,7 @@
 
 ### TODO
 
-- [ ]: example project
+- [x]: example project
 - [ ]: test project and test injection
 - [ ]: test scenario design
 - [ ]: support box in node with subgraph
