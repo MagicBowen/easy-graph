@@ -3,9 +3,10 @@
 #include "easy_graph/layout/graph_layout.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_executor.h"
 #include "candy/candy_box.h"
-#include "candy/integer.h"
-#include "candy/shape.h"
-#include "candy/color.h"
+#include "candy/hard_candy.h"
+#include "candy/jelly_candy.h"
+#include "candy/color_candy.h"
+#include "candy/toffee_candy.h"
 
 USING_EG_NS
 
@@ -18,13 +19,14 @@ FIXTURE(GraphLayoutTest) {
 
 	TEST("should layout candy graph success") {
 		GRAPH(g1) {
-			Node i1{CANDY(Integer, 1)};
-			Node s1{CANDY(Shape, ShapeType::RECT)};
-			Node c1{CANDY(Color, 100, 128, 223)};
+			Node h1{CANDY(HardCandy, 1)};
+			Node j1{CANDY(JellyCandy, JellyType::TRIANGLE)};
+			Node c1{CANDY(ColorCandy, 100, 128, 223)};
+			Node l1{CANDY(ToffeeCandy, "Dove")};
 
-			CHAIN(NODE(i1) -> NODE(s1) -> NODE(c1));
-			CHAIN(NODE(i1) -> CANDY_NODE(Shape, ShapeType::CIRCLE));
-			CHAIN(CANDY_NODE(Shape, ShapeType::CIRCLE) -> CANDY_NODE(Color, 100, 128, 223));
+			CHAIN(NODE(h1) -> NODE(j1) -> NODE(c1) -> NODE(l1));
+			CHAIN(NODE(h1) -> CANDY_NODE(JellyCandy, JellyType::CIRCLE) -> NODE(l1));
+			CHAIN(CANDY_NODE(JellyCandy, JellyType::CIRCLE) -> CANDY_NODE(ColorCandy, 100, 128, 223));
 		});
 
 		ASSERT_TRUE(__EG_OK(g1.layout()));

@@ -35,7 +35,7 @@ struct GraphEasyOption : LayoutOption {
 
 	std::string getLayoutCmdArgs(const std::string& graphName) const;
 
-	LayoutFormat format{LayoutFormat::ASCII};
+	LayoutFormat format{LayoutFormat::BOXART};
 	LayoutOutput output{LayoutOutput::CONSOLE};
 	FlowDir dir{FlowDir::LR};
 	LayoutType type{LayoutType::FREE};

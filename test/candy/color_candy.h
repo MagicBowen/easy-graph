@@ -6,16 +6,16 @@
 
 EG_NS_BEGIN
 
-struct Color : Candy {
-	Color(size_t r, size_t g, size_t b)
+struct ColorCandy : Candy {
+	ColorCandy(size_t r, size_t g, size_t b)
 	: rgb{r, g, b}{
 	}
 
 	std::string getLabel() const override {
-		return std::string("Color(") +
-				"R:" + std::to_string(rgb[0]) +
-				"G:" + std::to_string(rgb[1]) +
-				"B:" + std::to_string(rgb[2]) +
+		return std::string("Color Candy (") +
+				 "R:" + std::to_string(rgb[0]) +
+				",G:" + std::to_string(rgb[1]) +
+				",B:" + std::to_string(rgb[2]) +
 				")";
 	}
 

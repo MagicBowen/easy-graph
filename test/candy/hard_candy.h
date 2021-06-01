@@ -5,16 +5,16 @@
 
 EG_NS_BEGIN
 
-struct Integer : Candy {
-	Integer(int id = 0) : id(id) {
+struct HardCandy : Candy {
+	HardCandy(int level = 0) : hardLevel(level) {
 	}
 
 	std::string getLabel() const override {
-		return std::to_string(id);
+		return std::string("Hard Candy (Level:") + std::to_string(hardLevel) + ")";
 	}
 
 private:
-	int id;
+	int hardLevel;
 };
 
 EG_NS_END
