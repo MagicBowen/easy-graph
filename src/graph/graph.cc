@@ -35,8 +35,8 @@ const Node* Graph::findNode(const NodeId& id) const {
 
 void Graph::accept(GraphVisitor& visitor) const {
 	visitor.visit(*this);
-	std::for_each(nodes.begin(), nodes.end(), [&visitor](auto& node){visitor.visit(node.second);});
-	std::for_each(edges.begin(), edges.end(), [&visitor](auto edge){visitor.visit(edge);});
+	std::for_each(nodes.begin(), nodes.end(), [&visitor](const auto& node){visitor.visit(node.second);});
+	std::for_each(edges.begin(), edges.end(), [&visitor](const auto& edge){visitor.visit(edge);});
 }
 
 Status Graph::layout(const LayoutOption* option) const {

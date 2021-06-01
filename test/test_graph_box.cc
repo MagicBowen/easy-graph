@@ -10,7 +10,7 @@
 
 USING_EG_NS
 
-FIXTURE(GraphLayoutTest) {
+FIXTURE(GraphBoxTest) {
 	GraphEasyExecutor executor;
 
 	BEFORE {
@@ -19,16 +19,24 @@ FIXTURE(GraphLayoutTest) {
 
 	TEST("should layout candy graph success") {
 		GRAPH(g1) {
+			CHAIN(Node("a") -> Node("b"));
+		});
+
+		GRAPH(g2) {
+			CHAIN(Node("a") -> Node("b") -> Node("c"));
+		});
+
+		GRAPH(graph) {
 			Node h1{CANDY(HardCandy, 1)};
 			Node j1{CANDY(JellyCandy, JellyType::TRIANGLE)};
 			Node c1{CANDY(ColorCandy, 100, 128, 223)};
-			Node l1{CANDY(ToffeeCandy, "Dove")};
+			Node l1{CANDY(ToffeeCandy, "Dove"), g1};
 
-			CHAIN(NODE(h1) -> NODE(j1) -> NODE(c1) -> NODE(l1));
-			CHAIN(NODE(h1) -> CANDY_NODE(JellyCandy, JellyType::CIRCLE) -> NODE(l1));
-			CHAIN(CANDY_NODE(JellyCandy, JellyType::CIRCLE) -> CANDY_NODE(ColorCandy, 100, 128, 223));
+			CHAIN(Node(h1) -> Node(j1) -> Node(CANDY(ColorCandy, 100, 128, 223), g1, g2) -> Node(l1));
+			CHAIN(Node(h1) -> Node(CANDY(JellyCandy, JellyType::CIRCLE)) -> Node(l1));
+			CHAIN(Node(CANDY(JellyCandy, JellyType::CIRCLE)) -> Node(CANDY(ColorCandy, 100, 128, 223)));
 		});
 
-		ASSERT_TRUE(__EG_OK(g1.layout()));
+		ASSERT_TRUE(__EG_OK(graph.layout()));
 	}
 };

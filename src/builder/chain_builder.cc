@@ -25,7 +25,7 @@ ChainBuilder::LinkBuilder::LinkBuilder(ChainBuilder& chain, EdgeType defaultEdge
 : chain(chain), defaultEdgeType(defaultEdgeType), fromLink(defaultEdgeType){
 }
 
-ChainBuilder& ChainBuilder::LinkBuilder::NODE(const Node& node) {
+ChainBuilder& ChainBuilder::LinkBuilder::Node(const NodeObj& node) {
 	chain.linkTo(node, fromLink);
 	fromLink.reset(defaultEdgeType);
 	return chain;
@@ -36,15 +36,15 @@ ChainBuilder& ChainBuilder::LinkBuilder::startLink(const Link& link) {
 	return chain;
 }
 
-ChainBuilder& ChainBuilder::LinkBuilder::CTRL(const std::string& label) {
+ChainBuilder& ChainBuilder::LinkBuilder::Ctrl(const std::string& label) {
 	return this->startLink(Link(EdgeType::CTRL_EDGE, label, UNDEFINED_PORT_ID, UNDEFINED_PORT_ID));
 }
 
-ChainBuilder& ChainBuilder::LinkBuilder::DATA(const std::string& label) {
+ChainBuilder& ChainBuilder::LinkBuilder::Data(const std::string& label) {
 	return this->startLink(Link(EdgeType::DATA_EDGE, label, UNDEFINED_PORT_ID, UNDEFINED_PORT_ID));
 }
 
-ChainBuilder& ChainBuilder::LinkBuilder::DATA(PortId srcPort, PortId dstPort, const std::string& label) {
+ChainBuilder& ChainBuilder::LinkBuilder::Data(PortId srcPort, PortId dstPort, const std::string& label) {
 	return this->startLink(Link(EdgeType::DATA_EDGE, label, srcPort, dstPort));
 }
 

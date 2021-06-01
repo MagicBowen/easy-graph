@@ -44,8 +44,8 @@ namespace {
 		}
 
 		std::string getLayout() const {
-			std::string srcNodeLayout = getNodeLayout(edge.getSrc().getNode(), ctxt);
-			std::string dstNodeLayout = getNodeLayout(edge.getDst().getNode(), ctxt);
+			std::string srcNodeLayout = getNodeLayout(edge.getSrcNode(), ctxt);
+			std::string dstNodeLayout = getNodeLayout(edge.getDstNode(), ctxt);
 			return srcNodeLayout + getArrowLayout() + getAttrLayout() + dstNodeLayout;
 		}
 
@@ -85,7 +85,7 @@ namespace {
 
 	private:
 		std::string getPortPair() const {
-			return std::string("(")+ std::to_string(edge.getSrc().getPortId()) + "," + std::to_string(edge.getDst().getPortId()) + ")";
+			return std::string("(")+ std::to_string(edge.getSrcPortId()) + "," + std::to_string(edge.getDstPortId()) + ")";
 		}
 
 		std::string getLabelAttr() const {
@@ -97,11 +97,11 @@ namespace {
 		}
 
 		std::string getOutPortAttr() const {
-			return std::string(" start : ") + "front" + ", " + std::to_string(edge.getSrc().getPortId() * options.scale) + "; ";
+			return std::string(" start : ") + "front" + ", " + std::to_string(edge.getSrcPortId() * options.scale) + "; ";
 		}
 
 		std::string getInPortAttr() const {
-			return std::string(" end : ") + "back" + ", " + std::to_string(edge.getDst().getPortId() * options.scale) + "; ";
+			return std::string(" end : ") + "back" + ", " + std::to_string(edge.getDstPortId() * options.scale) + "; ";
 		}
 	};
 }

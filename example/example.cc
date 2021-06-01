@@ -27,7 +27,7 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g1) {
-		CHAIN(NODE("a") -> NODE("b") -> NODE("c") -> NODE("d") -> NODE("e"));
+		CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e"));
 	});
 
 	g1.layout();
@@ -37,8 +37,8 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g2) {
-		CHAIN(NODE("a") -> CTRL("omit") -> NODE("b") -> NODE("c") -> DATA("copy") -> NODE("d") -> NODE("e"));
-		CHAIN(NODE("a") -> CTRL("condition") -> NODE("c"));
+		CHAIN(Node("a") -> Ctrl("omit") -> Node("b") -> Node("c") -> Data("copy") -> Node("d") -> Node("e"));
+		CHAIN(Node("a") -> Ctrl("condition") -> Node("c"));
 	});
 
 	g2.layout();
@@ -50,9 +50,9 @@ int main() {
 	GRAPH(g3) {
 		Node a("a"), b("b"), c("c");
 
-		DATA_CHAIN(NODE(a) -> NODE(b) -> NODE(c) -> NODE("d") -> NODE("e"));
-		CTRL_CHAIN(NODE(a) -> NODE("e"));
-		DATA_CHAIN(NODE(b) -> NODE("d"));
+		DATA_CHAIN(Node(a) -> Node(b) -> Node(c) -> Node("d") -> Node("e"));
+		DATA_CHAIN(Node(a) -> Node("e"));
+		DATA_CHAIN(Node(b) -> Node("d"));
 	});
 
 	g3.layout();
@@ -62,11 +62,11 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g4) {
-		CHAIN(NODE("a") -> NODE("b") -> NODE("d") -> NODE("f"));
-		CHAIN(NODE("a") -> NODE("c") -> NODE("e") -> NODE("f"));
-		CHAIN(NODE("a") -> NODE("d") -> NODE("e"));
-		CHAIN(NODE("a") -> NODE("e"));
-		CHAIN(NODE("a") -> NODE("f"));
+		CHAIN(Node("a") -> Node("b") -> Node("d") -> Node("f"));
+		CHAIN(Node("a") -> Node("c") -> Node("e") -> Node("f"));
+		CHAIN(Node("a") -> Node("d") -> Node("e"));
+		CHAIN(Node("a") -> Node("e"));
+		CHAIN(Node("a") -> Node("f"));
 	});
 
 	g4.layout();
@@ -76,11 +76,11 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g5) {
-		CHAIN(NODE("a") -> DATA("to") -> NODE("b") -> CTRL("condition") -> NODE("c") -> NODE("d") -> DATA(1, 1) -> NODE("e"));
-		CHAIN(NODE("a") -> DATA(0, 1) -> NODE("c") -> CTRL() -> NODE("e"));
-		CHAIN(NODE("a") -> DATA(1, 0) -> NODE("d"));
-		CHAIN(NODE("b") -> NODE("e"));
-		CHAIN(NODE("c") -> NODE("e"));
+		CHAIN(Node("a") -> Data("to") -> Node("b") -> Ctrl("condition") -> Node("c") -> Node("d") -> Data(1, 1) -> Node("e"));
+		CHAIN(Node("a") -> Data(0, 1) -> Node("c") -> Ctrl() -> Node("e"));
+		CHAIN(Node("a") -> Data(1, 0) -> Node("d"));
+		CHAIN(Node("b") -> Node("e"));
+		CHAIN(Node("c") -> Node("e"));
 	});
 
 	g5.layout();
@@ -90,20 +90,20 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(Cond) {
-		CTRL_CHAIN(NODE("a") -> NODE("b"));
+		CTRL_CHAIN(Node("a") -> Node("b"));
 	});
 
 	GRAPH(Body) {
-		CHAIN(NODE("a") -> NODE("b") -> NODE("c"));
+		CHAIN(Node("a") -> Node("b") -> Node("c"));
 	});
 
 	GRAPH(graph) {
 		Node loop("loop", Cond, Body);
 		Node foreach("foreach", Cond, Body);
-		DATA_CHAIN(NODE("const_1") -> NODE(loop) -> NODE("unique") -> NODE("softmax"));
-		DATA_CHAIN(NODE("const_2") -> NODE("while", Cond, Body));
-		CTRL_CHAIN(NODE("case") -> NODE("unique"));
-		CTRL_CHAIN(NODE(loop) -> NODE(foreach));
+		DATA_CHAIN(Node("const_1") -> Node(loop) -> Node("unique") -> Node("softmax"));
+		DATA_CHAIN(Node("const_2") -> Node("while", Cond, Body));
+		CTRL_CHAIN(Node("case") -> Node("unique"));
+		CTRL_CHAIN(Node(loop) -> Node(foreach));
 	});
 
 	graph.layout();

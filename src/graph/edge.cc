@@ -31,12 +31,29 @@ std::string Edge::getLabel() const {
 	return label;
 }
 
-const NodePort& Edge::getSrc() const {
-	return src;
+const Node& Edge::getSrcNode() const {
+	return src.getNode();
 }
 
-const NodePort& Edge::getDst() const {
-	return dst;
+const Node& Edge::getDstNode() const {
+	return dst.getNode();
 }
+
+NodeId Edge::getSrcNodeId() const {
+	return getSrcNode().getId();
+}
+
+NodeId Edge::getDstNodeId() const {
+	return getDstNode().getId();
+}
+
+PortId Edge::getSrcPortId() const {
+	return src.getPortId();
+}
+
+PortId Edge::getDstPortId() const {
+	return dst.getPortId();
+}
+
 
 EG_NS_END

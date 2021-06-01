@@ -3,13 +3,13 @@
 
 #include "easy_graph/graph/node_id.h"
 #include "easy_graph/infra/operator.h"
+#include "easy_graph/graph/box.h"
 #include <vector>
 
 EG_NS_BEGIN
 
 struct Graph;
 struct GraphVisitor;
-struct Box;
 
 struct Node
 {
@@ -21,9 +21,24 @@ struct Node
 	: id(id), subgraphs{&graphs...}{
     }
 
+    template<typename ...GRAPHS>
+    Node(const Box& box, const GRAPHS&... graphs)
+	: id(box.getId()), box(&box), subgraphs{&graphs...}{
+    }
+
     __DECL_COMP(Node);
 
     NodeId getId() const;
+
+    void packing(const Box& box) {
+    	this->box = &box;
+    }
+
+    template<typename CONTENT>
+    const CONTENT* unpacking() {
+    	return dynamic_cast<const CONTENT*>(box);
+    }
+
 
     bool hasSubgraph() const;
     void addSubgraph(const Graph&);

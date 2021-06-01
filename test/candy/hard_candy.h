@@ -10,7 +10,7 @@ struct HardCandy : Candy {
 	}
 
 	std::string getLabel() const override {
-		return std::string("Hard Candy (Level:") + std::to_string(hardLevel) + ")";
+		return std::string("Hard Candy <Level:") + std::to_string(hardLevel) + ">";
 	}
 
 private:

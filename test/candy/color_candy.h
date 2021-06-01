@@ -12,11 +12,11 @@ struct ColorCandy : Candy {
 	}
 
 	std::string getLabel() const override {
-		return std::string("Color Candy (") +
+		return std::string("Color Candy <") +
 				 "R:" + std::to_string(rgb[0]) +
 				",G:" + std::to_string(rgb[1]) +
 				",B:" + std::to_string(rgb[2]) +
-				")";
+				">";
 	}
 
 private:

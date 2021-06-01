@@ -10,7 +10,7 @@ struct ToffeeCandy : Candy {
 	}
 
 	std::string getLabel() const override {
-		return std::string("Toffee (Label:") + label + ")";
+		return std::string("Toffee <Label:") + label + ">";
 	}
 
 private:

@@ -23,7 +23,7 @@ struct JellyCandy : Candy {
 		case JellyType::CIRCLE    : jellyType = "Circle"; break;
 		default: jellyType = "None";
 		}
-		return std::string("Jelly (Shape:") + jellyType + ")";
+		return std::string("Jelly <Shape:") + jellyType + ">";
 	}
 
 private:

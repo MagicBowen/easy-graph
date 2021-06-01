@@ -6,7 +6,6 @@
 EG_NS_BEGIN
 
 #define CANDY(TYPE, ...)      BOXING(TYPE, getLabel, __VA_ARGS__)
-#define CANDY_NODE(TYPE, ...) NODE(CANDY(TYPE, __VA_ARGS__))
 
 EG_NS_END
 

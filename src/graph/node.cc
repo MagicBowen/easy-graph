@@ -1,5 +1,4 @@
 #include "easy_graph/graph/node.h"
-#include "easy_graph/graph/box.h"
 #include "easy_graph/graph/graph_visitor.h"
 
 EG_NS_BEGIN
@@ -36,7 +35,7 @@ void Node::addSubgraph(const Graph& graph) {
 }
 
 void Node::accept(GraphVisitor& visitor) const {
-	std::for_each(subgraphs.begin(), subgraphs.end(),  [&visitor](auto graph){visitor.visit(*graph);});
+	std::for_each(subgraphs.begin(), subgraphs.end(),  [&visitor](const auto& graph){visitor.visit(*graph);});
 }
 
 EG_NS_END

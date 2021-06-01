@@ -3,29 +3,38 @@
 
 #include "easy_graph/builder/link.h"
 #include "easy_graph/graph/node_id.h"
+#include "easy_graph/graph/node.h"
 
 EG_NS_BEGIN
 
 struct GraphBuilder;
 struct Graph;
-struct Node;
+struct Box;
 
 struct ChainBuilder {
 	ChainBuilder(GraphBuilder& graphBuilder, EdgeType defaultEdgeType);
 
 	struct LinkBuilder {
+
+		using NodeObj = Node;
+
 		LinkBuilder(ChainBuilder& chain, EdgeType defaultEdgeType);
 
-		ChainBuilder& NODE(const Node& node);
+		ChainBuilder& Node(const NodeObj& node);
 
 		template<typename ...GRAPHS>
-		ChainBuilder& NODE(const NodeId& id, const GRAPHS&... graphs) {
-			return this->NODE(Node(id, graphs...));
+		ChainBuilder& Node(const NodeId& id, const GRAPHS&... graphs) {
+			return this->Node(NodeObj(id, graphs...));
 		}
 
-		ChainBuilder& CTRL(const std::string& label = "");
-		ChainBuilder& DATA(const std::string& label = "");
-		ChainBuilder& DATA(PortId srcId, PortId dstId, const std::string& label = "");
+		template<typename ...GRAPHS>
+		ChainBuilder& Node(const Box& box, const GRAPHS&... graphs) {
+			return this->Node(NodeObj(box, graphs...));
+		}
+
+		ChainBuilder& Ctrl(const std::string& label = "");
+		ChainBuilder& Data(const std::string& label = "");
+		ChainBuilder& Data(PortId srcId, PortId dstId, const std::string& label = "");
 
 	private:
 		ChainBuilder& startLink(const Link& link);
