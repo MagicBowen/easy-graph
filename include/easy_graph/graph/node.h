@@ -3,9 +3,9 @@
 
 #include "easy_graph/graph/node_id.h"
 #include "easy_graph/infra/operator.h"
-#include "easy_graph/graph/box.h"
 #include "easy_graph/infra/ext_traits.h"
 #include <vector>
+#include <any>
 
 EG_NS_BEGIN
 
@@ -18,28 +18,23 @@ struct Node
     Node(const NodeId& id, const GRAPHS&... graphs)
 	: id(id), subgraphs{&graphs...} {
     }
-
+    
     template<typename ...GRAPHS, SUBGRAPH_CONCEPT(GRAPHS, Graph)>
-    Node(const Box& box, const GRAPHS&... graphs)
-	: id(box.getId()), box(&box), subgraphs{&graphs...} {
-    }
-
-    template<typename ...GRAPHS, SUBGRAPH_CONCEPT(GRAPHS, Graph)>
-    Node(const NodeId& id, const Box& box, const GRAPHS&... graphs)
-	: id(id), box(&box), subgraphs{&graphs...} {
+    Node(const NodeId& id, const std::any& any, const GRAPHS&... graphs)
+	: id(id), any(&any), subgraphs{&graphs...} {
     }
 
     __DECL_COMP(Node);
 
     NodeId getId() const;
 
-    void packing(const Box& box) {
-    	this->box = &box;
+    void packing(const std::any& any) {
+    	this->any = any;
     }
 
     template<typename CONTENT>
-    const CONTENT* unpacking() {
-    	return dynamic_cast<const CONTENT*>(box);
+    CONTENT* unpacking() {
+    	return std::any_cast<CONTENT>(&any);
     }
 
     void addSubgraph(const Graph&);
@@ -47,7 +42,7 @@ struct Node
 
 private:
     NodeId id;
-    const Box* box{nullptr};
+    std::any any;
     std::vector<const Graph*> subgraphs;
 };
 

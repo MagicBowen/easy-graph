@@ -4,10 +4,10 @@
 ### TODO
 
 - [x]: example project
+- [ ]: any shared ptr?
+- [ ]: link node with already existed node
 - [ ]: test project and test injection
 - [ ]: test scenario design
-- [ ]: support box in node with subgraph
-- [ ]: support edge with more information
 
 ### Cli Usage
 

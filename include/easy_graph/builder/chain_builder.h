@@ -9,7 +9,6 @@ EG_NS_BEGIN
 
 struct GraphBuilder;
 struct Graph;
-struct Box;
 
 struct ChainBuilder {
 	ChainBuilder(GraphBuilder& graphBuilder, EdgeType defaultEdgeType);
