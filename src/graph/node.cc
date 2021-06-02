@@ -17,10 +17,6 @@ NodeId Node::getId() const {
 	return id;
 }
 
-bool Node::hasSubgraph() const {
-	return !subgraphs.empty();
-}
-
 void Node::addSubgraph(const Graph& graph) {
 	subgraphs.push_back(&graph);
 }

@@ -14,10 +14,12 @@ namespace {
 		: id(id), ctxt(ctxt) {
 		}
 		std::string layout;
+		bool hasSubgraph{false};
 
 	private:
 		Status visit(const Graph& graph) override {
 			layout += (std::string(" -- [") + id + "/" + graph.getName() + "]" + "{class : subgraph; label : " + graph.getName() + ";}");
+			hasSubgraph = true;
 			return EG_SUCCESS;
 		}
 	private:
@@ -29,10 +31,10 @@ namespace {
 		const auto& id = node.getId();
 		std::string nodeBox = std::string("[") + id + "]";
 
-		if (!node.hasSubgraph() || ctxt.inLinking()) return nodeBox;
-
 		SubgraphLayoutVisitor subgraphVisitor(id, ctxt);
 		node.accept(subgraphVisitor);
+
+		if (!subgraphVisitor.hasSubgraph || ctxt.inLinking()) return nodeBox;
 
 		return (std::string("( ") + id + ": " + nodeBox + subgraphVisitor.layout + ")");
 	}

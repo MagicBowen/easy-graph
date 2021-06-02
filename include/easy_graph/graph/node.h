@@ -36,10 +36,7 @@ struct Node
     	return dynamic_cast<const CONTENT*>(box);
     }
 
-
-    bool hasSubgraph() const;
     void addSubgraph(const Graph&);
-
     void accept(GraphVisitor&) const;
 
 private:
