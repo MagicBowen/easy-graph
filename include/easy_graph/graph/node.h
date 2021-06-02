@@ -13,17 +13,14 @@ struct GraphVisitor;
 
 struct Node
 {
-	Node(const NodeId& id);
-	Node(const Box& box);
-
     template<typename ...GRAPHS>
     Node(const NodeId& id, const GRAPHS&... graphs)
-	: id(id), subgraphs{&graphs...}{
+	: id(id), subgraphs{&graphs...} {
     }
 
     template<typename ...GRAPHS>
     Node(const Box& box, const GRAPHS&... graphs)
-	: id(box.getId()), box(&box), subgraphs{&graphs...}{
+	: id(box.getId()), box(&box), subgraphs{&graphs...} {
     }
 
     __DECL_COMP(Node);

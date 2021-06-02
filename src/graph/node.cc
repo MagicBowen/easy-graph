@@ -3,15 +3,6 @@
 
 EG_NS_BEGIN
 
-Node::Node(const NodeId& id)
-: id(id){
-}
-
-Node::Node(const Box& box)
-: id(box.getId()), box(&box){
-
-}
-
 __DEF_EQUALS(Node)
 {
 	return id == rhs.id;
