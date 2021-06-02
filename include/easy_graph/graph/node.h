@@ -4,9 +4,8 @@
 #include "easy_graph/graph/node_id.h"
 #include "easy_graph/infra/operator.h"
 #include "easy_graph/graph/box.h"
-#include "easy_graph/infra/all_same.h"
+#include "easy_graph/infra/ext_traits.h"
 #include <vector>
-#include <type_traits>
 
 EG_NS_BEGIN
 
@@ -15,29 +14,17 @@ struct GraphVisitor;
 
 struct Node
 {
-    Node(const NodeId& id)
-	: id(id) {
-    }
-
-    Node(const Box& box)
-	: id(box.getId()), box(&box) {
-    }
-
-    Node(const NodeId& id, const Box& box)
-    : id(id), box(&box) {
-    }
-
-    template<typename ...GRAPHS, ALL_SAME_CONCEPT(GRAPHS, Graph)>
+    template<typename ...GRAPHS, SUBGRAPH_CONCEPT(GRAPHS, Graph)>
     Node(const NodeId& id, const GRAPHS&... graphs)
 	: id(id), subgraphs{&graphs...} {
     }
 
-    template<typename ...GRAPHS, ALL_SAME_CONCEPT(GRAPHS, Graph)>
+    template<typename ...GRAPHS, SUBGRAPH_CONCEPT(GRAPHS, Graph)>
     Node(const Box& box, const GRAPHS&... graphs)
 	: id(box.getId()), box(&box), subgraphs{&graphs...} {
     }
 
-    template<typename ...GRAPHS, ALL_SAME_CONCEPT(GRAPHS, Graph)>
+    template<typename ...GRAPHS, SUBGRAPH_CONCEPT(GRAPHS, Graph)>
     Node(const NodeId& id, const Box& box, const GRAPHS&... graphs)
 	: id(id), box(&box), subgraphs{&graphs...} {
     }
