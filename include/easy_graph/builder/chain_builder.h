@@ -22,14 +22,9 @@ struct ChainBuilder {
 
 		ChainBuilder& Node(const NodeObj& node);
 
-		template<typename ...GRAPHS>
-		ChainBuilder& Node(const NodeId& id, const GRAPHS&... graphs) {
-			return this->Node(NodeObj(id, graphs...));
-		}
-
-		template<typename ...GRAPHS>
-		ChainBuilder& Node(const Box& box, const GRAPHS&... graphs) {
-			return this->Node(NodeObj(box, graphs...));
+		template<typename ...PARAMS>
+		ChainBuilder& Node(const PARAMS&... params) {
+			return this->Node(NodeObj(params...));
 		}
 
 		ChainBuilder& Ctrl(const std::string& label = "");
