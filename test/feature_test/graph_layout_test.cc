@@ -25,15 +25,13 @@ FIXTURE(GraphLayoutTest) {
 
 	TEST("should layout calculator graph success") {
 		GRAPH(calculator) {
-			Node plus("plus", BOX_OF(Plus));
-			Node minus("minus", BOX_OF(Minus));
 			Node i1("2", BOX_OF(Integer, 2));
 			Node i2("5", BOX_OF(Integer, 5));
 
-			CHAIN(Node(i1) -> Node(plus) -> Node(minus) -> Node("div", BOX_OF(Divides)));
-			CHAIN(Node(i2) -> Node(plus));
-			CHAIN(Node("3", BOX_OF(Integer, 3)) -> Node(minus));
-			CHAIN(Node(i1) -> Node("div", BOX_OF(Divides)));
+			CHAIN(Node("2") -> Node("plus", BOX_OF(Plus)) -> Node("minus", BOX_OF(Minus)) -> Node("div", BOX_OF(Divides)));
+			CHAIN(Node("5") -> Node("plus"));
+			CHAIN(Node("3", BOX_OF(Integer, 3)) -> Node("minus"));
+			CHAIN(Node("2") -> Node("div"));
 		});
 
 		ASSERT_TRUE(__EG_OK(calculator.layout()));
@@ -49,12 +47,11 @@ FIXTURE(GraphLayoutTest) {
 		});
 
 		GRAPH(candy) {
-			Node dove{"dove", BOX_OF(ToffeeCandy, "Dove")};
 			Node jelly{"jelly",  BOX_OF(JellyCandy, JellyCandy::CIRCLE), c1, c2};
 			Node rainbow{"rainbow", BOX_OF(ColorCandy, 3, 2, 1)};
 
-			CHAIN(Node(dove) -> Node(jelly) -> Node("sweet", BOX_OF(HardCandy, 3)));
-			CHAIN(Node(dove) -> Node(rainbow) -> Node("toffee", BOX_OF(ToffeeCandy, "Haribo"), c2, c1));
+			CHAIN(Node("dove", BOX_OF(ToffeeCandy, "Dove")) -> Node(jelly) -> Node("sweet", BOX_OF(HardCandy, 3)));
+			CHAIN(Node("dove") -> Node(rainbow) -> Node("toffee", BOX_OF(ToffeeCandy, "Haribo"), c2, c1));
 		});
 
 		ASSERT_TRUE(__EG_OK(c1.layout()));

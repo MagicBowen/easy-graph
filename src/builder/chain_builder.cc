@@ -21,6 +21,10 @@ ChainBuilder& ChainBuilder::linkTo(const Node& node, const Link& link) {
 	return *this;
 }
 
+const Node* ChainBuilder::findNode(const NodeId& id) const {
+	return graphBuilder->findNode(id);
+}
+
 ChainBuilder::LinkBuilder::LinkBuilder(ChainBuilder& chain, EdgeType defaultEdgeType)
 : chain(chain), defaultEdgeType(defaultEdgeType), fromLink(defaultEdgeType){
 }

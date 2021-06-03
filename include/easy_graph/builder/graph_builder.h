@@ -12,7 +12,26 @@ struct GraphBuilder {
 
 	Node*  buildNode(const Node&);
 	void   buildEdge(const Node& src, const Node& dst, const Link&);
-	Graph& buildGraphDone();
+
+	Graph& operator*()
+    {
+        return graph;
+    }
+
+    const Graph& operator*() const
+    {
+        return graph;
+    }
+
+    Graph* operator->()
+    {
+        return &graph;
+    }
+
+    const Graph* operator->() const
+    {
+        return &graph;
+    }
 
 private:
 	struct NodeInfo {

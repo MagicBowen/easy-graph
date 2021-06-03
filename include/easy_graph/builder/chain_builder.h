@@ -22,8 +22,12 @@ struct ChainBuilder {
 		ChainBuilder& Node(const NodeObj& node);
 
 		template<typename ...PARAMS>
-		ChainBuilder& Node(const PARAMS&... params) {
-			return this->Node(NodeObj(params...));
+		ChainBuilder& Node(const NodeId& id, const PARAMS&... params) {
+			auto node = chain.findNode(id);
+			if (node) {
+				return this->Node(*node);
+			}
+			return this->Node(NodeObj(id, params...));
 		}
 
 		ChainBuilder& Ctrl(const std::string& label = "");
@@ -43,6 +47,7 @@ struct ChainBuilder {
 
 private:
 	ChainBuilder& linkTo(const Node&, const Link&);
+	const Node* findNode(const NodeId& id) const;
 
 private:
 	Node* prevNode{nullptr};

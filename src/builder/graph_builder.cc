@@ -18,10 +18,6 @@ GraphBuilder::GraphBuilder(const std::string& name)
 : graph(name) {
 }
 
-Graph& GraphBuilder::buildGraphDone() {
-	return this->graph;
-}
-
 GraphBuilder::NodeInfo* GraphBuilder::findNode(const NodeId& id) {
 	auto it = nodes.find(id);
 	if (it == nodes.end()) {
@@ -35,7 +31,10 @@ const GraphBuilder::NodeInfo* GraphBuilder::findNode(const NodeId& id) const {
 }
 
 Node* GraphBuilder::buildNode(const Node& node) {
-	nodes.emplace(std::make_pair(node.getId(), NodeInfo()));
+	auto it = nodes.find(node.getId());
+	if (it == nodes.end()) {
+		nodes.emplace(std::make_pair(node.getId(), NodeInfo()));
+	}
 	return graph.addNode(node);
 }
 

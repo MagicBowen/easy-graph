@@ -12,7 +12,7 @@ namespace detail {
 	Graph build_graph(const char* name, GRAPH_BUILDER builderInDSL) {
 		GraphBuilder builder(name);
 		builderInDSL(builder);
-		return std::move(builder.buildGraphDone());
+		return std::move(*builder);
 	}
 }
 

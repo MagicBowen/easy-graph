@@ -13,6 +13,9 @@ std::string Graph::getName() const {
 }
 
 Node* Graph::addNode(const Node& node) {
+	auto existed = findNode(node.getId());
+	if (existed) return existed;
+
 	nodes.emplace(std::make_pair(node.getId(), node));
 	return findNode(node.getId());
 }
