@@ -107,7 +107,7 @@ namespace {
 	};
 }
 
-FIXTURE(GraphBuildTest) {
+FIXTURE(GraphAssertTest) {
 	TEST("should build graph success") {
 
 		GRAPH(g1) {

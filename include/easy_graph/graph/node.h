@@ -4,13 +4,13 @@
 #include "easy_graph/graph/node_id.h"
 #include "easy_graph/infra/operator.h"
 #include "easy_graph/infra/ext_traits.h"
+#include "easy_graph/graph/box.h"
 #include <vector>
-#include <any>
 
 EG_NS_BEGIN
 
-struct Graph;
 struct GraphVisitor;
+struct Graph;
 
 struct Node
 {
@@ -20,21 +20,20 @@ struct Node
     }
     
     template<typename ...GRAPHS, SUBGRAPH_CONCEPT(GRAPHS, Graph)>
-    Node(const NodeId& id, const std::any& any, const GRAPHS&... graphs)
-	: id(id), any(&any), subgraphs{&graphs...} {
+    Node(const NodeId& id, const BoxPtr& box, const GRAPHS&... graphs)
+	: id(id), box(box), subgraphs{&graphs...} {
     }
 
     __DECL_COMP(Node);
 
     NodeId getId() const;
 
-    void packing(const std::any& any) {
-    	this->any = any;
-    }
+    void packing(const BoxPtr& box);
 
-    template<typename CONTENT>
-    CONTENT* unpacking() {
-    	return std::any_cast<CONTENT>(&any);
+    template<typename Anything>
+    Anything* unpacking() const {
+    	if(!box) return nullptr;
+    	return box_unpacking<Anything>(box);
     }
 
     void addSubgraph(const Graph&);
@@ -42,7 +41,7 @@ struct Node
 
 private:
     NodeId id;
-    std::any any;
+    BoxPtr box;
     std::vector<const Graph*> subgraphs;
 };
 

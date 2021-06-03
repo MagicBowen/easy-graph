@@ -4,10 +4,11 @@
 ### TODO
 
 - [x]: example project
-- [ ]: any shared ptr?
+- [x]: box as shared ptr
 - [ ]: link node with already existed node
+- [ ]: graph with name
 - [ ]: test project and test injection
-- [ ]: test scenario design
+- [ ]: assertion visitor
 
 ### Cli Usage
 

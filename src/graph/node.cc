@@ -17,6 +17,10 @@ NodeId Node::getId() const {
 	return id;
 }
 
+void Node::packing(const BoxPtr& box) {
+	this->box = box;
+}
+
 void Node::addSubgraph(const Graph& graph) {
 	subgraphs.push_back(&graph);
 }
