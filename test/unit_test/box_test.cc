@@ -9,30 +9,25 @@
 EG_NS_BEGIN
 
 FIXTURE(BoxTest) {
-	TEST("box packing and unpacking") {
+	TEST("box unpacking nothing") {
 		auto box = box_packing<Integer>(5);
-
 		auto nonething = box_unpacking<Plus>(box);
 		ASSERT_FALSE(nonething);
-
-		auto anything = box_unpacking<Integer>(box);
-		ASSERT_TRUE(anything);
-		ASSERT_EQ(5, anything->getValue());
 	}
 
-	TEST("box_of subclass") {
-		auto box = BOX_OF(Integer, 3);
+	TEST("box unpacking something") {
+		auto box = box_packing<Integer>(5);
+		auto something = box_unpacking<Integer>(box);
 
-		auto anything = box_unpacking<Integer>(box);
-		ASSERT_TRUE(anything);
-		ASSERT_EQ(3, anything->getValue());
+		ASSERT_TRUE(something);
+		ASSERT_EQ(5, something->getValue());
 	}
 
-	TEST("box_of any class") {
+	TEST("box unpacking interface") {
 		auto box = BOX_OF(JellyCandy, JellyCandy::CIRCLE);
-		auto anything = box_unpacking<Candy>(box);
-		ASSERT_TRUE(anything);
-		ASSERT_EQ(std::string("Jelly (Shape:Circle)"), anything->getLabel());
+		auto candy = box_unpacking<Candy>(box);
+		ASSERT_TRUE(candy);
+		ASSERT_EQ(std::string("Jelly (Shape:Circle)"), candy->getLabel());
 	}
 };
 
