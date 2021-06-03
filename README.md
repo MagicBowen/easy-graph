@@ -5,9 +5,9 @@
 
 - [x]: example project
 - [x]: box as shared ptr
-- [ ]: link node with already existed node
+- [x]: test project and test injection
+- [x]: link node with already existed node
 - [ ]: graph with name
-- [ ]: test project and test injection
 - [ ]: assertion visitor
 
 ### Cli Usage
