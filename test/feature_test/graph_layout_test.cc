@@ -6,7 +6,7 @@
 #include "anything/calculator.h"
 #include "anything/candy.h"
 
-EG_NS_BEGIN
+USING_EG_NS
 
 FIXTURE(GraphLayoutTest) {
 	GraphEasyExecutor executor;
@@ -37,11 +37,11 @@ FIXTURE(GraphLayoutTest) {
 	}
 
 	TEST("should layout candy graph success") {
-		GRAPH(c1) {
+		GRAPH(c1, "dove candy") {
 			CHAIN(Node("dove", BOX_OF(ToffeeCandy, "Dove")) -> Node("sweet", BOX_OF(HardCandy, 5)));
 		});
 
-		GRAPH(c2) {
+		GRAPH(c2, "circle candy") {
 			CHAIN(Node("circle", BOX_OF(JellyCandy, JellyCandy::CIRCLE)) -> Node("rainbow", BOX_OF(ColorCandy, 3, 2, 1)));
 		});
 
@@ -58,5 +58,3 @@ FIXTURE(GraphLayoutTest) {
 		ASSERT_TRUE(__EG_OK(candy.layout()));
 	}
 };
-
-EG_NS_END

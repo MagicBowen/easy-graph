@@ -1,12 +1,9 @@
-#ifndef H9121AF36_31A3_4E9C_957D_F41FF81BE7E3
-#define H9121AF36_31A3_4E9C_957D_F41FF81BE7E3
-
 #include <cctest/cctest.h>
 #include "easy_graph/builder/box_builder.h"
 #include "anything/calculator.h"
 #include "anything/candy.h"
 
-EG_NS_BEGIN
+USING_EG_NS
 
 FIXTURE(BoxTest) {
 	TEST("box unpacking nothing") {
@@ -30,7 +27,3 @@ FIXTURE(BoxTest) {
 		ASSERT_EQ(std::string("Jelly (Shape:Circle)"), candy->getLabel());
 	}
 };
-
-EG_NS_END
-
-#endif

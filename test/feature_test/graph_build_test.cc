@@ -2,7 +2,7 @@
 #include "easy_graph/builder/graph_dsl.h"
 #include "anything/calculator.h"
 
-EG_NS_BEGIN
+USING_EG_NS
 
 FIXTURE(GraphBuildTest) {
 
@@ -68,5 +68,3 @@ FIXTURE(GraphBuildTest) {
 		ASSERT_EQ(Integer(2), (*op)(*i1, *i2));
 	}
 };
-
-EG_NS_END

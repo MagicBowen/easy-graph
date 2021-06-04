@@ -89,11 +89,11 @@ int main() {
 	///  node with subgraphs
 	/////////////////////////////////////////////////
 
-	GRAPH(Cond) {
+	GRAPH(Cond, "condition") {
 		CTRL_CHAIN(Node("a") -> Node("b"));
 	});
 
-	GRAPH(Body) {
+	GRAPH(Body, "loop body") {
 		CHAIN(Node("a") -> Node("b") -> Node("c"));
 	});
 
