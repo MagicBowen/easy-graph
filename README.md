@@ -1,14 +1,26 @@
 
 ## Easy Graph
 
+
 ### TODO
 
-- [x]: example project
-- [x]: box as shared ptr
-- [x]: test project and test injection
-- [x]: link node with already existed node
-- [ ]: graph with name
-- [ ]: assertion visitor
+- [ ]: assert visitor and dsl
+- [ ]: node attributes
+- [ ]: user defined edge type and attributes
+- [ ]: readme && usage
+
+### layout
+
+```sh
+cpan install Graph::Easy
+```
+
+```sh
+echo "[a]->[b]->[c]->[d][b]->{ start: right, 0; }[e],[d]"|graph-easy
+```
+
+- http://bloodgate.com/perl/graph/manual/
+- https://metacpan.org/pod/Graph::Easy
 
 ### Cli Usage
 

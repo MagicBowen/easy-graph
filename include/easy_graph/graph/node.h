@@ -28,7 +28,7 @@ struct Node
 
     NodeId getId() const;
 
-    void packing(const BoxPtr& box);
+    Node& packing(const BoxPtr& box);
 
     template<typename Anything>
     Anything* unpacking() const {
@@ -36,7 +36,7 @@ struct Node
     	return box_unpacking<Anything>(box);
     }
 
-    void addSubgraph(const Graph&);
+    Node& addSubgraph(const Graph&);
     void accept(GraphVisitor&) const;
 
 private:

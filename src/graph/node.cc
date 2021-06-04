@@ -17,12 +17,14 @@ NodeId Node::getId() const {
 	return id;
 }
 
-void Node::packing(const BoxPtr& box) {
+Node& Node::packing(const BoxPtr& box) {
 	this->box = box;
+	return *this;
 }
 
-void Node::addSubgraph(const Graph& graph) {
+Node& Node::addSubgraph(const Graph& graph) {
 	subgraphs.push_back(&graph);
+	return *this;
 }
 
 void Node::accept(GraphVisitor& visitor) const {
