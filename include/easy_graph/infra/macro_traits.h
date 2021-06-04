@@ -43,6 +43,8 @@ EG_NS_BEGIN
 #define MACRO_CONDITION_1(true_branch, false_branch)  true_branch
 #define MACRO_CONDITION(N) MACRO_CONCAT(MACRO_CONDITION_, MACRO_BOOL(N))
 
+#define NOT_EMPTY_SELECT(...)   MACRO_CONDITION(VA_ARGS_NUM(__VA_ARGS__))
+
 EG_NS_END
 
 #endif
