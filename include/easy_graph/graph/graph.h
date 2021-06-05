@@ -20,7 +20,7 @@ struct Graph
 	std::string getName() const;
 
 	Node* addNode(const Node&);
-	void  addEdge(const Edge&);
+	Edge* addEdge(const Edge&);
 
 	Node* findNode(const NodeId&);
 	const Node* findNode(const NodeId&) const;

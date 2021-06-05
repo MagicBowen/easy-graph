@@ -38,13 +38,13 @@ Node* GraphBuilder::buildNode(const Node& node) {
 	return graph.addNode(node);
 }
 
-void GraphBuilder::buildEdge(const Node& src, const Node& dst, const Link& link) {
+Edge* GraphBuilder::buildEdge(const Node& src, const Node& dst, const Link& link) {
 	NodeInfo* srcInfo = findNode(src.getId());
 	NodeInfo* dstInfo = findNode(dst.getId());
 
 	if(!srcInfo || !dstInfo) {
 		EG_ERR("link edge{%d : %s} error!", link.type, link.label.c_str());
-		return;
+		return nullptr;
 	}
 
 	PortId srcPortId = getPortIdBy(link.type, link.srcPortId, srcInfo->outPortMax);

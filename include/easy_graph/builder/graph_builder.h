@@ -11,7 +11,7 @@ struct GraphBuilder {
 	GraphBuilder(const std::string& name);
 
 	Node*  buildNode(const Node&);
-	void   buildEdge(const Node& src, const Node& dst, const Link&);
+	Edge*  buildEdge(const Node& src, const Node& dst, const Link&);
 
 	Graph& operator*()
     {

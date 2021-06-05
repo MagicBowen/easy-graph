@@ -13,15 +13,13 @@ std::string Graph::getName() const {
 }
 
 Node* Graph::addNode(const Node& node) {
-	auto existed = findNode(node.getId());
-	if (existed) return existed;
-
-	nodes.emplace(std::make_pair(node.getId(), node));
-	return findNode(node.getId());
+	auto result = nodes.emplace(node.getId(), node);
+	return &(result.first->second);
 }
 
-void Graph::addEdge(const Edge& edge) {
-	edges.emplace(edge);
+Edge* Graph::addEdge(const Edge& edge) {
+	auto result = edges.emplace(edge);
+	return &(const_cast<Edge&>(*(result.first)));
 }
 
 Node* Graph::findNode(const NodeId& id) {
