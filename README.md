@@ -5,6 +5,7 @@
 ### TODO
 
 - [ ]: assert visitor and dsl
+- [ ]: use correct rvalue and emplace
 - [ ]: node attributes
 - [ ]: user defined edge type and attributes
 - [ ]: readme && usage
