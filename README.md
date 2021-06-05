@@ -1,23 +1,22 @@
 
 ## Easy Graph
 
+Easy graph is a C++ library for describing graph topology and attributes by DSL;
+It support layouting the graph in console using `Graph-Easy` module of perl;
+It also support asserting the graph topology and attributes.
 
-### TODO
+### Layout preparing
 
-- [ ]: assert visitor and dsl
-- [ ]: use correct rvalue and emplace
-- [ ]: node attributes
-- [ ]: user defined edge type and attributes
-- [ ]: readme && usage
-
-### layout
+Intall `Graph::Easy` module of perl for graph layout.
 
 ```sh
+# install Graph::Easy by cpan which pre-installed in Ubuntu or MacOS
 cpan install Graph::Easy
 ```
 
 ```sh
-echo "[a]->[b]->[c]->[d][b]->{ start: right, 0; }[e],[d]"|graph-easy
+# test graph-easy
+echo "[a]->[b]->[c]->[d][b]->{ start: right, 0; }[e],[d]" | graph-easy
 ```
 
 - http://bloodgate.com/perl/graph/manual/
@@ -28,11 +27,11 @@ echo "[a]->[b]->[c]->[d][b]->{ start: right, 0; }[e],[d]"|graph-easy
 ```sh
 $ chmod a+x ./ccup.sh
 
-# start project from docker env
-# make sure docker is pre-installed on the system.
-./ccup.sh -e
+# help
+./ccup.sh -h
 
-# update depends and execute cmake generating
+# update dependents
+# cmake generating
 ./ccup.sh -u
 
 # build
@@ -40,6 +39,9 @@ $ chmod a+x ./ccup.sh
 
 # update & build
 ./ccup.sh -ub
+
+# run example
+./ccup.sh -r
 
 # run tests
 ./ccup.sh -t
@@ -50,24 +52,15 @@ $ chmod a+x ./ccup.sh
 # update & build & test
 ./ccup.sh -ubt
 
-# run executable
-./ccup.sh -r
-
-# install
-./ccup.sh -i
-
-# build & install
-./ccup.sh -bi
-
-# update & build & install
-./ccup.sh -ubi
-
 # clean build
 ./ccup.sh -c
 
 # clean all
 ./ccup.sh -C
-
-# help
-./ccup.sh -h
 ```
+
+### TODO
+
+- [ ]: support assertion dsl for graph;
+- [ ]: support set attributes on graph, node or edge;
+- [ ]: support user specified edge type;

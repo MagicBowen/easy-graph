@@ -17,6 +17,7 @@ struct GraphEasyLayoutContext {
 
 	void linkBegin();
 	void linkEnd();
+
 	bool inLinking() const;
 
 	std::string getGroupPath() const;
