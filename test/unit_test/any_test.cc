@@ -24,18 +24,26 @@ namespace {
 }
 
 FIXTURE(AnyTest) {
-	TEST("basic features") {
+	TEST("uninitialized any has no value") {
 		std::any any ;
 		ASSERT_FALSE(any.has_value());
+	}
 
-		any = LabelType("test");
+	TEST("initialized any has correct value type") {
+		std::any any = LabelType("test");
 		ASSERT_TRUE(any.has_value());
 		ASSERT_TRUE(typeid(LabelType) == any.type());
+	}
 
+	TEST("should cast any to value in it") {
+		std::any any = LabelType("test");
 		Base* lt = std::any_cast<LabelType>(&any);
 		ASSERT_TRUE(lt);
 		ASSERT_EQ(std::string("test"), lt->getType());
+	}
 
+	TEST("should not cast any to the supper class value of which in it") {
+		std::any any = LabelType("test");
 		Base* lb = std::any_cast<Base>(&any);
 		ASSERT_FALSE(lb);
 	}
