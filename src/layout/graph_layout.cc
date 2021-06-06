@@ -4,7 +4,7 @@
 
 EG_NS_BEGIN
 
-void GraphLayout::config(layoutExecutor& executor, const LayoutOption* opts) {
+void GraphLayout::config(LayoutExecutor& executor, const LayoutOption* opts) {
 	this->executor = &executor;
 	options = opts;
 }

@@ -6,16 +6,16 @@
 
 EG_NS_BEGIN
 
-struct layoutExecutor;
+struct LayoutExecutor;
 struct LayoutOption;
 struct Graph;
 
 SINGLETON(GraphLayout) {
-	void config(layoutExecutor&, const LayoutOption* = nullptr);
+	void config(LayoutExecutor&, const LayoutOption* = nullptr);
 	Status layout(const Graph&, const LayoutOption* = nullptr);
 
 private:
-	layoutExecutor* executor{nullptr};
+	LayoutExecutor* executor{nullptr};
 	const LayoutOption* options{nullptr};
 };
 

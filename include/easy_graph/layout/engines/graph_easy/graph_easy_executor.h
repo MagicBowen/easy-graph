@@ -5,7 +5,7 @@
 
 EG_NS_BEGIN
 
-struct GraphEasyExecutor : layoutExecutor {
+struct GraphEasyExecutor : LayoutExecutor {
 private:
 	Status layout(const Graph&, const LayoutOption*) override;
 };

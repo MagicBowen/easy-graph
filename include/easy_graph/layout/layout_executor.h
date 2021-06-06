@@ -9,7 +9,7 @@ EG_NS_BEGIN
 struct Graph;
 struct LayoutOption;
 
-INTERFACE(layoutExecutor) {
+INTERFACE(LayoutExecutor) {
 	ABSTRACT(Status layout(const Graph&, const LayoutOption*));
 };
 
