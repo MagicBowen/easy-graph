@@ -2,20 +2,23 @@
 #include "easy_graph/builder/graph_dsl.h"
 #include "assertion/graph_assert.h"
 #include "assertion/node_assert.h"
+#include "assertion/edge_assert.h"
 
 USING_EG_NS
 
 FIXTURE(GraphAssertTest) {
 
+	GRAPH(g1) {
+		CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e"));
+		CHAIN(Node("a") -> Data(1, 1) -> Node("b") -> Edge(EdgeType::CTRL) -> Node("e"));
+	});
+
 	TEST("should assert graph info") {
-		GRAPH(g1) {
-			CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e"));
-		});
 
 		ASSERT_GRAPH(g1) {
 			ASSERT_EQ("g1", graph.name);
 			ASSERT_EQ(5   , graph.nodeCount);
-			ASSERT_EQ(4   , graph.edgeCount);
+			ASSERT_EQ(6   , graph.edgeCount);
 		});
 
 		ASSERT_GRAPH(g1) {
@@ -30,13 +33,22 @@ FIXTURE(GraphAssertTest) {
 			ASSERT_TRUE(graph.hasEdge("a", "b"));
 			ASSERT_TRUE(graph.hasEdge("b", "c"));
 			ASSERT_TRUE(graph.hasEdge("c", "d"));
-			ASSERT_TRUE(graph.hasEdge("d", "e"));
+			ASSERT_TRUE(graph.hasEdge("b", "e", EdgeType::CTRL));
+			ASSERT_TRUE(graph.hasEdge("d", "e", EdgeType::DATA));
+		});
+
+		ASSERT_GRAPH(g1) {
+			ASSERT_TRUE(graph.hasEdge(Endpoint{"a", 0}, {"b", 0}));
+			ASSERT_TRUE(graph.hasEdge(Endpoint{"c", 0}, {"d", 0}, EdgeType::DATA));
 		});
 
 		ASSERT_GRAPH(g1) {
 			ASSERT_FALSE(graph.hasNode("f"));
-			ASSERT_FALSE(graph.hasEdge("c", "e"));
+			ASSERT_FALSE(graph.hasEdge("a", "e"));
 			ASSERT_FALSE(graph.hasEdge("e", "f"));
+			ASSERT_FALSE(graph.hasEdge("c", "d", EdgeType::CTRL));
+			ASSERT_FALSE(graph.hasEdge(Endpoint{"a", 1}, {"b", 0}));
+			ASSERT_FALSE(graph.hasEdge(Endpoint{"a", 0}, {"b", 0}, EdgeType::CTRL));
 		});
 
 		ASSERT_GRAPH(g1) {
@@ -51,14 +63,47 @@ FIXTURE(GraphAssertTest) {
 
 	TEST("should assert node info") {
 
-		GRAPH(g1) {
-			CHAIN(Node("a") -> Node("b") -> Node("c"));
-			CHAIN(Node("c") -> Node("d") -> Node("e"));
+		ASSERT_NODE(g1, "a") {
+			ASSERT_EQ(0, node.inputCount);
+			ASSERT_EQ(2, node.outputCount);
 		});
 
 		ASSERT_NODE(g1, "a") {
-			ASSERT_EQ(0, node.prevEdgeCount);
+			ASSERT_TRUE(node.isSource());
 			ASSERT_TRUE(node.prevNextTo("b"));
+		});
+
+		ASSERT_NODE(g1, "a") {
+			ASSERT_FALSE(node.isSink());
+			ASSERT_FALSE(node.isIsolated());
+			ASSERT_FALSE(node.prevNextTo("d"));
+		});
+
+		ASSERT_NODE(g1, "b") {
+			ASSERT_TRUE(node.prevNextTo("c"));
+			ASSERT_TRUE(node.postNextTo("a"));
+		});
+
+		ASSERT_NODE(g1, "e") {
+			ASSERT_TRUE(node.isSink());
+			ASSERT_TRUE(node.postNextTo("d"));
+		});
+	}
+
+	TEST("should assert edge info") {
+
+		ASSERT_EDGE(g1, "a", "b") {
+			ASSERT_EQ(2, edge.count);
+			ASSERT_TRUE(edge.linked(0, 0));
+			ASSERT_TRUE(edge.linked(1, 1));
+			ASSERT_TRUE(edge.isDataType(0, 0));
+			ASSERT_TRUE(edge.isDataType(1, 1));
+			ASSERT_FALSE(edge.linked(0, 1));
+		});
+
+		ASSERT_EDGE(g1, "b", "e") {
+			ASSERT_EQ(1, edge.count);
+			ASSERT_TRUE(edge.isCtrlType());
 		});
 	}
 };

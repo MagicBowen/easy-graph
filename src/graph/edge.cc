@@ -39,21 +39,11 @@ const Node& Edge::getDstNode() const {
 	return dst.getNode();
 }
 
-NodeId Edge::getSrcNodeId() const {
-	return getSrcNode().getId();
+Endpoint Edge::getSrcEndpoint() const {
+	return Endpoint{getSrcNode().getId(), src.getPortId()};
 }
-
-NodeId Edge::getDstNodeId() const {
-	return getDstNode().getId();
+Endpoint Edge::getDstEndpoint() const {
+	return Endpoint{getDstNode().getId(), dst.getPortId()};
 }
-
-PortId Edge::getSrcPortId() const {
-	return src.getPortId();
-}
-
-PortId Edge::getDstPortId() const {
-	return dst.getPortId();
-}
-
 
 EG_NS_END

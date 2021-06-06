@@ -3,8 +3,7 @@
 
 #include "easy_graph/graph/edge_type.h"
 #include "easy_graph/graph/node_port.h"
-#include "easy_graph/graph/node_id.h"
-#include "easy_graph/infra/operator.h"
+#include "easy_graph/graph/endpoint.h"
 #include <string>
 
 EG_NS_BEGIN
@@ -24,11 +23,8 @@ struct Edge
 	const Node& getSrcNode() const;
 	const Node& getDstNode() const;
 
-	NodeId getSrcNodeId() const;
-	NodeId getDstNodeId() const;
-
-	PortId getSrcPortId() const;
-	PortId getDstPortId() const;
+	Endpoint getSrcEndpoint() const;
+	Endpoint getDstEndpoint() const;
 
 private:
 	std::string label;

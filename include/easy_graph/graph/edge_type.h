@@ -6,8 +6,8 @@
 EG_NS_BEGIN
 
 enum class EdgeType {
-	CTRL_EDGE = 0,
-	DATA_EDGE,
+	CTRL = 0,
+	DATA,
 };
 
 EG_NS_END

@@ -1,11 +1,10 @@
 #ifndef HAF54D894_EE19_492A_940E_D0B3449C3016
 #define HAF54D894_EE19_492A_940E_D0B3449C3016
 
-#include "assertion/node_assert_visitor.h"
+#include "assertion/visitor/node_assert_visitor.h"
 #include "easy_graph/graph/node_id.h"
 #include "easy_graph/graph/graph.h"
 #include "easy_graph/infra/log.h"
-#include <string>
 
 EG_NS_BEGIN
 
@@ -18,8 +17,9 @@ namespace detail {
 		graph.accept(visitor);
 		try {
 			nodeAssert(visitor);
-		} catch(...) {
-			EG_ERR("Graph(%s)' node(%s) assert failed!", graph.getName().c_str(), nodeId.c_str());
+		} catch(std::exception& e) {
+			EG_ERR("Graph(%s)' node(%s) assert failed!\n%s", graph.getName().c_str(), nodeId.c_str(), e.what());
+			throw(e);
 		}
 	}
 }

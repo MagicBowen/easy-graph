@@ -37,7 +37,7 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g2) {
-		CHAIN(Node("a") -> Ctrl("omit") -> Node("b") -> Node("c") -> Data("copy") -> Node("d") -> Node("e"));
+		CHAIN(Node("a") -> Edge(EdgeType::CTRL) -> Node("b") -> Node("c") -> Data("copy") -> Node("d") -> Node("e"));
 		CHAIN(Node("a") -> Ctrl("condition") -> Node("c"));
 	});
 

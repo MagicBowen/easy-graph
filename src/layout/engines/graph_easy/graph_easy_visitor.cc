@@ -87,7 +87,7 @@ namespace {
 
 	private:
 		std::string getPortPair() const {
-			return std::string("(")+ std::to_string(edge.getSrcPortId()) + "," + std::to_string(edge.getDstPortId()) + ")";
+			return std::string("(")+ std::to_string(edge.getSrcEndpoint().port) + "," + std::to_string(edge.getDstEndpoint().port) + ")";
 		}
 
 		std::string getLabelAttr() const {
@@ -99,11 +99,11 @@ namespace {
 		}
 
 		std::string getOutPortAttr() const {
-			return std::string(" start : ") + "front" + ", " + std::to_string(edge.getSrcPortId() * options.scale) + "; ";
+			return std::string(" start : ") + "front" + ", " + std::to_string(edge.getSrcEndpoint().port * options.scale) + "; ";
 		}
 
 		std::string getInPortAttr() const {
-			return std::string(" end : ") + "back" + ", " + std::to_string(edge.getDstPortId() * options.scale) + "; ";
+			return std::string(" end : ") + "back" + ", " + std::to_string(edge.getDstEndpoint().port * options.scale) + "; ";
 		}
 	};
 }
@@ -131,7 +131,7 @@ Status GraphEasyVisitor::visit(const Edge& edge) {
 	ScopeGuard guard([this](){ctxt.linkBegin();}, [this](){ctxt.linkEnd();});
 
 	auto makeEdgeLayout = [this, &edge]() -> const EdgeLayout* {
-		if (edge.getType() == EdgeType::CTRL_EDGE) return new CtrlEdgeLayout(ctxt, edge);
+		if (edge.getType() == EdgeType::CTRL) return new CtrlEdgeLayout(ctxt, edge);
 		return new DataEdgeLayout(ctxt, edge);
 	};
 

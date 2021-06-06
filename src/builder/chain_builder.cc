@@ -41,15 +41,19 @@ ChainBuilder& ChainBuilder::LinkBuilder::startLink(const Link& link) {
 }
 
 ChainBuilder& ChainBuilder::LinkBuilder::Ctrl(const std::string& label) {
-	return this->startLink(Link(EdgeType::CTRL_EDGE, label, UNDEFINED_PORT_ID, UNDEFINED_PORT_ID));
+	return this->Edge(EdgeType::CTRL, UNDEFINED_PORT_ID, UNDEFINED_PORT_ID, label);
 }
 
 ChainBuilder& ChainBuilder::LinkBuilder::Data(const std::string& label) {
-	return this->startLink(Link(EdgeType::DATA_EDGE, label, UNDEFINED_PORT_ID, UNDEFINED_PORT_ID));
+	return this->Edge(EdgeType::DATA, UNDEFINED_PORT_ID, UNDEFINED_PORT_ID, label);
 }
 
-ChainBuilder& ChainBuilder::LinkBuilder::Data(PortId srcPort, PortId dstPort, const std::string& label) {
-	return this->startLink(Link(EdgeType::DATA_EDGE, label, srcPort, dstPort));
+ChainBuilder& ChainBuilder::LinkBuilder::Data(PortId srcId, PortId dstId, const std::string& label) {
+	return this->Edge(EdgeType::DATA, srcId, dstId, label);
+}
+
+ChainBuilder& ChainBuilder::LinkBuilder::Edge(EdgeType type, PortId srcPort, PortId dstPort, const std::string& label) {
+	return this->startLink(Link(type, label, srcPort, dstPort));
 }
 
 EG_NS_END
