@@ -20,25 +20,25 @@ NodeAssertVisitor::NodeAssertVisitor(const Node& node)
 
 bool NodeAssertVisitor::prevNextTo(const NodeId& id) const {
 	return findEdgeBy(postEdges, [id](const Edge& edge) {
-		return edge.getDstEndpoint().node == id;
+		return edge.getDst().getNodeId() == id;
 	});
 }
 
 bool NodeAssertVisitor::postNextTo(const NodeId& id) const {
 	return findEdgeBy(prevEdges, [id](const Edge& edge) {
-		return edge.getSrcEndpoint().node == id;
+		return edge.getSrc().getNodeId() == id;
 	});
 }
 
 bool NodeAssertVisitor::prevNextTo(const Endpoint& dst) const {
 	return findEdgeBy(postEdges, [dst](const Edge& edge) {
-		return edge.getDstEndpoint() == dst;
+		return edge.getDst() == dst;
 	});
 }
 
 bool NodeAssertVisitor::postNextTo(const Endpoint& src) const {
 	return findEdgeBy(prevEdges, [src](const Edge& edge) {
-		return edge.getSrcEndpoint() == src;
+		return edge.getSrc() == src;
 	});
 }
 
@@ -55,11 +55,11 @@ bool NodeAssertVisitor::isIsolated() const {
 }
 
 Status NodeAssertVisitor::visit(const Edge& edge) {
-	if (edge.getSrcEndpoint().node == node.getId()) {
+	if (edge.getSrc().getNodeId() == node.getId()) {
 		postEdges.push_back(&edge);
 		outputCount++;
 	}
-	if (edge.getDstEndpoint().node == node.getId()) {
+	if (edge.getDst().getNodeId() == node.getId()) {
 		prevEdges.push_back(&edge);
 		inputCount++;
 	}

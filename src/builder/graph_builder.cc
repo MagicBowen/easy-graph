@@ -1,4 +1,5 @@
 #include "easy_graph/builder/graph_builder.h"
+#include "easy_graph/graph/endpoint.h"
 #include "easy_graph/builder/link.h"
 #include "easy_graph/infra/log.h"
 
@@ -52,7 +53,7 @@ Edge* GraphBuilder::buildEdge(const Node& src, const Node& dst, const Link& link
 
 	EG_DBG("link edge(%d) from (%s:%d) to (%s:%d)", link.type, src.getId().c_str(), srcPortId, dst.getId().c_str(), dstPortId);
 
-	return graph.addEdge(Edge(link.type, link.label, NodePort(src, srcPortId), NodePort(dst, dstPortId)));
+	return graph.addEdge(Edge(link.type, link.label, Endpoint(src.getId(), srcPortId), Endpoint(dst.getId(), dstPortId)));
 }
 
 EG_NS_END

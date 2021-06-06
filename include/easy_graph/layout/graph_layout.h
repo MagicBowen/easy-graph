@@ -12,7 +12,7 @@ struct Graph;
 
 SINGLETON(GraphLayout) {
 	void config(layoutExecutor&, const LayoutOption* = nullptr);
-	Status layout(const Graph&, const LayoutOption* options = nullptr);
+	Status layout(const Graph&, const LayoutOption* = nullptr);
 
 private:
 	layoutExecutor* executor{nullptr};

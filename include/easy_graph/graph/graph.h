@@ -25,6 +25,9 @@ struct Graph
 	Node* findNode(const NodeId&);
 	const Node* findNode(const NodeId&) const;
 
+	std::pair<const Node*, const Node*> findNodePair(const Edge&) const;
+	std::pair<Node*, Node*> findNodePair(const Edge&);
+
 	void accept(GraphVisitor&) const;
 
 	Status layout(const LayoutOption* option = nullptr) const;

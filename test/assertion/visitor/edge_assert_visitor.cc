@@ -26,7 +26,7 @@ bool EdgeAssertVisitor::isDataType(const PortId& src, const PortId& dst) const {
 
 const Edge* EdgeAssertVisitor::findEdge(const PortId& src, const PortId& dst) const {
 	for (const auto& e : edges) {
-		if ((e->getSrcEndpoint().port == src) && (e->getDstEndpoint().port == dst)) {
+		if ((e->getSrc().getPortId() == src) && (e->getDst().getPortId() == dst)) {
 			return e;
 		}
 	}
@@ -34,8 +34,8 @@ const Edge* EdgeAssertVisitor::findEdge(const PortId& src, const PortId& dst) co
 }
 
 Status EdgeAssertVisitor::visit(const Edge& edge) {
-	if ((edge.getSrcEndpoint().node == srcNode.getId()) &&
-		(edge.getDstEndpoint().node == dstNode.getId())) {
+	if ((edge.getSrc().getNodeId() == srcNode.getId()) &&
+		(edge.getDst().getNodeId() == dstNode.getId())) {
 		edges.push_back(&edge);
 		count++;
 	}

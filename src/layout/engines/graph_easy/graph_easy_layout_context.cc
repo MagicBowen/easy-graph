@@ -1,5 +1,6 @@
 #include "easy_graph/layout/engines/graph_easy/graph_easy_layout_context.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
+#include "easy_graph/graph/graph.h"
 
 EG_NS_BEGIN
 
@@ -7,12 +8,17 @@ GraphEasyLayoutContext::GraphEasyLayoutContext(const GraphEasyOption& options)
 : options(options){
 }
 
-void GraphEasyLayoutContext::enterGroup(const std::string& groupName) {
-	groups.push_back(groupName);
+const Graph* GraphEasyLayoutContext::getCurrentGraph() const {
+	if (graphs.empty()) return nullptr;
+	return graphs.back();
 }
 
-void GraphEasyLayoutContext::exitGroup() {
-	groups.pop_back();
+void GraphEasyLayoutContext::enterGraph(const Graph& graph) {
+	graphs.push_back(&graph);
+}
+
+void GraphEasyLayoutContext::exitGraph() {
+	graphs.pop_back();
 }
 
 void GraphEasyLayoutContext::linkBegin() {
@@ -28,10 +34,10 @@ bool GraphEasyLayoutContext::inLinking() const {
 }
 
 std::string GraphEasyLayoutContext::getGroupPath() const {
-	if (groups.empty()) return "";
+	if (graphs.empty()) return "";
 	std::string result("");
-	std::for_each(groups.begin(), groups.end(), [&result](const auto& group) {
-		result += (std::string("/") + group);
+	std::for_each(graphs.begin(), graphs.end(), [&result](const auto& graph) {
+		result += (std::string("/") + graph->getName());
 	});
 	return (result + "/");
 }

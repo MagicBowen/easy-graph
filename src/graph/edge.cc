@@ -1,12 +1,11 @@
 #include "easy_graph/graph/edge.h"
-#include "easy_graph/graph/node.h"
 
 EG_NS_BEGIN
 
 Edge::Edge(const EdgeType type,
 		   const std::string& label,
-		   const NodePort& src,
-		   const NodePort& dst)
+		   const Endpoint& src,
+		   const Endpoint& dst)
 : type(type), label(label), src(src),dst(dst) {
 }
 
@@ -31,19 +30,11 @@ std::string Edge::getLabel() const {
 	return label;
 }
 
-const Node& Edge::getSrcNode() const {
-	return src.getNode();
+Endpoint Edge::getSrc() const {
+	return src;
 }
-
-const Node& Edge::getDstNode() const {
-	return dst.getNode();
-}
-
-Endpoint Edge::getSrcEndpoint() const {
-	return Endpoint{getSrcNode().getId(), src.getPortId()};
-}
-Endpoint Edge::getDstEndpoint() const {
-	return Endpoint{getDstNode().getId(), dst.getPortId()};
+Endpoint Edge::getDst() const {
+	return dst;
 }
 
 EG_NS_END

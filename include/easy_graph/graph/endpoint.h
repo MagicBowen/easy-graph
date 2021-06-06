@@ -8,16 +8,16 @@
 EG_NS_BEGIN
 
 struct Endpoint {
-	Endpoint(const NodeId& node, const PortId& port)
-	: node(node), port(port) {
-	}
+	Endpoint(const NodeId&, const PortId&);
 
-	__INLINE_EQUALS(Endpoint) {
-		return (node == rhs.node) && (port == rhs.port);
-	}
+	__DECL_COMP(Endpoint);
 
-	NodeId node;
-	PortId port;
+	NodeId getNodeId() const;
+	PortId getPortId() const;
+
+private:
+	NodeId nodeId;
+	PortId portId;
 };
 
 EG_NS_END

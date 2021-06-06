@@ -28,7 +28,7 @@ struct Node
 
     NodeId getId() const;
 
-    Node& packing(const BoxPtr& box);
+    Node& packing(const BoxPtr&);
 
     template<typename Anything>
     Anything* unpacking() const {

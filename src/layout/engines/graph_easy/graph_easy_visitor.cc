@@ -5,6 +5,7 @@
 #include "easy_graph/graph/graph.h"
 #include "easy_graph/graph/edge.h"
 #include "easy_graph/graph/node.h"
+#include "easy_graph/infra/log.h"
 
 EG_NS_BEGIN
 
@@ -18,6 +19,7 @@ namespace {
 
 	private:
 		Status visit(const Graph& graph) override {
+			ScopeGuard guard([this, &graph](){ctxt.enterGraph(graph);}, [this](){ctxt.exitGraph();});
 			layout += (std::string(" -- [") + id + "/" + graph.getName() + "]" + "{class : subgraph; label : " + graph.getName() + ";}");
 			hasSubgraph = true;
 			return EG_SUCCESS;
@@ -27,6 +29,16 @@ namespace {
 		GraphEasyLayoutContext& ctxt;
 	};
 
+	/////////////////////////////////////////////////////////////////////////
+	std::string getGraphLayoutTitle(const Graph& graph, const GraphEasyLayoutContext& ctxt) {
+		std::string flowDirection = (ctxt.getOptions().dir == FlowDir::LR) ? "east" : "down";
+		std::string graphTitle = std::string("graph { label : ")
+				               + graph.getName()
+							   +  "; flow : "
+							   + flowDirection + " ; } node.subgraph { border : double-dash; }";
+		return graphTitle;
+	}
+	/////////////////////////////////////////////////////////////////////////
 	std::string getNodeLayout(const Node& node, GraphEasyLayoutContext& ctxt) {
 		const auto& id = node.getId();
 		std::string nodeBox = std::string("[") + id + "]";
@@ -39,6 +51,7 @@ namespace {
 		return (std::string("( ") + id + ": " + nodeBox + subgraphVisitor.layout + ")");
 	}
 
+	/////////////////////////////////////////////////////////////////////////
 	INTERFACE(EdgeLayout) {
 		EdgeLayout(GraphEasyLayoutContext& ctxt,
 				   const Edge& edge)
@@ -46,8 +59,24 @@ namespace {
 		}
 
 		std::string getLayout() const {
-			std::string srcNodeLayout = getNodeLayout(edge.getSrcNode(), ctxt);
-			std::string dstNodeLayout = getNodeLayout(edge.getDstNode(), ctxt);
+			auto graph = ctxt.getCurrentGraph();
+			if (!graph) {
+				EG_FATAL("Layout context has no graph!");
+				return "";
+			}
+
+			auto nodePair = graph->findNodePair(edge);
+
+			if ((!nodePair.first) || (!nodePair.second)) {
+				EG_FATAL("Layout context graph(%s) has not found node(%s, %s)!",
+						graph->getName().c_str(),
+						edge.getSrc().getNodeId().c_str(),
+						edge.getDst().getNodeId().c_str());
+				return "";
+			}
+
+			std::string srcNodeLayout = getNodeLayout(*nodePair.first, ctxt);
+			std::string dstNodeLayout = getNodeLayout(*nodePair.second, ctxt);
 			return srcNodeLayout + getArrowLayout() + getAttrLayout() + dstNodeLayout;
 		}
 
@@ -61,6 +90,7 @@ namespace {
 		const Edge& edge;
 	};
 
+	/////////////////////////////////////////////////////////////////////////
 	struct CtrlEdgeLayout : EdgeLayout {
 		using EdgeLayout::EdgeLayout;
 	private:
@@ -74,6 +104,7 @@ namespace {
 		}
 	};
 
+	/////////////////////////////////////////////////////////////////////////
 	struct DataEdgeLayout : EdgeLayout {
 		using EdgeLayout::EdgeLayout;
 	private:
@@ -87,7 +118,7 @@ namespace {
 
 	private:
 		std::string getPortPair() const {
-			return std::string("(")+ std::to_string(edge.getSrcEndpoint().port) + "," + std::to_string(edge.getDstEndpoint().port) + ")";
+			return std::string("(")+ std::to_string(edge.getSrc().getPortId()) + "," + std::to_string(edge.getDst().getPortId()) + ")";
 		}
 
 		std::string getLabelAttr() const {
@@ -99,11 +130,11 @@ namespace {
 		}
 
 		std::string getOutPortAttr() const {
-			return std::string(" start : ") + "front" + ", " + std::to_string(edge.getSrcEndpoint().port * options.scale) + "; ";
+			return std::string(" start : ") + "front" + ", " + std::to_string(edge.getSrc().getPortId() * options.scale) + "; ";
 		}
 
 		std::string getInPortAttr() const {
-			return std::string(" end : ") + "back" + ", " + std::to_string(edge.getDstEndpoint().port * options.scale) + "; ";
+			return std::string(" end : ") + "back" + ", " + std::to_string(edge.getDst().getPortId() * options.scale) + "; ";
 		}
 	};
 }
@@ -113,12 +144,8 @@ GraphEasyVisitor::GraphEasyVisitor(const GraphEasyOption& options)
 }
 
 Status GraphEasyVisitor::visit(const Graph& graph) {
-	std::string flowDirection = (ctxt.getOptions().dir == FlowDir::LR) ? "east" : "down";
-	std::string graphTitle = std::string("graph { label : ")
-			               + graph.getName()
-						   +  "; flow : "
-						   + flowDirection + " ; } node.subgraph { border : double-dash; }";
-	layout += graphTitle;
+	ctxt.enterGraph(graph);
+	layout += getGraphLayoutTitle(graph, ctxt);
 	return EG_SUCCESS;
 }
 

@@ -27,13 +27,13 @@ bool GraphAssertVisitor::isEdgeExisted(EdgeType type, PRED pred) const {
 
 bool GraphAssertVisitor::hasEdge(const NodeId& src, const NodeId& dst, EdgeType type) const {
 	return isEdgeExisted(type, [&src, &dst](const Edge& edge) {
-		return (src == edge.getSrcEndpoint().node) && (dst ==  edge.getDstEndpoint().node);
+		return (src == edge.getSrc().getNodeId()) && (dst ==  edge.getDst().getNodeId());
 	});
 }
 
 bool GraphAssertVisitor::hasEdge(const Endpoint& src, const Endpoint& dst, EdgeType type) const {
 	return isEdgeExisted(type, [&src, &dst](const Edge& edge) {
-		return (src == edge.getSrcEndpoint()) && (dst ==  edge.getDstEndpoint());
+		return (src == edge.getSrc()) && (dst ==  edge.getDst());
 	});
 }
 

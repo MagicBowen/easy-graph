@@ -34,6 +34,14 @@ const Node* Graph::findNode(const NodeId& id) const {
 	return const_cast<Graph&>(*this).findNode(id);
 }
 
+std::pair<const Node*, const Node*> Graph::findNodePair(const Edge& edge) const {
+	return std::make_pair(findNode(edge.getSrc().getNodeId()), findNode(edge.getDst().getNodeId()));
+}
+
+std::pair<Node*, Node*> Graph::findNodePair(const Edge& edge) {
+	return std::make_pair(findNode(edge.getSrc().getNodeId()), findNode(edge.getDst().getNodeId()));
+}
+
 void Graph::accept(GraphVisitor& visitor) const {
 	visitor.visit(*this);
 	std::for_each(nodes.begin(), nodes.end(), [&visitor](const auto& node){visitor.visit(node.second);});

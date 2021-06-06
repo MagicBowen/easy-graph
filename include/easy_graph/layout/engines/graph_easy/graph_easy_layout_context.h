@@ -8,12 +8,15 @@
 EG_NS_BEGIN
 
 struct GraphEasyOption;
+struct Graph;
 
 struct GraphEasyLayoutContext {
 	GraphEasyLayoutContext(const GraphEasyOption&);
 
-	void enterGroup(const std::string&);
-	void exitGroup();
+	const Graph* getCurrentGraph() const;
+
+	void enterGraph(const Graph&);
+	void exitGraph();
 
 	void linkBegin();
 	void linkEnd();
@@ -24,7 +27,7 @@ struct GraphEasyLayoutContext {
 	const GraphEasyOption& getOptions() const;
 
 private:
-	std::deque<std::string> groups;
+	std::deque<const Graph*> graphs;
 	const GraphEasyOption& options;
 	bool isLinking{false};
 };
