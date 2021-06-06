@@ -5,7 +5,7 @@ Easy graph is a C++ library for describing graph topology and attributes by DSL;
 It support layouting the graph in console using `Graph-Easy` module of perl;
 It also support asserting the graph topology and attributes.
 
-### Layout preparing
+### Layout
 
 Intall `Graph::Easy` module of perl for graph layout.
 
@@ -21,6 +21,10 @@ echo "[a]->[b]->[c]->[d][b]->{ start: right, 0; }[e],[d]" | graph-easy
 
 - http://bloodgate.com/perl/graph/manual/
 - https://metacpan.org/pod/Graph::Easy
+
+### Design
+
+![](docs/images/model.png)
 
 ### Cli Usage
 
