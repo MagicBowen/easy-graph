@@ -4,7 +4,6 @@
 #include "easy_graph/builder/graph_builder.h"
 #include "easy_graph/builder/chain_builder.h"
 #include "easy_graph/builder/box_builder.h"
-#include "easy_graph/infra/macro_traits.h"
 
 EG_NS_BEGIN
 
@@ -16,17 +15,23 @@ namespace detail {
 		builderInDSL(builder);
 		return std::move(*builder);
 	}
+
+	constexpr const char* get_graph_name(const char* defaultName,
+			                             const char* specifiedName = nullptr) {
+		return specifiedName ? specifiedName : defaultName;
+	}
 }
 
 ////////////////////////////////////////////////////////////////
-#define HAS_NAME(...)         NOT_EMPTY_SELECT(__VA_ARGS__)
+#define NODE(NAME, TYPE, ...) ::EG_NS::Node NAME(#NAME, BOX_OF(TYPE, ##__VA_ARGS__))
 
-////////////////////////////////////////////////////////////////
-#define GRAPH(G, ...)         Graph G = ::EG_NS::detail::build_graph(HAS_NAME(__VA_ARGS__)(#__VA_ARGS__, #G), [&](GraphBuilder& BUILDER)
+#define CHAIN(...)            DATA_CHAIN(__VA_ARGS__)
 #define DATA_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, EdgeType::DATA) -> __VA_ARGS__
 #define CTRL_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, EdgeType::CTRL) -> __VA_ARGS__
-#define CHAIN(...)            DATA_CHAIN(__VA_ARGS__)
-#define NODE(NAME, TYPE, ...) ::EG_NS::Node NAME(#NAME, BOX_OF(TYPE, ##__VA_ARGS__))
+
+#define GRAPH(G, ...)         Graph G = ::EG_NS::detail::build_graph(										\
+													   ::EG_NS::detail::get_graph_name(#G, ##__VA_ARGS__), 	\
+												       [&](GraphBuilder& BUILDER)
 
 EG_NS_END
 
