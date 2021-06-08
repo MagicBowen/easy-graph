@@ -4,9 +4,9 @@
 
 EG_NS_BEGIN
 
-bool GraphAssertVisitor::isEqualTo(const Graph&) const {
-	// TODO
-	return true;
+bool GraphAssertVisitor::isEqualTo(const Graph& expect) const {
+	if (!graph) return false;
+	return (*graph) == expect;
 }
 
 bool GraphAssertVisitor::hasNode(const NodeId& id) const {

@@ -17,6 +17,8 @@ struct Graph
 {
 	explicit Graph(const std::string& name);
 
+	__DECL_EQUALS(Graph);
+
 	std::string getName() const;
 
 	Node* addNode(const Node&);
@@ -27,6 +29,8 @@ struct Graph
 
 	std::pair<const Node*, const Node*> findNodePair(const Edge&) const;
 	std::pair<Node*, Node*> findNodePair(const Edge&);
+
+	bool hasEdge(const Edge&) const;
 
 	void accept(GraphVisitor&) const;
 

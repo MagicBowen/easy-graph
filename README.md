@@ -65,6 +65,7 @@ $ chmod a+x ./ccup.sh
 
 ### TODO
 
-- [ ]: support assertion dsl for graph;
+- [X]: support assertion dsl for graph;
 - [ ]: support set attributes on graph, node or edge;
 - [ ]: support user specified edge type;
+- [ ]: docs;
