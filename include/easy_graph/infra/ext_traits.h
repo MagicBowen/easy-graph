@@ -10,12 +10,12 @@ template<typename T, typename ...TS>
 using all_same_traits = typename std::enable_if<std::conjunction<std::is_same<T, TS>...>::value>::type;
 
 template<typename T, typename ...TS>
-using all_same_but_none_traits = typename std::enable_if<std::disjunction<std::bool_constant<not(sizeof...(TS))>, std::conjunction<std::is_same<T, TS>...>>::value>::type;
+using all_same_or_empty_traits = typename std::enable_if<std::disjunction<std::bool_constant<not(sizeof...(TS))>, std::conjunction<std::is_same<T, TS>...>>::value>::type;
 
 #define ALL_SAME_CONCEPT(TS, T)  all_same_traits<T, TS...>* = nullptr
-#define ALL_SAME_BUT_NONE_CONCEPT(TS, T)  all_same_but_none_traits<T, TS...>* = nullptr
+#define ALL_SAME_OR_EMPTY_CONCEPT(TS, T)  all_same_or_empty_traits<T, TS...>* = nullptr
 
-#define SUBGRAPH_CONCEPT(GS, G)  ALL_SAME_BUT_NONE_CONCEPT(GS, G)
+#define SUBGRAPH_CONCEPT(GS, G)  ALL_SAME_OR_EMPTY_CONCEPT(GS, G)
 
 EG_NS_END
 

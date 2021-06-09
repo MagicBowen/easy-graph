@@ -3,8 +3,6 @@
 #include <any>
 #include <map>
 
-#include <iostream>
-
 namespace {
     using AttrKey = std::string;
 	using Attribute = std::pair<AttrKey, std::any>;
