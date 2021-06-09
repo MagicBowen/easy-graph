@@ -22,7 +22,7 @@ FIXTURE(GraphLayoutTest) {
 		GraphLayout::getInstance().config(executor, &options);
 	}
 
-	TEST("should layout calculator graph success") {
+	TEST("should layout calculator graph") {
 		GRAPH(calculator) {
 			Node i1("2", BOX_OF(Integer, 2));
 			Node i2("5", BOX_OF(Integer, 5));
@@ -36,7 +36,7 @@ FIXTURE(GraphLayoutTest) {
 		ASSERT_TRUE(__EG_OK(calculator.layout()));
 	}
 
-	TEST("should layout candy graph success") {
+	TEST("should layout candy graph") {
 		GRAPH(c1, "dove candy") {
 			CHAIN(Node("dove", BOX_OF(ToffeeCandy, "Dove")) -> Node("sweet", BOX_OF(HardCandy, 5)));
 		});

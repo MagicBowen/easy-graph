@@ -28,20 +28,20 @@ FIXTURE(GraphBuildTest) {
 		ASSERT_TRUE(n1);
 	}
 
-	TEST("should unpacking thing from box success") {
+	TEST("should unpacking thing from box") {
 		auto n1 = calculator.findNode("5");
 		auto i1 = n1->unpacking<Integer>();
 		ASSERT_TRUE(i1);
 		ASSERT_EQ(5, i1->getValue());
 	}
 
-	TEST("should unpacking interface from box success") {
+	TEST("should unpacking interface from box") {
 		auto plus = calculator.findNode("plus");
 		auto op = plus->unpacking<Operator>();
 		ASSERT_TRUE(op);
 	}
 
-	TEST("should invoke interface from box success") {
+	TEST("should invoke interface from box") {
 		auto n1 = calculator.findNode("5");
 		auto i1 = n1->unpacking<Integer>();
 
@@ -54,7 +54,7 @@ FIXTURE(GraphBuildTest) {
 		ASSERT_EQ(Integer(7), (*op)(*i1, *i2));
 	}
 
-	TEST("should invoke interface from box of multiple nodes success") {
+	TEST("should invoke interface from box of multiple nodes") {
 		auto n1 = calculator.findNode("5");
 		auto i1 = n1->unpacking<Integer>();
 
