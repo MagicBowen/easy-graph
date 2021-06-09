@@ -66,7 +66,7 @@ $ chmod a+x ./ccup.sh
 ### TODO
 
 - [X]: support assertion dsl for graph;
-- [ ]: support specify graph name for subgraph;
+- [x]: support specify graph name for subgraph;
 - [ ]: relation between node and subgraph;
 - [ ]: support set attributes on graph, node or edge;
 - [ ]: support user specified edge type;

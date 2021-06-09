@@ -4,24 +4,24 @@
 #include "easy_graph/graph/node_id.h"
 #include "easy_graph/infra/operator.h"
 #include "easy_graph/infra/ext_traits.h"
+#include "easy_graph/graph/subgraph.h"
 #include "easy_graph/graph/box.h"
 #include <vector>
 
 EG_NS_BEGIN
 
-struct GraphVisitor;
-struct Graph;
+struct SubgraphVisitor;
 
 struct Node
 {
-    template<typename ...GRAPHS, SUBGRAPH_CONCEPT(GRAPHS, Graph)>
-    Node(const NodeId& id, const GRAPHS&... graphs)
-	: id(id), subgraphs{&graphs...} {
+    template<typename ...SUBGRAPHS, SUBGRAPH_CONCEPT(SUBGRAPHS, Subgraph)>
+    Node(const NodeId& id, const SUBGRAPHS&... subgraphs)
+	: id(id), subgraphs{subgraphs...} {
     }
     
-    template<typename ...GRAPHS, SUBGRAPH_CONCEPT(GRAPHS, Graph)>
-    Node(const NodeId& id, const BoxPtr& box, const GRAPHS&... graphs)
-	: id(id), box(box), subgraphs{&graphs...} {
+    template<typename ...SUBGRAPHS, SUBGRAPH_CONCEPT(SUBGRAPHS, Subgraph)>
+    Node(const NodeId& id, const BoxPtr& box, const SUBGRAPHS&... subgraphs)
+	: id(id), box(box), subgraphs{subgraphs...} {
     }
 
     __DECL_COMP(Node);
@@ -36,13 +36,14 @@ struct Node
     	return box_unpacking<Anything>(box);
     }
 
-    Node& addSubgraph(const Graph&);
-    void accept(GraphVisitor&) const;
+    Node& addSubgraph(const Subgraph&);
+
+    void accept(SubgraphVisitor&) const;
 
 private:
     NodeId id;
     BoxPtr box;
-    std::vector<const Graph*> subgraphs;
+    std::vector<Subgraph> subgraphs;
 };
 
 EG_NS_END

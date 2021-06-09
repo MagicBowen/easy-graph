@@ -1,7 +1,9 @@
 #include "easy_graph/layout/engines/graph_easy/graph_easy_visitor.h"
-#include "layout/engines/graph_easy/utils/shell_executor.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
+#include "layout/engines/graph_easy/utils/shell_executor.h"
+#include "easy_graph/graph/subgraph_visitor.h"
 #include "easy_graph/infra/scope_guard.h"
+#include "easy_graph/graph/subgraph.h"
 #include "easy_graph/graph/graph.h"
 #include "easy_graph/graph/edge.h"
 #include "easy_graph/graph/node.h"
@@ -10,7 +12,7 @@
 EG_NS_BEGIN
 
 namespace {
-	struct SubgraphLayoutVisitor : GraphVisitor {
+	struct SubgraphLayoutVisitor : SubgraphVisitor {
 		SubgraphLayoutVisitor(const NodeId& id, GraphEasyLayoutContext& ctxt)
 		: id(id), ctxt(ctxt) {
 		}
@@ -18,9 +20,9 @@ namespace {
 		bool hasSubgraph{false};
 
 	private:
-		Status visit(const Graph& graph) override {
-			ScopeGuard guard([this, &graph](){ctxt.enterGraph(graph);}, [this](){ctxt.exitGraph();});
-			layout += (std::string(" -- [") + id + "/" + graph.getName() + "]" + "{class : subgraph; label : " + graph.getName() + ";}");
+		Status visit(const Subgraph& subgraph) override {
+			ScopeGuard guard([this, &subgraph](){ctxt.enterGraph(subgraph.getGraph());}, [this](){ctxt.exitGraph();});
+			layout += (std::string(" -- [") + id + "/" + subgraph.getName() + "]" + "{class : subgraph; label : " + subgraph.getName() + ";}");
 			hasSubgraph = true;
 			return EG_SUCCESS;
 		}

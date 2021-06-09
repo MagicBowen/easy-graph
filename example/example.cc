@@ -2,6 +2,7 @@
 #include "easy_graph/layout/graph_layout.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_executor.h"
+#include "easy_graph/graph/subgraph.h"
 
 USING_EG_NS
 
@@ -89,19 +90,20 @@ int main() {
 	///  node with subgraphs
 	/////////////////////////////////////////////////
 
-	GRAPH(Cond, "condition") {
+	GRAPH(Cond) {
 		CTRL_CHAIN(Node("a") -> Node("b"));
 	});
 
-	GRAPH(Body, "loop body") {
+	GRAPH(Body) {
 		CHAIN(Node("a") -> Node("b") -> Node("c"));
 	});
 
 	GRAPH(graph) {
-		Node loop("loop", Cond, Body);
-		Node foreach("foreach", Cond, Body);
+		Node loop("loop", Subgraph{"condition", Cond}, Subgraph{"loop body", Body});
+		Node foreach("foreach", Subgraph{"condition", Cond}, Subgraph{"for body", Body});
+
 		DATA_CHAIN(Node("const_1") -> Node(loop) -> Node("unique") -> Node("softmax"));
-		DATA_CHAIN(Node("const_2") -> Node("while", Cond, Body));
+		DATA_CHAIN(Node("const_2") -> Node("while", Subgraph{"condition", Cond}, Subgraph{"while body", Body}));
 		CTRL_CHAIN(Node("case") -> Node("unique"));
 		CTRL_CHAIN(Node(loop) -> Node(foreach));
 	});
