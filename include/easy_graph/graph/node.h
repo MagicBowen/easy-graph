@@ -3,9 +3,9 @@
 
 #include "easy_graph/graph/node_id.h"
 #include "easy_graph/infra/operator.h"
-#include "easy_graph/infra/ext_traits.h"
 #include "easy_graph/graph/subgraph.h"
 #include "easy_graph/graph/box.h"
+#include <type_traits>
 #include <vector>
 
 EG_NS_BEGIN
@@ -14,21 +14,26 @@ struct SubgraphVisitor;
 
 struct Node
 {
-    template<typename ...SUBGRAPHS, SUBGRAPH_CONCEPT(SUBGRAPHS, Subgraph)>
-    Node(const NodeId& id, const SUBGRAPHS&... subgraphs)
-	: id(id), subgraphs{subgraphs...} {
-    }
-    
-    template<typename ...SUBGRAPHS, SUBGRAPH_CONCEPT(SUBGRAPHS, Subgraph)>
-    Node(const NodeId& id, const BoxPtr& box, const SUBGRAPHS&... subgraphs)
-	: id(id), box(box), subgraphs{subgraphs...} {
-    }
+	template<typename ...TS>
+	Node(const NodeId& id, TS && ...ts) : id(id) {
+		makeNode(std::forward<TS>(ts)...);
+	}
+
+	template<typename T, typename ... TS>
+	void makeNode(T && t, TS && ...ts) {
+		if constexpr (std::is_same_v<Subgraph, std::decay_t<T>>) {
+			this->addSubgraph(std::forward<T>(t));
+		} else if constexpr (std::is_same_v<BoxPtr, std::decay_t<T>>) {
+			this->packing(std::forward<T>(t));
+		} else {
+			static_assert(!sizeof(T), "Unsupported node construction type!");
+		}
+		this->makeNode(std::forward<TS>(ts)...);
+	}
 
     __DECL_COMP(Node);
 
     NodeId getId() const;
-
-    Node& packing(const BoxPtr&);
 
     template<typename Anything>
     Anything* unpacking() const {
@@ -36,9 +41,13 @@ struct Node
     	return box_unpacking<Anything>(box);
     }
 
+    void accept(SubgraphVisitor&) const;
+
+private:
+    Node& packing(const BoxPtr&);
     Node& addSubgraph(const Subgraph&);
 
-    void accept(SubgraphVisitor&) const;
+    void makeNode() {}
 
 private:
     NodeId id;

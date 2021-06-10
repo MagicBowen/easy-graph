@@ -24,12 +24,12 @@ struct ChainBuilder {
 		ChainBuilder& Node(const NodeObj& node);
 
 		template<typename ...PARAMS>
-		ChainBuilder& Node(const NodeId& id, const PARAMS&... params) {
+		ChainBuilder& Node(const NodeId& id, PARAMS &&... params) {
 			auto node = chain.findNode(id);
 			if (node) {
 				return this->Node(*node);
 			}
-			return this->Node(NodeObj(id, params...));
+			return this->Node(NodeObj(id, std::forward<PARAMS>(params)...));
 		}
 
 		ChainBuilder& Ctrl(const std::string& label = "");
