@@ -33,13 +33,12 @@ const Edge* EdgeAssertVisitor::findEdge(const PortId& src, const PortId& dst) co
 	return nullptr;
 }
 
-Status EdgeAssertVisitor::visit(const Edge& edge) {
+void EdgeAssertVisitor::visit(const Edge& edge) {
 	if ((edge.getSrc().getNodeId() == srcNode.getId()) &&
 		(edge.getDst().getNodeId() == dstNode.getId())) {
 		edges.push_back(&edge);
 		count++;
 	}
-	return EG_SUCCESS;
 }
 
 EG_NS_END

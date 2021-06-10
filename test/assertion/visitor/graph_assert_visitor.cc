@@ -37,21 +37,18 @@ bool GraphAssertVisitor::hasEdge(const Endpoint& src, const Endpoint& dst, EdgeT
 	});
 }
 
-Status GraphAssertVisitor::visit(const Graph& graph) {
+void GraphAssertVisitor::visit(const Graph& graph) {
 	this->graph = &graph;
 	this->name = this->graph->getName();
-	return EG_SUCCESS;
 }
 
-Status GraphAssertVisitor::visit(const Node& node) {
+void GraphAssertVisitor::visit(const Node& node) {
 	this->nodeCount++;
-	return EG_SUCCESS;
 }
 
-Status GraphAssertVisitor::visit(const Edge& edge) {
+void GraphAssertVisitor::visit(const Edge& edge) {
 	edges.push_back(&edge);
 	this->edgeCount++;
-	return EG_SUCCESS;
 }
 
 EG_NS_END

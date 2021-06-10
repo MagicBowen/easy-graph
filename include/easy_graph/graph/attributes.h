@@ -6,18 +6,27 @@
 
 EG_NS_BEGIN
 
+struct AttributeVisitor;
+
 struct Attributes {
 	Attributes();
 	Attributes(std::initializer_list<Attribute>);
 
-	std::any* get(const AttrKey&);
+	void set(const Attribute&);
 	void set(const AttrKey&, const std::any&);
-	void remove(const AttrKey&);
+
+	const std::any* get(const AttrKey&) const;
 
 	template<typename VALUE>
-	VALUE* get(const AttrKey& key) {
+	const VALUE* get(const AttrKey& key) const {
 		return std::any_cast<VALUE>(this->get(key));
 	}
+
+	void remove(const AttrKey&);
+
+	void merge(const Attributes&);
+
+	void accept(AttributeVisitor&) const;
 
 private:
 	std::map<AttrKey, std::any> dict;

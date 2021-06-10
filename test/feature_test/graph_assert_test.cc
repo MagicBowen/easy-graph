@@ -13,7 +13,7 @@ FIXTURE(GraphAssertTest) {
 	});
 
 	GRAPH(sample) {
-		CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", Subgraph{g1}));
+		CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", Subgraph{"se", g1}));
 		CHAIN(Node("a") -> Data(1, 1) -> Node("b") -> Edge(EdgeType::CTRL) -> Node("e"));
 	});
 
@@ -94,8 +94,11 @@ FIXTURE(GraphAssertTest) {
 		});
 
 		ASSERT_NODE(sample, "e") {
+			ASSERT_EQ(1, node.subgraphCount);
 			ASSERT_TRUE(node.isSink());
 			ASSERT_TRUE(node.postNextTo("d"));
+			ASSERT_TRUE(node.hasSubgraph("se"));
+			ASSERT_FALSE(node.hasSubgraph("subgraph"));
 		});
 	}
 

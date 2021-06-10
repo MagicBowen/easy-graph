@@ -17,7 +17,7 @@ struct EdgeAssertVisitor: GraphVisitor {
 	bool isDataType(const PortId& src, const PortId& dst) const;
 
 private:
-	Status visit(const Edge&) override;
+	void visit(const Edge&) override;
 
 private:
 	const Edge* findEdge(const PortId& src, const PortId& dst) const;

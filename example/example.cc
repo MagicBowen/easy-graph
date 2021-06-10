@@ -87,6 +87,19 @@ int main() {
 	g5.layout();
 
 	/////////////////////////////////////////////////
+	///  node with attributes
+	/////////////////////////////////////////////////
+
+	GRAPH(g6) {
+		CHAIN(Node("a", Attributes{{"source", true}, {"length", 3}}) -> Data(1, 0) -> Node("d"));
+		CHAIN(Node("b") -> Node("e"));
+		CHAIN(Node("c") -> Node("e"));
+	});
+
+	g6.layout();
+
+
+	/////////////////////////////////////////////////
 	///  node with subgraphs
 	/////////////////////////////////////////////////
 
@@ -100,7 +113,7 @@ int main() {
 
 	GRAPH(graph) {
 		Node loop("loop", Subgraph{"condition", Cond}, Subgraph{"loop body", Body});
-		Node foreach("foreach", Subgraph{"condition", Cond}, Subgraph{"for body", Body});
+		Node foreach("foreach", Subgraph{"condition", Cond}, Subgraph{"for body", Body}, Attribute{"loop", true});
 
 		DATA_CHAIN(Node("const_1") -> Node(loop) -> Node("unique") -> Node("softmax"));
 		DATA_CHAIN(Node("const_2") -> Node("while", Subgraph{"condition", Cond}, Subgraph{"while body", Body}));

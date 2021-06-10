@@ -20,11 +20,10 @@ namespace {
 		bool hasSubgraph{false};
 
 	private:
-		Status visit(const Subgraph& subgraph) override {
+		void visit(const Subgraph& subgraph) override {
 			ScopeGuard guard([this, &subgraph](){ctxt.enterGraph(subgraph.getGraph());}, [this](){ctxt.exitGraph();});
 			layout += (std::string(" -- [") + id + "/" + subgraph.getName() + "]" + "{class : subgraph; label : " + subgraph.getName() + ";}");
 			hasSubgraph = true;
-			return EG_SUCCESS;
 		}
 	private:
 		NodeId id;
@@ -143,18 +142,16 @@ GraphEasyVisitor::GraphEasyVisitor(const GraphEasyOption& options)
 : ctxt(options){
 }
 
-Status GraphEasyVisitor::visit(const Graph& graph) {
+void GraphEasyVisitor::visit(const Graph& graph) {
 	ctxt.enterGraph(graph);
 	layout += getGraphLayoutTitle(graph, ctxt);
-	return EG_SUCCESS;
 }
 
-Status GraphEasyVisitor::visit(const Node& node) {
+void GraphEasyVisitor::visit(const Node& node) {
 	layout += getNodeLayout(node, ctxt);
-	return EG_SUCCESS;
 }
 
-Status GraphEasyVisitor::visit(const Edge& edge) {
+void GraphEasyVisitor::visit(const Edge& edge) {
 	ScopeGuard guard([this](){ctxt.linkBegin();}, [this](){ctxt.linkEnd();});
 
 	auto makeEdgeLayout = [this, &edge]() -> const EdgeLayout* {
@@ -164,7 +161,6 @@ Status GraphEasyVisitor::visit(const Edge& edge) {
 
 	std::unique_ptr<const EdgeLayout> edgeLayout(makeEdgeLayout());
 	layout += edgeLayout->getLayout();
-	return EG_SUCCESS;
 }
 
 std::string GraphEasyVisitor::getLayout() const {

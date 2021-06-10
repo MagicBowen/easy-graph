@@ -5,6 +5,7 @@
 #include "easy_graph/infra/operator.h"
 #include "easy_graph/graph/subgraph.h"
 #include "easy_graph/graph/box.h"
+#include "easy_graph/graph/attributes.h"
 #include <type_traits>
 #include <vector>
 
@@ -25,6 +26,10 @@ struct Node
 			this->addSubgraph(std::forward<T>(t));
 		} else if constexpr (std::is_same_v<BoxPtr, std::decay_t<T>>) {
 			this->packing(std::forward<T>(t));
+		} else if constexpr (std::is_same_v<Attribute, std::decay_t<T>>) {
+			this->attributes.set(std::forward<T>(t));
+		} else if constexpr (std::is_same_v<Attributes, std::decay_t<T>>) {
+			this->attributes.merge(std::forward<T>(t));
 		} else {
 			static_assert(!sizeof(T), "Unsupported node construction type!");
 		}
@@ -35,11 +40,16 @@ struct Node
 
     NodeId getId() const;
 
-    template<typename Anything>
-    Anything* unpacking() const {
+    template<typename ANYTHING>
+    ANYTHING* unpacking() const {
     	if(!box) return nullptr;
-    	return box_unpacking<Anything>(box);
+    	return box_unpacking<ANYTHING>(box);
     }
+
+    template<typename VALUE>
+	const VALUE* getAttr(const AttrKey& key) const {
+		return this->attributes.get<VALUE>(key);
+	}
 
     void accept(SubgraphVisitor&) const;
 
@@ -53,6 +63,7 @@ private:
     NodeId id;
     BoxPtr box;
     std::vector<Subgraph> subgraphs;
+    Attributes attributes;
 };
 
 EG_NS_END

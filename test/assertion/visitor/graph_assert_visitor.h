@@ -28,9 +28,9 @@ struct GraphAssertVisitor: GraphVisitor {
 				 EdgeType type = EdgeType::DATA) const;
 
 private:
-	Status visit(const Graph&) override;
-	Status visit(const Node&) override;
-	Status visit(const Edge&) override;
+	void visit(const Graph&) override;
+	void visit(const Node&) override;
+	void visit(const Edge&) override;
 
 private:
 	template<typename PRED>
