@@ -67,9 +67,9 @@ namespace {
 				return "";
 			}
 
-			auto nodePair = graph->findNodePair(edge);
+			auto [src, dst] = graph->findNodePair(edge);
 
-			if ((!nodePair.first) || (!nodePair.second)) {
+			if ((!src) || (!dst)) {
 				EG_FATAL("Layout context graph(%s) has not found node(%s, %s)!",
 						graph->getName().c_str(),
 						edge.getSrc().getNodeId().c_str(),
@@ -77,8 +77,8 @@ namespace {
 				return "";
 			}
 
-			std::string srcNodeLayout = getNodeLayout(*nodePair.first, ctxt);
-			std::string dstNodeLayout = getNodeLayout(*nodePair.second, ctxt);
+			std::string srcNodeLayout = getNodeLayout(*src, ctxt);
+			std::string dstNodeLayout = getNodeLayout(*dst, ctxt);
 			return srcNodeLayout + getArrowLayout() + getAttrLayout() + dstNodeLayout;
 		}
 
