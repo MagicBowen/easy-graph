@@ -1,47 +1,7 @@
 #include <cctest/cctest.h>
-#include <string>
-#include <any>
-#include <map>
+#include "easy_graph/graph/attributes.h"
 
-namespace {
-    using AttrKey = std::string;
-	using Attribute = std::pair<AttrKey, std::any>;
-
-	struct Attributes {
-		Attributes() {
-		}
-
-		Attributes(std::initializer_list<Attribute> attrs) {
-			for (auto& attr : attrs) {
-				dict.insert(attr);
-			}
-		}
-
-		std::any* get(const AttrKey& key) {
-			auto it = dict.find(key);
-			if (it == dict.end()) {
-				return nullptr;
-			}
-			return &(it->second);
-		}
-
-		template<typename VALUE>
-		VALUE* get(const AttrKey& key) {
-			return std::any_cast<VALUE>(this->get(key));
-		}
-
-		void set(const AttrKey& key, const std::any& any) {
-			dict.insert_or_assign(key, any);
-		}
-
-		void remove(const AttrKey& key) {
-			dict.erase(key);
-		}
-
-	private:
-		std::map<AttrKey, std::any> dict;
-	};
-}
+USING_EG_NS
 
 FIXTURE(AttributesTest) {
 
@@ -89,5 +49,4 @@ FIXTURE(AttributesTest) {
         ASSERT_TRUE(name);
         ASSERT_EQ(std::string("Jerry"), *name);
 	}
-
 };
