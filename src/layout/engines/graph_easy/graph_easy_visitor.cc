@@ -77,9 +77,7 @@ namespace {
 				return "";
 			}
 
-			std::string srcNodeLayout = getNodeLayout(*src, ctxt);
-			std::string dstNodeLayout = getNodeLayout(*dst, ctxt);
-			return srcNodeLayout + getArrowLayout() + getAttrLayout() + dstNodeLayout;
+			return getNodeLayout(*src, ctxt) + getArrowLayout() + getAttrLayout() + getNodeLayout(*dst, ctxt);
 		}
 
 	private:
