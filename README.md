@@ -68,7 +68,8 @@ $ chmod a+x ./ccup.sh
 - [X]: support assertion dsl for graph;
 - [x]: support specify graph name for subgraph;
 - [ ]: relation between node and subgraph;
-- [ ]: support set attributes on graph, node or edge;
+- [x]: support set attributes on node;
 - [ ]: support user specified edge type;
 - [ ]: support api to modity graph;
+- [ ]: support rvalue construct and assignment;
 - [ ]: docs;
