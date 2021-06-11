@@ -25,18 +25,18 @@ namespace detail {
 ////////////////////////////////////////////////////////////////
 #define NODE(NAME, TYPE, ...) ::EG_NS::Node NAME(#NAME, BOX_OF(TYPE, ##__VA_ARGS__))
 
-#define CHAIN(...)            DATA_CHAIN(__VA_ARGS__)
+#define CHAIN(...)              DATA_CHAIN(__VA_ARGS__)
 #define DATA_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, EdgeType::DATA) -> __VA_ARGS__
 #define CTRL_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, EdgeType::CTRL) -> __VA_ARGS__
 
-#define ATTR(...)             Attribute(__VA_ARGS__)
-#define ATTRS(...)            Attributes(__VA_ARGS__)
+#define ATTR(...)               Attribute(__VA_ARGS__)
+#define ATTRS(...)              Attributes(__VA_ARGS__)
 
-#define SUB_G(G, ...)         Subgraph(::EG_NS::detail::get_graph_name(#G, ##__VA_ARGS__), G)
+#define SUB_G(G, ...)           Subgraph(::EG_NS::detail::get_graph_name(#G, ##__VA_ARGS__), G)
 
-#define GRAPH(G, ...)         Graph G = ::EG_NS::detail::build_graph(										\
-													   ::EG_NS::detail::get_graph_name(#G, ##__VA_ARGS__), 	\
-												       [&](GraphBuilder& BUILDER)
+#define GRAPH(G, ...)           Graph G = ::EG_NS::detail::build_graph(										\
+													     ::EG_NS::detail::get_graph_name(#G, ##__VA_ARGS__),\
+												           [&](GraphBuilder& BUILDER)
 
 EG_NS_END
 
