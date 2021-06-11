@@ -3,10 +3,9 @@
 EG_NS_BEGIN
 
 Edge::Edge(const EdgeType type,
-		   const std::string& label,
 		   const Endpoint& src,
 		   const Endpoint& dst)
-: type(type), label(label), src(src),dst(dst) {
+: type(type), src(src),dst(dst) {
 }
 
 __DEF_EQUALS(Edge)
@@ -24,10 +23,6 @@ __DEF_COMP(Edge)
 
 EdgeType Edge::getType() const {
 	return type;
-}
-
-std::string Edge::getLabel() const {
-	return label;
 }
 
 Endpoint Edge::getSrc() const {

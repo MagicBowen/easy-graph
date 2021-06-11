@@ -7,7 +7,7 @@ USING_EG_NS
 FIXTURE(GraphBuildTest) {
 
 	GRAPH(calculator) {
-		Node plus("plus", BOX_OF(Plus), ATTRS({{"danger", false}, {"input", 2}}));
+		Node plus("plus", BOX_OF(Plus), ATTRS({"danger", false}, {"input", 2}));
 		Node minus("minus", BOX_OF(Minus));
 		Node i1("2", BOX_OF(Integer, 2));
 		Node i2("5", BOX_OF(Integer, 5));

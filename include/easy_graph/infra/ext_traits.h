@@ -15,8 +15,6 @@ using all_same_or_empty_traits = typename std::enable_if<std::disjunction<std::b
 #define ALL_SAME_CONCEPT(TS, T)  all_same_traits<T, TS...>* = nullptr
 #define ALL_SAME_OR_EMPTY_CONCEPT(TS, T)  all_same_or_empty_traits<T, TS...>* = nullptr
 
-#define SUBGRAPH_CONCEPT(GS, G)  ALL_SAME_OR_EMPTY_CONCEPT(GS, G)
-
 EG_NS_END
 
 #endif

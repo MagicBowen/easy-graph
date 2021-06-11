@@ -38,6 +38,10 @@ void Attributes::remove(const AttrKey& key) {
 	dict.erase(key);
 }
 
+void Attributes::clear() {
+	dict.clear();
+}
+
 void Attributes::accept(AttributeVisitor& visitor) const {
 	std::for_each(dict.begin(), dict.end(),  [&visitor](const auto& attr){visitor.visit(attr);});
 }

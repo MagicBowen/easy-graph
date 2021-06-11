@@ -3,27 +3,24 @@
 
 #include "easy_graph/graph/edge_type.h"
 #include "easy_graph/graph/endpoint.h"
-#include <string>
+#include "easy_graph/graph/attributes_mixin.h"
 
 EG_NS_BEGIN
 
-struct Edge
+struct Edge : AttributesMixin
 {
 	Edge(const EdgeType type,
-		 const std::string& label,
 		 const Endpoint& src,
 		 const Endpoint& dst);
 
 	__DECL_COMP(Edge);
 
 	EdgeType getType() const;
-	std::string getLabel() const;
 
 	Endpoint getSrc() const;
 	Endpoint getDst() const;
 
 private:
-	std::string label;
 	EdgeType type;
 	Endpoint src;
 	Endpoint dst;

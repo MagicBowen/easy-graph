@@ -44,7 +44,7 @@ Edge* GraphBuilder::buildEdge(const Node& src, const Node& dst, const Link& link
 	NodeInfo* dstInfo = findNode(dst.getId());
 
 	if(!srcInfo || !dstInfo) {
-		EG_ERR("link edge{%d : %s} error!", link.type, link.label.c_str());
+		EG_ERR("link edge{endpoint : (&s , %s) , type : %d} error!", src.getId().c_str(), dst.getId().c_str(), link.type);
 		return nullptr;
 	}
 
@@ -53,7 +53,9 @@ Edge* GraphBuilder::buildEdge(const Node& src, const Node& dst, const Link& link
 
 	EG_DBG("link edge(%d) from (%s:%d) to (%s:%d)", link.type, src.getId().c_str(), srcPortId, dst.getId().c_str(), dstPortId);
 
-	return graph.addEdge(Edge(link.type, link.label, Endpoint(src.getId(), srcPortId), Endpoint(dst.getId(), dstPortId)));
+	Edge edge(link.type, Endpoint(src.getId(), srcPortId), Endpoint(dst.getId(), dstPortId));
+	edge.mergeAttrs(link.attrs);
+	return graph.addEdge(std::move(edge));
 }
 
 EG_NS_END

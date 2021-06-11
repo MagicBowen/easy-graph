@@ -1,10 +1,10 @@
 #include "easy_graph/layout/graph_layout.h"
-#include "easy_graph/layout/layout_executor.h"
+#include "easy_graph/layout/layout_engine.h"
 #include "easy_graph/graph/graph.h"
 
 EG_NS_BEGIN
 
-void GraphLayout::config(LayoutExecutor& executor, const LayoutOption* opts) {
+void GraphLayout::config(LayoutEngine& executor, const LayoutOption* opts) {
 	this->executor = &executor;
 	options = opts;
 }

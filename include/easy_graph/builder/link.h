@@ -3,6 +3,7 @@
 
 #include "easy_graph/graph/edge_type.h"
 #include "easy_graph/graph/port_id.h"
+#include "easy_graph/graph/attributes.h"
 #include <string>
 
 EG_NS_BEGIN
@@ -12,21 +13,25 @@ struct Link {
 		reset(type);
 	}
 
-	Link(EdgeType type, const std::string& label, PortId srcPortId, PortId dstPortId)
-	: type(type), label(label), srcPortId(srcPortId), dstPortId(dstPortId){
+	void setPortId(PortId id) {
+		if (srcPortId == UNDEFINED_PORT_ID) {
+			srcPortId = id;
+		} else {
+			dstPortId = id;
+		}
 	}
 
 	void reset(EdgeType type) {
 		this->type = type;
-		this->label = "";
 		this->srcPortId = UNDEFINED_PORT_ID;
 		this->dstPortId = UNDEFINED_PORT_ID;
+		this->attrs.clear();
 	}
 
 	EdgeType type;
-	std::string label;
-	PortId srcPortId;
-	PortId dstPortId;
+	PortId srcPortId{UNDEFINED_PORT_ID};
+	PortId dstPortId{UNDEFINED_PORT_ID};
+	Attributes attrs;
 };
 
 EG_NS_END

@@ -94,8 +94,9 @@ namespace {
 		using EdgeLayout::EdgeLayout;
 	private:
 		std::string getAttrLayout() const override {
-			if (edge.getLabel() == "") return "";
-			return std::string("{label : ") + edge.getLabel()  + "}";
+			auto label = edge.getAttr<const char*>("label");
+			if (!label || std::string(*label) == "") return "";
+			return std::string("{label : ") + *label  + "}";
 		}
 
 		std::string getArrowLayout() const override {
@@ -121,7 +122,10 @@ namespace {
 		}
 
 		std::string getLabelAttr() const {
-			return std::string("label :") + edge.getLabel() + getPortPair() + "; ";
+			std::string label;
+			auto labelAttr = edge.getAttr<const char*>("label");
+			if (labelAttr) label = *labelAttr;
+			return std::string("label :") + label + getPortPair() + "; ";
 		}
 
 		std::string getPortAttr() const {

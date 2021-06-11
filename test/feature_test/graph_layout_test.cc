@@ -1,5 +1,5 @@
 #include <cctest/cctest.h>
-#include "easy_graph/layout/engines/graph_easy/graph_easy_executor.h"
+#include "easy_graph/layout/engines/graph_easy/graph_easy_layout_engine.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
 #include "easy_graph/layout/graph_layout.h"
 #include "easy_graph/builder/graph_dsl.h"
@@ -9,7 +9,7 @@
 USING_EG_NS
 
 FIXTURE(GraphLayoutTest) {
-	GraphEasyExecutor executor;
+	GraphEasyLayoutEngine executor;
 	GraphEasyOption options;
 
 	BEFORE {

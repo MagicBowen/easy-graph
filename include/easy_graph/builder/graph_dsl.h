@@ -30,7 +30,7 @@ namespace detail {
 #define CTRL_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, EdgeType::CTRL) -> __VA_ARGS__
 
 #define ATTR(...)               Attribute(__VA_ARGS__)
-#define ATTRS(...)              Attributes(__VA_ARGS__)
+#define ATTRS(...)              Attributes({__VA_ARGS__})
 
 #define SUB_G(G, ...)           Subgraph(::EG_NS::detail::get_graph_name(#G, ##__VA_ARGS__), G)
 

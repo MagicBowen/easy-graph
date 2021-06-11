@@ -1,7 +1,7 @@
 #include "easy_graph/builder/graph_dsl.h"
 #include "easy_graph/layout/graph_layout.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
-#include "easy_graph/layout/engines/graph_easy/graph_easy_executor.h"
+#include "easy_graph/layout/engines/graph_easy/graph_easy_layout_engine.h"
 
 USING_EG_NS
 
@@ -11,7 +11,7 @@ int main() {
 	///  global layout configuration example
 	/////////////////////////////////////////////////
 
-	GraphEasyExecutor executor;
+	GraphEasyLayoutEngine executor;
 
 	GraphEasyOption options;
 	options.format = LayoutFormat::BOXART;
@@ -37,8 +37,8 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g2) {
-		CHAIN(Node("a") -> Edge(EdgeType::CTRL) -> Node("b") -> Node("c") -> Data("copy") -> Node("d") -> Node("e"));
-		CHAIN(Node("a") -> Ctrl("condition") -> Node("c"));
+		CHAIN(Node("a") -> Edge(EdgeType::CTRL) -> Node("b") -> Node("c") -> Edge(ATTR("label", "copy")) -> Node("d") -> Node("e"));
+		CHAIN(Node("a") -> Ctrl(ATTR("label", "condition")) -> Node("c"));
 	});
 
 	g2.layout();
@@ -76,8 +76,8 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g5) {
-		CHAIN(Node("a") -> Data("to") -> Node("b") -> Ctrl("condition") -> Node("c") -> Node("d") -> Data(1, 1) -> Node("e"));
-		CHAIN(Node("a") -> Data(0, 1) -> Node("c") -> Ctrl() -> Node("e"));
+		CHAIN(Node("a") -> Node("b") -> Ctrl(ATTR("label", "condition")) -> Node("c") -> Node("d") -> Data(1, 1) -> Node("e"));
+		CHAIN(Node("a") -> Data(0, 1) -> Node("c") -> Ctrl(ATTR("label", "to"), ATTR("border", true)) -> Node("e"));
 		CHAIN(Node("a") -> Data(1, 0) -> Node("d"));
 		CHAIN(Node("b") -> Node("e"));
 		CHAIN(Node("c") -> Node("e"));
@@ -90,13 +90,12 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g6) {
-		CHAIN(Node("a", Attributes{{"source", true}, {"length", 3}}) -> Data(1, 0) -> Node("d"));
+		CHAIN(Node("a", ATTRS({"source", true}, {"length", 3})) -> Data(1, 0) -> Node("d"));
 		CHAIN(Node("b") -> Node("e"));
 		CHAIN(Node("c") -> Node("e"));
 	});
 
 	g6.layout();
-
 
 	/////////////////////////////////////////////////
 	///  node with subgraphs

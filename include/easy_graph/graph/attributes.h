@@ -26,6 +26,8 @@ struct Attributes {
 
 	void merge(const Attributes&);
 
+	void clear();
+
 	void accept(AttributeVisitor&) const;
 
 private:

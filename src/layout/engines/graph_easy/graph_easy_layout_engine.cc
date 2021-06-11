@@ -1,4 +1,4 @@
-#include "easy_graph/layout/engines/graph_easy/graph_easy_executor.h"
+#include "easy_graph/layout/engines/graph_easy/graph_easy_layout_engine.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_visitor.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
 #include "layout/engines/graph_easy/utils/shell_executor.h"
@@ -16,7 +16,7 @@ namespace {
 	}
 }
 
-Status GraphEasyExecutor::layout(const Graph& graph, const LayoutOption* opts) {
+Status GraphEasyLayoutEngine::layout(const Graph& graph, const LayoutOption* opts) {
 	auto options = graphEasyOptionCast(opts);
 	GraphEasyVisitor visitor(*options);
 	graph.accept(visitor);
