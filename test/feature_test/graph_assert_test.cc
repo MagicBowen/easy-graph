@@ -1,6 +1,5 @@
 #include <cctest/cctest.h>
 #include "easy_graph/builder/graph_dsl.h"
-#include "easy_graph/graph/subgraph.h"
 #include "assertion/graph_assert.h"
 #include "assertion/node_assert.h"
 #include "assertion/edge_assert.h"
@@ -13,7 +12,7 @@ FIXTURE(GraphAssertTest) {
 	});
 
 	GRAPH(sample) {
-		CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", Subgraph{"se", g1}));
+		CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", SUB_G(g1, "se")));
 		CHAIN(Node("a") -> Data(1, 1) -> Node("b") -> Edge(EdgeType::CTRL) -> Node("e"));
 	});
 
@@ -61,7 +60,7 @@ FIXTURE(GraphAssertTest) {
 			});
 
 			GRAPH(expect) {
-				CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", Subgraph{"g1", g1}));
+				CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", SUB_G(g1)));
 				CHAIN(Node("a") -> Data(1, 1) -> Node("b"));
 				CHAIN(Node("b") -> Edge(EdgeType::CTRL) -> Node("e"));
 			});

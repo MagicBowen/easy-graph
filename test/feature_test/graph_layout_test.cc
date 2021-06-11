@@ -3,7 +3,6 @@
 #include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
 #include "easy_graph/layout/graph_layout.h"
 #include "easy_graph/builder/graph_dsl.h"
-#include "easy_graph/graph/subgraph.h"
 #include "anything/calculator.h"
 #include "anything/candy.h"
 
@@ -47,11 +46,11 @@ FIXTURE(GraphLayoutTest) {
 		});
 
 		GRAPH(candy) {
-			Node jelly{"jelly",  BOX_OF(JellyCandy, JellyCandy::CIRCLE), Subgraph{"dove", c1}, Subgraph{"circle", c2}};
+			Node jelly{"jelly",  BOX_OF(JellyCandy, JellyCandy::CIRCLE), SUB_G(c1,"dove"), SUB_G(c2,"circle")};
 			Node rainbow{"rainbow", BOX_OF(ColorCandy, 3, 2, 1)};
 
 			CHAIN(Node("dove", BOX_OF(ToffeeCandy, "Dove")) -> Node(jelly) -> Node("sweet", BOX_OF(HardCandy, 3)));
-			CHAIN(Node("dove") -> Node(rainbow) -> Node("toffee", BOX_OF(ToffeeCandy, "Haribo"), Subgraph{c2}, Subgraph{c1}));
+			CHAIN(Node("dove") -> Node(rainbow) -> Node("toffee", BOX_OF(ToffeeCandy, "Haribo"), SUB_G(c2), SUB_G(c1)));
 		});
 
 		ASSERT_TRUE(__EG_OK(c1.layout()));
