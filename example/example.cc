@@ -8,7 +8,7 @@ USING_EG_NS
 int main() {
 
 	/////////////////////////////////////////////////
-	///  global layout configuration example
+	///  global layout configuration
 	/////////////////////////////////////////////////
 
 	GraphEasyLayoutEngine executor;
@@ -23,7 +23,7 @@ int main() {
 	GraphLayout::getInstance().config(executor, &options);
 
 	/////////////////////////////////////////////////
-	///  basic graph example
+	///  basic graph
 	/////////////////////////////////////////////////
 
 	GRAPH(g1) {
