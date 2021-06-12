@@ -8,12 +8,12 @@ USING_EG_NS
 
 FIXTURE(GraphAssertTest) {
 	GRAPH(g1, "subgraph") {
-		CHAIN(Node("a") -> Node("b"));
+		CHAIN(Node("a") -> Node("b", ATTR("sink", true)));
 	});
 
 	GRAPH(sample) {
 		CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", SUB_G(g1, "se")));
-		CHAIN(Node("a") -> Data(1, 1) -> Node("b") -> Edge(EdgeType::CTRL) -> Node("e"));
+		CHAIN(Node("a") -> Data(1, 1) -> Node("b") -> Edge(EdgeType::CTRL, ATTR("label", "to")) -> Node("e"));
 	});
 
 	TEST("should assert graph info") {
@@ -71,6 +71,15 @@ FIXTURE(GraphAssertTest) {
 
 	TEST("should assert node info") {
 
+		ASSERT_NODE(g1, "b") {
+			ASSERT_EQ(1, node.inputCount);
+			ASSERT_EQ(0, node.outputCount);
+			ASSERT_EQ(0, node.subgraphCount);
+			ASSERT_TRUE(node.getAttr<bool>("sink"));
+			ASSERT_TRUE(*node.getAttr<bool>("sink"));
+			ASSERT_FALSE(node.getAttr<bool>("source"));
+		});
+
 		ASSERT_NODE(sample, "a") {
 			ASSERT_EQ(0, node.inputCount);
 			ASSERT_EQ(2, node.outputCount);
@@ -115,6 +124,9 @@ FIXTURE(GraphAssertTest) {
 		ASSERT_EDGE(sample, "b", "e") {
 			ASSERT_EQ(1, edge.count);
 			ASSERT_TRUE(edge.isCtrlType());
+			ASSERT_TRUE(edge.getAttr<const char*>("label"));
+			ASSERT_EQ("to", *edge.getAttr<const char*>("label"));
+			ASSERT_FALSE(edge.getAttr<const char*>("cond"));
 		});
 	}
 };

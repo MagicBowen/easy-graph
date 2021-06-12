@@ -1,5 +1,4 @@
 #include "assertion/visitor/edge_assert_visitor.h"
-#include "easy_graph/graph/edge.h"
 #include "easy_graph/graph/node.h"
 
 EG_NS_BEGIN

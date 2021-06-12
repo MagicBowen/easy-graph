@@ -4,6 +4,7 @@
 #include "assertion/visitor/base_types.h"
 #include "easy_graph/graph/graph_visitor.h"
 #include "easy_graph/graph/port_id.h"
+#include "easy_graph/graph/edge.h"
 
 EG_NS_BEGIN
 
@@ -15,6 +16,13 @@ struct EdgeAssertVisitor: GraphVisitor {
 
 	bool isCtrlType() const;
 	bool isDataType(const PortId& src, const PortId& dst) const;
+
+    template<typename VALUE>
+	const VALUE* getAttr(const AttrKey& key, PortId src = 0, PortId dst = 0) const {
+    	auto edge = findEdge(src, dst);
+    	if (!edge) return nullptr;
+		return edge->getAttr<VALUE>(key);
+	}
 
 private:
 	void visit(const Edge&) override;

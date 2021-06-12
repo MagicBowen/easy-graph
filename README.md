@@ -69,6 +69,7 @@ $ chmod a+x ./ccup.sh
 - [x]: support specify graph name for subgraph;
 - [ ]: relation between node and subgraph;
 - [x]: support set attributes on node;
+- [x]: support set attributes on edge;
 - [ ]: support user specified edge type;
 - [ ]: support api to modity graph;
 - [ ]: support rvalue construct and assignment;
