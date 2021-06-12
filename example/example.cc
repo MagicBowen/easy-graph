@@ -101,20 +101,20 @@ int main() {
 	///  node with subgraphs
 	/////////////////////////////////////////////////
 
-	GRAPH(Cond, "condition") {
+	GRAPH(cond, "condition") {
 		CTRL_CHAIN(Node("a") -> Node("b"));
 	});
 
-	GRAPH(Body) {
+	GRAPH(body) {
 		CHAIN(Node("a") -> Node("b") -> Node("c"));
 	});
 
 	GRAPH(graph) {
-		Node loop("loop", SUB_G(Cond), SUB_G(Body, "loop body"));
-		Node foreach("foreach", SUB_G(Cond), SUB_G(Body, "for body"), ATTR("loop", true));
+		Node loop("loop", SUB_G(cond), SUB_G(body, "loop body"));
+		Node foreach("foreach", SUB_G(cond), SUB_G(body, "for body"), ATTR("loop", true));
 
 		DATA_CHAIN(Node("const_1") -> Node(loop) -> Node("unique") -> Node("softmax"));
-		DATA_CHAIN(Node("const_2") -> Node("while", SUB_G(Cond), SUB_G(Body, "while body")));
+		DATA_CHAIN(Node("const_2") -> Node("while", SUB_G(cond), SUB_G(body, "while body")));
 		CTRL_CHAIN(Node("case") -> Node("unique"));
 		CTRL_CHAIN(Node(loop) -> Node(foreach));
 	});
