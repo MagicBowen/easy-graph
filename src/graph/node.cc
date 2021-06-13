@@ -1,18 +1,12 @@
 #include "easy_graph/graph/node.h"
 #include "easy_graph/graph/subgraph_visitor.h"
+#include "easy_graph/infra/vector_eq.h"
 
 EG_NS_BEGIN
 
 namespace {
 	bool isSubgraphsEqual(const std::vector<Subgraph>& lhs, const std::vector<Subgraph>& rhs) {
-		if (lhs.size() != rhs.size()) return false;
-		for (auto lg : lhs) {
-			auto result = std::find_if(rhs.begin(), rhs.end(), [&lg](const auto& rg) {
-				return lg == rg;
-			});
-			if (result == rhs.end()) return false;
-		}
-		return true;
+		return is_vector_unorder_equal(lhs, rhs);
 	}
 }
 
