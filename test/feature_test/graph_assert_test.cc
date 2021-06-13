@@ -1,13 +1,13 @@
 #include <cctest/cctest.h>
 #include "easy_graph/builder/graph_dsl.h"
-#include "assertion/graph_assert.h"
-#include "assertion/node_assert.h"
-#include "assertion/edge_assert.h"
+#include "easy_graph/assert/graph_assert.h"
+#include "easy_graph/assert/node_assert.h"
+#include "easy_graph/assert/edge_assert.h"
 #include "easy_graph/builder/edge_types/default_edge_type_register.h"
 
 USING_EG_NS
 
-REG_DEFAULT_EDGE_TYPE(DATA_EDGE);
+REG_DEFAULT_EDGE_TYPE(EDGE_DATA);
 
 FIXTURE(GraphAssertTest) {
 
@@ -18,7 +18,7 @@ FIXTURE(GraphAssertTest) {
 
 	GRAPH(sample) {
 		CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", SUB_G(g1, "se")));
-		CHAIN(Node("a") -> Data(1, 1) -> Node("b") -> Edge(CTRL_EDGE, ATTR("label", "to")) -> Node("e"));
+		CHAIN(Node("a") -> Data(1, 1) -> Node("b") -> Edge(EDGE_CTRL, ATTR("label", "to")) -> Node("e"));
 	});
 
 	TEST("should assert graph info") {
@@ -41,22 +41,22 @@ FIXTURE(GraphAssertTest) {
 			ASSERT_TRUE(graph.hasEdge("a", "b"));
 			ASSERT_TRUE(graph.hasEdge("b", "c"));
 			ASSERT_TRUE(graph.hasEdge("c", "d"));
-			ASSERT_TRUE(graph.hasEdge("b", "e", CTRL_EDGE));
-			ASSERT_TRUE(graph.hasEdge("d", "e", DATA_EDGE));
+			ASSERT_TRUE(graph.hasEdge("b", "e", EDGE_CTRL));
+			ASSERT_TRUE(graph.hasEdge("d", "e", EDGE_DATA));
 		});
 
 		ASSERT_GRAPH(sample) {
 			ASSERT_TRUE(graph.hasEdge(Endpoint{"a", 0}, {"b", 0}));
-			ASSERT_TRUE(graph.hasEdge(Endpoint{"c", 0}, {"d", 0}, DATA_EDGE));
+			ASSERT_TRUE(graph.hasEdge(Endpoint{"c", 0}, {"d", 0}, EDGE_DATA));
 		});
 
 		ASSERT_GRAPH(sample) {
 			ASSERT_FALSE(graph.hasNode("f"));
 			ASSERT_FALSE(graph.hasEdge("a", "e"));
 			ASSERT_FALSE(graph.hasEdge("e", "f"));
-			ASSERT_FALSE(graph.hasEdge("c", "d", CTRL_EDGE));
+			ASSERT_FALSE(graph.hasEdge("c", "d", EDGE_CTRL));
 			ASSERT_FALSE(graph.hasEdge(Endpoint{"a", 1}, {"b", 0}));
-			ASSERT_FALSE(graph.hasEdge(Endpoint{"a", 0}, {"b", 0}, CTRL_EDGE));
+			ASSERT_FALSE(graph.hasEdge(Endpoint{"a", 0}, {"b", 0}, EDGE_CTRL));
 		});
 
 		ASSERT_GRAPH(sample) {
@@ -67,7 +67,7 @@ FIXTURE(GraphAssertTest) {
 			GRAPH(expect) {
 				CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", SUB_G(g1)));
 				CHAIN(Node("a") -> Data(1, 1) -> Node("b"));
-				CHAIN(Node("b") -> Edge(CTRL_EDGE) -> Node("e"));
+				CHAIN(Node("b") -> Edge(EDGE_CTRL) -> Node("e"));
 			});
 
 			ASSERT_TRUE(graph.isEqualTo(expect));

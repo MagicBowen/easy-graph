@@ -10,7 +10,7 @@ EG_NS_BEGIN
 SINGLETON(DataEdgeType) EXTENDS(EdgeType, PortAwareTrait) {
 };
 
-#define DATA_EDGE  ::EG_NS::DataEdgeType::getInstance()
+#define EDGE_DATA  ::EG_NS::DataEdgeType::getInstance()
 
 EG_NS_END
 

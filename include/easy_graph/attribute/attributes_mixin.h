@@ -1,7 +1,7 @@
 #ifndef HA663CE50_65F5_4399_BAF0_AF9569FBBBF6
 #define HA663CE50_65F5_4399_BAF0_AF9569FBBBF6
 
-#include "easy_graph/graph/attributes.h"
+#include "easy_graph/attribute/attributes.h"
 
 EG_NS_BEGIN
 

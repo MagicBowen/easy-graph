@@ -28,9 +28,9 @@ namespace detail {
 ////////////////////////////////////////////////////////////////
 #define NODE(NAME, TYPE, ...) ::EG_NS::Node NAME(#NAME, BOX_OF(TYPE, ##__VA_ARGS__))
 
-#define CHAIN(...)            ::EG_NS::ChainBuilder(BUILDER, DEFAULT_EDGE) -> __VA_ARGS__
-#define DATA_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, DATA_EDGE) -> __VA_ARGS__
-#define CTRL_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, CTRL_EDGE) -> __VA_ARGS__
+#define CHAIN(...)            ::EG_NS::ChainBuilder(BUILDER, EDGE_DEFAULT) -> __VA_ARGS__
+#define DATA_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, EDGE_DATA) -> __VA_ARGS__
+#define CTRL_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, EDGE_CTRL) -> __VA_ARGS__
 
 #define ATTR(...)               Attribute(__VA_ARGS__)
 #define ATTRS(...)              Attributes({__VA_ARGS__})

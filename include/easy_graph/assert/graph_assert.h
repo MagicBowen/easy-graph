@@ -1,7 +1,7 @@
 #ifndef H7D82AF79_7C21_4FF8_9AFB_4BB7FFF9B86D
 #define H7D82AF79_7C21_4FF8_9AFB_4BB7FFF9B86D
 
-#include "assertion/visitor/graph_assert_visitor.h"
+#include "easy_graph/assert/visitor/graph_assert_visitor.h"
 #include "easy_graph/graph/graph.h"
 #include "easy_graph/infra/log.h"
 

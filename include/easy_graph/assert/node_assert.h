@@ -1,7 +1,7 @@
 #ifndef HAF54D894_EE19_492A_940E_D0B3449C3016
 #define HAF54D894_EE19_492A_940E_D0B3449C3016
 
-#include "assertion/visitor/node_assert_visitor.h"
+#include "easy_graph/assert/visitor/node_assert_visitor.h"
 #include "easy_graph/graph/node_id.h"
 #include "easy_graph/graph/graph.h"
 #include "easy_graph/infra/log.h"

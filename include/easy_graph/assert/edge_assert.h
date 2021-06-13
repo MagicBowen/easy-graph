@@ -1,7 +1,7 @@
 #ifndef H4F77218F_964D_4BEC_ACA8_DD9846BC7507
 #define H4F77218F_964D_4BEC_ACA8_DD9846BC7507
 
-#include "assertion/visitor/edge_assert_visitor.h"
+#include "easy_graph/assert/visitor/edge_assert_visitor.h"
 #include "easy_graph/graph/node_id.h"
 #include "easy_graph/graph/graph.h"
 #include "easy_graph/infra/log.h"

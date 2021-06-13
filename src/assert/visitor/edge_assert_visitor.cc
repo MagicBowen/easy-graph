@@ -1,4 +1,4 @@
-#include "assertion/visitor/edge_assert_visitor.h"
+#include "easy_graph/assert/visitor/edge_assert_visitor.h"
 #include "easy_graph/builder/edge_types/ctrl_edge_type.h"
 #include "easy_graph/builder/edge_types/data_edge_type.h"
 #include "easy_graph/graph/node.h"
@@ -15,14 +15,14 @@ bool EdgeAssertVisitor::linked(const PortId& src, const PortId& dst) const {
 
 bool EdgeAssertVisitor::isCtrlType() const {
 	if (count != 1) return false;
-	return edges[0]->getType() == CTRL_EDGE;
+	return edges[0]->getType() == EDGE_CTRL;
 }
 
 bool EdgeAssertVisitor::isDataType(const PortId& src, const PortId& dst) const {
 	auto edge = findEdge(src, dst);
 	if (!edge) return false;
 
-	return edge->getType() == DATA_EDGE;
+	return edge->getType() == EDGE_DATA;
 }
 
 const Edge* EdgeAssertVisitor::findEdge(const PortId& src, const PortId& dst) const {

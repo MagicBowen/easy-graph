@@ -14,7 +14,7 @@ private:
 	}
 };
 
-#define CTRL_EDGE  ::EG_NS::CtrlEdgeType::getInstance()
+#define EDGE_CTRL  ::EG_NS::CtrlEdgeType::getInstance()
 
 EG_NS_END
 

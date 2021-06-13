@@ -3,7 +3,7 @@
 
 #include "easy_graph/graph/graph_visitor.h"
 #include "easy_graph/graph/node.h"
-#include "assertion/visitor/base_types.h"
+#include "easy_graph/assert/visitor/base_types.h"
 #include <string>
 
 EG_NS_BEGIN

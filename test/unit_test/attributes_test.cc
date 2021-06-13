@@ -1,5 +1,5 @@
 #include <cctest/cctest.h>
-#include "easy_graph/graph/attributes.h"
+#include "easy_graph/attribute/attributes.h"
 
 USING_EG_NS
 

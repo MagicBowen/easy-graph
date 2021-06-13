@@ -1,4 +1,4 @@
-#include "assertion/visitor/node_assert_visitor.h"
+#include "easy_graph/assert/visitor/node_assert_visitor.h"
 #include "easy_graph/graph/subgraph_visitor.h"
 #include "easy_graph/graph/edge.h"
 #include "easy_graph/graph/node.h"

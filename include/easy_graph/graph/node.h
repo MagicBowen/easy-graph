@@ -4,7 +4,7 @@
 #include "easy_graph/graph/node_id.h"
 #include "easy_graph/infra/operator.h"
 #include "easy_graph/graph/subgraph.h"
-#include "easy_graph/graph/attributes_mixin.h"
+#include "easy_graph/attribute/attributes_mixin.h"
 #include "easy_graph/graph/box.h"
 #include <type_traits>
 #include <vector>

@@ -3,7 +3,7 @@
 
 #include "easy_graph/graph/edge_type.h"
 #include "easy_graph/graph/endpoint.h"
-#include "easy_graph/graph/attributes_mixin.h"
+#include "easy_graph/attribute/attributes_mixin.h"
 
 EG_NS_BEGIN
 

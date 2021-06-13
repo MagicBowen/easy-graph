@@ -50,11 +50,11 @@ struct ChainBuilder {
 		}
 		template<typename ...TS>
 		ChainBuilder& Ctrl(TS && ...ts) {
-			return this->Edge(CTRL_EDGE, std::forward<TS>(ts)...);
+			return this->Edge(EDGE_CTRL, std::forward<TS>(ts)...);
 		}
 		template<typename ...TS>
 		ChainBuilder& Data(TS && ...ts) {
-			return this->Edge(DATA_EDGE, std::forward<TS>(ts)...);
+			return this->Edge(EDGE_DATA, std::forward<TS>(ts)...);
 		}
 
 	private:

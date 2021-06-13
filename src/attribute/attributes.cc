@@ -1,5 +1,5 @@
-#include "easy_graph/graph/attributes.h"
-#include "easy_graph/graph/attribute_visitor.h"
+#include "easy_graph/attribute/attributes.h"
+#include "easy_graph/attribute/attribute_visitor.h"
 
 EG_NS_BEGIN
 

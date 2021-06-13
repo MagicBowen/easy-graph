@@ -2,7 +2,7 @@
 #define H35695B82_E9E5_419D_A6B4_C13FB0842C9F
 
 #include "easy_graph/graph/port_id.h"
-#include "easy_graph/graph/attributes.h"
+#include "easy_graph/attribute/attributes.h"
 #include <string>
 
 EG_NS_BEGIN
