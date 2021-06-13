@@ -34,7 +34,6 @@ void makeNodeImpl(Node& node, T && t, TS && ...ts) {
 }
 
 #define NODE_OF(...)		::EG_NS::makeNode(__VA_ARGS__)
-#define HAS_NODE(N, ...)    auto N = NODE_OF(#N, ##__VA_ARGS__)
 
 EG_NS_END
 

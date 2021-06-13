@@ -30,6 +30,9 @@ namespace detail {
 #define DATA_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, EDGE_DATA) -> __VA_ARGS__
 #define CTRL_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, EDGE_CTRL) -> __VA_ARGS__
 
+#define HAS_NODE(N, ...)       	auto N = NODE_OF(#N, ##__VA_ARGS__);		\
+								BUILDER->addNode(N)
+
 #define ATTR(...)               Attribute(__VA_ARGS__)
 #define ATTRS(...)              Attributes({__VA_ARGS__})
 
