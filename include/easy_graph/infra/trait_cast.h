@@ -5,14 +5,14 @@
 
 EG_NS_BEGIN
 
-template<typename Trait, typename Object>
-const Trait* trait_cast(const Object& object) {
-	return dynamic_cast<const Trait*>(&object);
+template<typename TRAIT, typename OBJECT>
+const TRAIT* trait_cast(const OBJECT& object) {
+	return dynamic_cast<const TRAIT*>(&object);
 }
 
-template<typename Trait, typename Object>
-Trait* trait_cast(Object& object) {
-	return dynamic_cast<Trait*>(&object);
+template<typename TRAIT, typename OBJECT>
+TRAIT* trait_cast(OBJECT& object) {
+	return dynamic_cast<TRAIT*>(&object);
 }
 
 EG_NS_END

@@ -9,13 +9,13 @@ EG_NS_BEGIN
 
 ////////////////////////////////////////////////////////////////
 namespace detail {
-	constexpr const char* get_graph_name(const char* defaultName,
+	constexpr const char* getGraphName(const char* defaultName,
 										 const char* specifiedName = nullptr) {
 		return specifiedName ? specifiedName : defaultName;
 	}
 
 	template<typename GRAPH_BUILDER>
-	Graph build_graph(const char* name, GRAPH_BUILDER builderInDSL) {
+	Graph buildGraph(const char* name, GRAPH_BUILDER builderInDSL) {
 		GraphBuilder builder(name);
 		builderInDSL(builder);
 		return std::move(*builder);
@@ -32,10 +32,10 @@ namespace detail {
 #define ATTR(...)               Attribute(__VA_ARGS__)
 #define ATTRS(...)              Attributes({__VA_ARGS__})
 
-#define SUB_G(G, ...)           Subgraph(::EG_NS::detail::get_graph_name(#G, ##__VA_ARGS__), G)
+#define SUB_G(G, ...)           Subgraph(::EG_NS::detail::getGraphName(#G, ##__VA_ARGS__), G)
 
-#define GRAPH(G, ...)           Graph G = ::EG_NS::detail::build_graph(										\
-													     ::EG_NS::detail::get_graph_name(#G, ##__VA_ARGS__),\
+#define GRAPH(G, ...)           Graph G = ::EG_NS::detail::buildGraph(										\
+													     ::EG_NS::detail::getGraphName(#G, ##__VA_ARGS__),	\
 												           [&](GraphBuilder& BUILDER)
 
 EG_NS_END

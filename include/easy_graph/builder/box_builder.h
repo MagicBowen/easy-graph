@@ -7,17 +7,17 @@
 EG_NS_BEGIN
 
 namespace detail {
-	template<typename Anything>
-	struct BoxWrapper : Anything, Box {
-		using Anything::Anything;
+	template<typename ANYTHING>
+	struct BoxWrapper : ANYTHING, Box {
+		using ANYTHING::ANYTHING;
 	};
 
-	template<typename Anything>
-	using BoxedAnything = std::conditional_t<std::is_base_of_v<Box, Anything>, Anything, BoxWrapper<Anything>>;
+	template<typename ANYTHING>
+	using BoxedAnything = std::conditional_t<std::is_base_of_v<Box, ANYTHING>, ANYTHING, BoxWrapper<ANYTHING>>;
 }
 
-#define BOX_WRAPPER(Anything)  ::EG_NS::detail::BoxedAnything<Anything>
-#define BOX_OF(Anything, ...)  ::EG_NS::box_packing<BOX_WRAPPER(Anything)>(__VA_ARGS__)
+#define BOX_WRAPPER(ANYTHING)  ::EG_NS::detail::BoxedAnything<ANYTHING>
+#define BOX_OF(ANYTHING, ...)  ::EG_NS::box_packing<BOX_WRAPPER(ANYTHING)>(__VA_ARGS__)
 
 EG_NS_END
 

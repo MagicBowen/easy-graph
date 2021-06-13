@@ -11,14 +11,14 @@ INTERFACE(Box) {
 
 using BoxPtr = std::shared_ptr<Box>;
 
-template<typename Anything, typename ...Args>
-BoxPtr box_packing(Args && ...args) {
-	return std::make_shared<Anything>(std::forward<Args>(args)...);
+template<typename ANYTHING, typename ...ARGS>
+BoxPtr box_packing(ARGS && ...args) {
+	return std::make_shared<ANYTHING>(std::forward<ARGS>(args)...);
 }
 
-template<typename Anything>
-Anything* box_unpacking(const BoxPtr& box) {
-	return dynamic_cast<Anything*>(box.get());
+template<typename ANYTHING>
+ANYTHING* box_unpacking(const BoxPtr& box) {
+	return dynamic_cast<ANYTHING*>(box.get());
 }
 
 EG_NS_END
