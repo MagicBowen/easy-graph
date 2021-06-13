@@ -3,6 +3,7 @@
 
 #include "easy_graph/graph/port_id.h"
 #include "easy_graph/attribute/attributes.h"
+#include "easy_graph/builder/port_pair.h"
 #include <string>
 
 EG_NS_BEGIN
@@ -10,9 +11,10 @@ EG_NS_BEGIN
 struct EdgeType;
 
 struct Link {
-	explicit Link(const EdgeType& type);
-	void setPortId(PortId id);
-	void reset(const EdgeType& type);
+	explicit Link(const EdgeType&);
+	void setPorts(const PortPair&);
+	void setPort(const PortId&);
+	void reset(const EdgeType&);
 
 	EdgeType* type{nullptr};
 	PortId srcPortId{UNDEFINED_PORT_ID};

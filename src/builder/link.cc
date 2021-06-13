@@ -6,10 +6,17 @@ Link::Link(const EdgeType& type) {
 	reset(type);
 }
 
-void Link::setPortId(PortId id) {
+void Link::setPorts(const PortPair& pp) {
+	srcPortId = pp.first;
+	dstPortId = pp.second;
+}
+
+void Link::setPort(const PortId& id) {
 	if (srcPortId == UNDEFINED_PORT_ID) {
 		srcPortId = id;
-	} else {
+		return;
+	}
+	if (dstPortId == UNDEFINED_PORT_ID) {
 		dstPortId = id;
 	}
 }

@@ -74,4 +74,5 @@ $ chmod a+x ./ccup.sh
 - [ ]: relation between node and subgraph;
 - [ ]: support api to modity graph;
 - [ ]: support rvalue construct and assignment;
+- [ ]: forward declare enum class (Status);
 - [ ]: docs;
