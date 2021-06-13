@@ -2,9 +2,9 @@
 #define HDF50E564_F050_476A_A479_F82B20F35C84
 
 #include "easy_graph/builder/link.h"
-#include "easy_graph/graph/node_id.h"
 #include "easy_graph/graph/node.h"
-#include "easy_graph/infra/ext_traits.h"
+
+#include "easy_graph/graph/edge_type.h"
 
 EG_NS_BEGIN
 

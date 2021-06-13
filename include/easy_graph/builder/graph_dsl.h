@@ -4,6 +4,8 @@
 #include "easy_graph/builder/graph_builder.h"
 #include "easy_graph/builder/chain_builder.h"
 #include "easy_graph/builder/box_builder.h"
+#include "easy_graph/builder/default_edge_type.h"
+#include "easy_graph/graph/edge_type.h"
 
 EG_NS_BEGIN
 
@@ -25,7 +27,7 @@ namespace detail {
 ////////////////////////////////////////////////////////////////
 #define NODE(NAME, TYPE, ...) ::EG_NS::Node NAME(#NAME, BOX_OF(TYPE, ##__VA_ARGS__))
 
-#define CHAIN(...)              DATA_CHAIN(__VA_ARGS__)
+#define CHAIN(...)            ::EG_NS::ChainBuilder(BUILDER, DEFAULT_EDGE_TYPE) -> __VA_ARGS__
 #define DATA_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, EdgeType::DATA()) -> __VA_ARGS__
 #define CTRL_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, EdgeType::CTRL()) -> __VA_ARGS__
 
