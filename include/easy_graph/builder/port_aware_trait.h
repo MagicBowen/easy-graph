@@ -5,7 +5,7 @@
 
 EG_NS_BEGIN
 
-INTERFACE(AutoLinkPortTrait) {
+INTERFACE(PortAwareTrait) {
 };
 
 EG_NS_END

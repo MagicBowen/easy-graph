@@ -6,12 +6,8 @@
 
 EG_NS_BEGIN
 
-struct Edge;
-struct GraphEasyLayoutContext;
-
 INTERFACE(GraphEasyEdgeLayoutTrait) {
-	ABSTRACT(std::string getAttrLayout(const Edge&, GraphEasyLayoutContext&) const);
-	ABSTRACT(std::string getArrowLayout(const Edge&, GraphEasyLayoutContext&) const);
+	ABSTRACT(std::string getArrow() const);
 };
 
 EG_NS_END

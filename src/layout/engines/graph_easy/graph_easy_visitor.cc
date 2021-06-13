@@ -1,6 +1,7 @@
 #include "easy_graph/layout/engines/graph_easy/graph_easy_visitor.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_edge_layout_trait.h"
+#include "easy_graph/builder/port_aware_trait.h"
 #include "easy_graph/graph/subgraph_visitor.h"
 #include "easy_graph/infra/scope_guard.h"
 #include "easy_graph/infra/trait_cast.h"
@@ -59,7 +60,7 @@ namespace {
 	/////////////////////////////////////////////////////////////////////////
 	struct EdgeLayout {
 		EdgeLayout(const Edge& edge, GraphEasyLayoutContext& ctxt)
-		: edge(edge), ctxt(ctxt) {
+		: edge(edge), ctxt(ctxt), option(ctxt.getOptions()) {
 		}
 
 		virtual ~EdgeLayout() {
@@ -87,18 +88,51 @@ namespace {
 
 	private:
 		std::string getAttrLayout() const {
-			auto edgeTypeLayout = trait_cast<GraphEasyEdgeLayoutTrait>(edge.getType());
-			return edgeTypeLayout ? edgeTypeLayout->getAttrLayout(edge, ctxt) : "";
+			auto label = getLabel();
+
+			if (isPortAware()) {
+				return std::string("{ ") + std::string("label :") + label + getPortPair() + "; " + getPortAttr() + " }";
+			}
+
+			if (label == "") return "";
+			return std::string("{ label : ") + label  + " }";
 		}
 
 		std::string getArrowLayout() const {
 			auto edgeTypeLayout = trait_cast<GraphEasyEdgeLayoutTrait>(edge.getType());
-			return edgeTypeLayout ? edgeTypeLayout->getArrowLayout(edge, ctxt) : " --> ";
+			return edgeTypeLayout ? edgeTypeLayout->getArrow() : " --> ";
+		}
+
+		std::string getLabel() const {
+			auto labelAttr = edge.getAttr<const char*>("label");
+			if (!labelAttr) return "";
+			return *labelAttr;
+		}
+
+		bool isPortAware() const {
+			return (trait_cast<PortAwareTrait>(edge.getType()) != nullptr);
+		}
+
+		std::string getPortPair() const {
+			return std::string("(")+ std::to_string(edge.getSrc().getPortId()) + "," + std::to_string(edge.getDst().getPortId()) + ")";
+		}
+
+		std::string getPortAttr() const {
+			return (option.type == LayoutType::FREE) ? "" : getOutPortAttr() + getInPortAttr();
+		}
+
+		std::string getOutPortAttr() const {
+			return std::string(" start : ") + "front" + ", " + std::to_string(edge.getSrc().getPortId() * option.scale) + "; ";
+		}
+
+		std::string getInPortAttr() const {
+			return std::string(" end : ") + "back" + ", " + std::to_string(edge.getDst().getPortId() * option.scale) + "; ";
 		}
 
 	protected:
 		const Edge& edge;
 		GraphEasyLayoutContext& ctxt;
+		const GraphEasyOption& option;
 	};
 }
 
