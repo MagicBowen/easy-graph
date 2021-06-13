@@ -3,10 +3,15 @@
 #include "assertion/graph_assert.h"
 #include "assertion/node_assert.h"
 #include "assertion/edge_assert.h"
+#include "easy_graph/builder/edge_types/default_edge_type_register.h"
 
 USING_EG_NS
 
+REG_DEFAULT_EDGE_TYPE(DATA_EDGE);
+
 FIXTURE(GraphAssertTest) {
+
+
 	GRAPH(g1, "subgraph") {
 		CHAIN(Node("a") -> Node("b", ATTR("sink", true)));
 	});
@@ -33,25 +38,25 @@ FIXTURE(GraphAssertTest) {
 		});
 
 		ASSERT_GRAPH(sample) {
-//			ASSERT_TRUE(graph.hasEdge("a", "b"));
-//			ASSERT_TRUE(graph.hasEdge("b", "c"));
-//			ASSERT_TRUE(graph.hasEdge("c", "d"));
-//			ASSERT_TRUE(graph.hasEdge("b", "e", EdgeType::CTRL));
-//			ASSERT_TRUE(graph.hasEdge("d", "e", EdgeType::DATA));
+			ASSERT_TRUE(graph.hasEdge("a", "b"));
+			ASSERT_TRUE(graph.hasEdge("b", "c"));
+			ASSERT_TRUE(graph.hasEdge("c", "d"));
+			ASSERT_TRUE(graph.hasEdge("b", "e", CTRL_EDGE));
+			ASSERT_TRUE(graph.hasEdge("d", "e", DATA_EDGE));
 		});
 
 		ASSERT_GRAPH(sample) {
-//			ASSERT_TRUE(graph.hasEdge(Endpoint{"a", 0}, {"b", 0}));
-//			ASSERT_TRUE(graph.hasEdge(Endpoint{"c", 0}, {"d", 0}, EdgeType::DATA));
+			ASSERT_TRUE(graph.hasEdge(Endpoint{"a", 0}, {"b", 0}));
+			ASSERT_TRUE(graph.hasEdge(Endpoint{"c", 0}, {"d", 0}, DATA_EDGE));
 		});
 
 		ASSERT_GRAPH(sample) {
 			ASSERT_FALSE(graph.hasNode("f"));
-//			ASSERT_FALSE(graph.hasEdge("a", "e"));
-//			ASSERT_FALSE(graph.hasEdge("e", "f"));
-//			ASSERT_FALSE(graph.hasEdge("c", "d", EdgeType::CTRL));
-//			ASSERT_FALSE(graph.hasEdge(Endpoint{"a", 1}, {"b", 0}));
-//			ASSERT_FALSE(graph.hasEdge(Endpoint{"a", 0}, {"b", 0}, EdgeType::CTRL));
+			ASSERT_FALSE(graph.hasEdge("a", "e"));
+			ASSERT_FALSE(graph.hasEdge("e", "f"));
+			ASSERT_FALSE(graph.hasEdge("c", "d", CTRL_EDGE));
+			ASSERT_FALSE(graph.hasEdge(Endpoint{"a", 1}, {"b", 0}));
+			ASSERT_FALSE(graph.hasEdge(Endpoint{"a", 0}, {"b", 0}, CTRL_EDGE));
 		});
 
 		ASSERT_GRAPH(sample) {
@@ -116,7 +121,7 @@ FIXTURE(GraphAssertTest) {
 			ASSERT_EQ(2, edge.count);
 			ASSERT_TRUE(edge.linked(0, 0));
 			ASSERT_TRUE(edge.linked(1, 1));
-//			ASSERT_TRUE(edge.isDataType(0, 0));
+			ASSERT_TRUE(edge.isDataType(0, 0));
 			ASSERT_TRUE(edge.isDataType(1, 1));
 			ASSERT_FALSE(edge.linked(0, 1));
 		});

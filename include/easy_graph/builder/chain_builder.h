@@ -3,8 +3,8 @@
 
 #include "easy_graph/builder/link.h"
 #include "easy_graph/graph/node.h"
-#include "easy_graph/builder/edge_type/ctrl_edge_type.h"
-#include "easy_graph/builder/edge_type/data_edge_type.h"
+#include "easy_graph/builder/edge_types/ctrl_edge_type.h"
+#include "easy_graph/builder/edge_types/data_edge_type.h"
 
 EG_NS_BEGIN
 
