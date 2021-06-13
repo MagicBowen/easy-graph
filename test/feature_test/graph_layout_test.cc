@@ -24,8 +24,8 @@ FIXTURE(GraphLayoutTest) {
 
 	TEST("should layout calculator graph") {
 		GRAPH(calculator) {
-			Node i1("2", BOX_OF(Integer, 2));
-			Node i2("5", BOX_OF(Integer, 5));
+			auto i1 = NODE_OF("2", BOX_OF(Integer, 2));
+			auto i2 = NODE_OF("5", BOX_OF(Integer, 5));
 
 			CHAIN(Node("2") -> Node("plus", BOX_OF(Plus)) -> Node("minus", BOX_OF(Minus)) -> Node("div", BOX_OF(Divides)));
 			CHAIN(Node("5") -> Node("plus"));
@@ -46,8 +46,8 @@ FIXTURE(GraphLayoutTest) {
 		});
 
 		GRAPH(candy) {
-			Node jelly{"jelly",  BOX_OF(JellyCandy, JellyCandy::CIRCLE), SUB_G(c1,"dove"), SUB_G(c2,"circle")};
-			Node rainbow{"rainbow", BOX_OF(ColorCandy, 3, 2, 1)};
+			HAS_NODE(jelly,   BOX_OF(JellyCandy, JellyCandy::CIRCLE), SUB_G(c1,"dove"), SUB_G(c2,"circle"));
+			HAS_NODE(rainbow, BOX_OF(ColorCandy, 3, 2, 1));
 
 			CHAIN(Node("dove", BOX_OF(ToffeeCandy, "Dove")) -> Node(jelly) -> Node("sweet", BOX_OF(HardCandy, 3)));
 			CHAIN(Node("dove") -> Node(rainbow) -> Node("toffee", BOX_OF(ToffeeCandy, "Haribo"), SUB_G(c2), SUB_G(c1)));

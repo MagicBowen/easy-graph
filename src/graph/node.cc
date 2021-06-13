@@ -16,6 +16,9 @@ namespace {
 	}
 }
 
+Node::Node(const NodeId& id) : id(id) {
+}
+
 __DEF_EQUALS(Node)
 {
 	if (id != rhs.id) return false;
@@ -39,10 +42,6 @@ Node& Node::packing(const BoxPtr& box) {
 Node& Node::addSubgraph(const Subgraph& graph) {
 	subgraphs.push_back(graph);
 	return *this;
-}
-
-bool Node::hasSubgraph() const {
-	return subgraphs.size() != 0;
 }
 
 void Node::accept(SubgraphVisitor& visitor) const {

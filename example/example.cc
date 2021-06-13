@@ -48,7 +48,9 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g3) {
-		Node a("a"), b("b"), c("c");
+		HAS_NODE(a);
+		HAS_NODE(b);
+		HAS_NODE(c);
 
 		DATA_CHAIN(Node(a) -> Node(b) -> Node(c) -> Node("d") -> Node("e"));
 		DATA_CHAIN(Node(a) -> Node("e"));
@@ -110,8 +112,8 @@ int main() {
 	});
 
 	GRAPH(graph) {
-		Node loop("loop", SUB_G(cond), SUB_G(body, "loop body"));
-		Node foreach("foreach", SUB_G(cond), SUB_G(body, "for body"), ATTR("loop", true));
+		auto loop = NODE_OF("loop", SUB_G(cond), SUB_G(body, "loop body"));
+		auto foreach = NODE_OF("foreach", SUB_G(cond), SUB_G(body, "for body"), ATTR("loop", true));
 
 		DATA_CHAIN(Node("const_1") -> Node(loop) -> Node("unique") -> Node("softmax"));
 		DATA_CHAIN(Node("const_2") -> Node("while", SUB_G(cond), SUB_G(body, "while body")));

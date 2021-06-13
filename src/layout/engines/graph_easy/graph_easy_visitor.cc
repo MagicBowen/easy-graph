@@ -20,11 +20,13 @@ namespace {
 		: id(id), ctxt(ctxt) {
 		}
 		std::string layout;
+		bool hasSubgraph{false};
 
 	private:
 		void visit(const Subgraph& subgraph) override {
 			ScopeGuard guard([this, &subgraph](){ctxt.enterGraph(subgraph.getGraph());}, [this](){ctxt.exitGraph();});
 			layout += (std::string(" -- [") + id + "/" + subgraph.getName() + "]" + "{class : subgraph; label : " + subgraph.getName() + ";}");
+			hasSubgraph = true;
 		}
 	private:
 		NodeId id;
@@ -50,11 +52,11 @@ namespace {
 		auto id = node.getId();
 		std::string nodeLayout = getNodeBaseLayout(node);
 
-		if (!node.hasSubgraph()) return nodeLayout;
+		SubgraphLayoutVisitor visitor(id, ctxt);
+		node.accept(visitor);
+		if (!visitor.hasSubgraph) return nodeLayout;
 
-		SubgraphLayoutVisitor subgraphVisitor(id, ctxt);
-		node.accept(subgraphVisitor);
-		return (std::string("( ") + node.getId() + ": " + nodeLayout + subgraphVisitor.layout + ")");
+		return (std::string("( ") + node.getId() + ": " + nodeLayout + visitor.layout + ")");
 	}
 
 	/////////////////////////////////////////////////////////////////////////

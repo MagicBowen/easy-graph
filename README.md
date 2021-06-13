@@ -70,7 +70,7 @@ $ chmod a+x ./ccup.sh
 - [x]: support set attributes on node;
 - [x]: support set attributes on edge;
 - [x]: support user specified edge type;
-- [ ]: unify the node making;
+- [x]: unify the node making;
 - [ ]: relation between node and subgraph;
 - [ ]: support api to modity graph;
 - [ ]: support rvalue construct and assignment;

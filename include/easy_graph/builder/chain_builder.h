@@ -2,7 +2,7 @@
 #define HDF50E564_F050_476A_A479_F82B20F35C84
 
 #include "easy_graph/builder/link.h"
-#include "easy_graph/graph/node.h"
+#include "easy_graph/builder/node_builder.h"
 #include "easy_graph/builder/edge_types/ctrl_edge_type.h"
 #include "easy_graph/builder/edge_types/data_edge_type.h"
 
@@ -30,7 +30,8 @@ struct ChainBuilder {
 			if (node) {
 				return this->Node(*node);
 			}
-			return this->Node(NodeObj(id, std::forward<PARAMS>(params)...));
+//			return this->Node(NodeObj(id, std::forward<PARAMS>(params)...));
+			return this->Node(makeNode(id, std::forward<PARAMS>(params)...));
 		}
 
 		template<typename T, typename ...TS>

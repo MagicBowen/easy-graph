@@ -11,7 +11,6 @@ REG_DEFAULT_EDGE_TYPE(EDGE_DATA);
 
 FIXTURE(GraphAssertTest) {
 
-
 	GRAPH(g1, "subgraph") {
 		CHAIN(Node("a") -> Node("b", ATTR("sink", true)));
 	});

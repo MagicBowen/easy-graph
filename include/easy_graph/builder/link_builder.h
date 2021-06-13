@@ -1,0 +1,12 @@
+#ifndef HB6C3D460_A84E_4057_9F7F_21C088FD7A27
+#define HB6C3D460_A84E_4057_9F7F_21C088FD7A27
+
+#include "easy_graph/eg.h"
+
+EG_NS_BEGIN
+
+
+
+EG_NS_END
+
+#endif
