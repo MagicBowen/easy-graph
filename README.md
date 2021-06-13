@@ -71,8 +71,8 @@ $ chmod a+x ./ccup.sh
 - [x]: support set attributes on edge;
 - [x]: support user specified edge type;
 - [x]: unify the node making;
+- [ ]: forward declare enum class (Status);
+- [ ]: support rvalue construct and assignment;
 - [ ]: relation between node and subgraph;
 - [ ]: support api to modity graph;
-- [ ]: support rvalue construct and assignment;
-- [ ]: forward declare enum class (Status);
 - [ ]: docs;
