@@ -1,8 +1,9 @@
 #include "easy_graph/layout/engines/graph_easy/graph_easy_visitor.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
-#include "layout/engines/graph_easy/utils/shell_executor.h"
+#include "easy_graph/layout/engines/graph_easy/graph_easy_edge_layout.h"
 #include "easy_graph/graph/subgraph_visitor.h"
 #include "easy_graph/infra/scope_guard.h"
+#include "easy_graph/graph/edge_type.h"
 #include "easy_graph/graph/subgraph.h"
 #include "easy_graph/graph/graph.h"
 #include "easy_graph/graph/edge.h"
@@ -17,13 +18,11 @@ namespace {
 		: id(id), ctxt(ctxt) {
 		}
 		std::string layout;
-		bool hasSubgraph{false};
 
 	private:
 		void visit(const Subgraph& subgraph) override {
 			ScopeGuard guard([this, &subgraph](){ctxt.enterGraph(subgraph.getGraph());}, [this](){ctxt.exitGraph();});
 			layout += (std::string(" -- [") + id + "/" + subgraph.getName() + "]" + "{class : subgraph; label : " + subgraph.getName() + ";}");
-			hasSubgraph = true;
 		}
 	private:
 		NodeId id;
@@ -40,23 +39,29 @@ namespace {
 		return graphTitle;
 	}
 	/////////////////////////////////////////////////////////////////////////
-	std::string getNodeLayout(const Node& node, GraphEasyLayoutContext& ctxt) {
-		const auto& id = node.getId();
-		std::string nodeBox = std::string("[") + id + "]";
-
-		SubgraphLayoutVisitor subgraphVisitor(id, ctxt);
-		node.accept(subgraphVisitor);
-
-		if (!subgraphVisitor.hasSubgraph || ctxt.inLinking()) return nodeBox;
-
-		return (std::string("( ") + id + ": " + nodeBox + subgraphVisitor.layout + ")");
+	std::string getNodeBaseLayout(const Node& node) {
+		return std::string("[") + node.getId() + "]";
 	}
 
 	/////////////////////////////////////////////////////////////////////////
-	INTERFACE(EdgeLayout) {
-		EdgeLayout(GraphEasyLayoutContext& ctxt,
-				   const Edge& edge)
-		: ctxt(ctxt), options(ctxt.getOptions()), edge(edge){
+	std::string getNodeLayout(const Node& node, GraphEasyLayoutContext& ctxt) {
+		auto id = node.getId();
+		std::string nodeLayout = getNodeBaseLayout(node);
+
+		if (!node.hasSubgraph()) return nodeLayout;
+
+		SubgraphLayoutVisitor subgraphVisitor(id, ctxt);
+		node.accept(subgraphVisitor);
+		return (std::string("( ") + node.getId() + ": " + nodeLayout + subgraphVisitor.layout + ")");
+	}
+
+	/////////////////////////////////////////////////////////////////////////
+	struct EdgeLayout {
+		EdgeLayout(const Edge& edge, GraphEasyLayoutContext& ctxt)
+		: edge(edge), ctxt(ctxt) {
+		}
+
+		virtual ~EdgeLayout() {
 		}
 
 		std::string getLayout() const {
@@ -69,76 +74,30 @@ namespace {
 			auto [src, dst] = graph->findNodePair(edge);
 
 			if ((!src) || (!dst)) {
-				EG_FATAL("Layout context graph(%s) has not found node(%s, %s)!",
+				EG_FATAL("Layout context graph(%s) has not found nodes(%s, %s)!",
 						graph->getName().c_str(),
 						edge.getSrc().getNodeId().c_str(),
 						edge.getDst().getNodeId().c_str());
 				return "";
 			}
 
-			return getNodeLayout(*src, ctxt) + getArrowLayout() + getAttrLayout() + getNodeLayout(*dst, ctxt);
+			return getNodeBaseLayout(*src) + getArrowLayout() + getAttrLayout() + getNodeBaseLayout(*dst);
 		}
 
 	private:
-		ABSTRACT(std::string getAttrLayout() const);
-		ABSTRACT(std::string getArrowLayout() const);
+		std::string getAttrLayout() const {
+			auto edgeTypeLayout = edge_type_trait_cast<GraphEasyEdgeLayoutTrait>(edge.getType());
+			return edgeTypeLayout ? edgeTypeLayout->getAttrLayout(edge, ctxt) : "";
+		}
+
+		std::string getArrowLayout() const {
+			auto edgeTypeLayout = edge_type_trait_cast<GraphEasyEdgeLayoutTrait>(edge.getType());
+			return edgeTypeLayout ? edgeTypeLayout->getArrowLayout(edge, ctxt) : " --> ";
+		}
 
 	protected:
-		GraphEasyLayoutContext& ctxt;
-		const GraphEasyOption& options;
 		const Edge& edge;
-	};
-
-	/////////////////////////////////////////////////////////////////////////
-	struct CtrlEdgeLayout : EdgeLayout {
-		using EdgeLayout::EdgeLayout;
-	private:
-		std::string getAttrLayout() const override {
-			auto label = edge.getAttr<const char*>("label");
-			if (!label || std::string(*label) == "") return "";
-			return std::string("{label : ") + *label  + "}";
-		}
-
-		std::string getArrowLayout() const override {
-			return " ..> ";
-		}
-	};
-
-	/////////////////////////////////////////////////////////////////////////
-	struct DataEdgeLayout : EdgeLayout {
-		using EdgeLayout::EdgeLayout;
-	private:
-		std::string getAttrLayout() const override {
-			return std::string("{ ") + getLabelAttr() + getPortAttr() + " }";
-		}
-
-		std::string getArrowLayout() const override {
-			return " --> ";
-		}
-
-	private:
-		std::string getPortPair() const {
-			return std::string("(")+ std::to_string(edge.getSrc().getPortId()) + "," + std::to_string(edge.getDst().getPortId()) + ")";
-		}
-
-		std::string getLabelAttr() const {
-			std::string label;
-			auto labelAttr = edge.getAttr<const char*>("label");
-			if (labelAttr) label = *labelAttr;
-			return std::string("label :") + label + getPortPair() + "; ";
-		}
-
-		std::string getPortAttr() const {
-			return (options.type == LayoutType::FREE) ? "" : getOutPortAttr() + getInPortAttr();
-		}
-
-		std::string getOutPortAttr() const {
-			return std::string(" start : ") + "front" + ", " + std::to_string(edge.getSrc().getPortId() * options.scale) + "; ";
-		}
-
-		std::string getInPortAttr() const {
-			return std::string(" end : ") + "back" + ", " + std::to_string(edge.getDst().getPortId() * options.scale) + "; ";
-		}
+		GraphEasyLayoutContext& ctxt;
 	};
 }
 
@@ -156,15 +115,8 @@ void GraphEasyVisitor::visit(const Node& node) {
 }
 
 void GraphEasyVisitor::visit(const Edge& edge) {
-	ScopeGuard guard([this](){ctxt.linkBegin();}, [this](){ctxt.linkEnd();});
-
-	auto makeEdgeLayout = [this, &edge]() -> const EdgeLayout* {
-		if (edge.getType() == EdgeType::CTRL) return new CtrlEdgeLayout(ctxt, edge);
-		return new DataEdgeLayout(ctxt, edge);
-	};
-
-	std::unique_ptr<const EdgeLayout> edgeLayout(makeEdgeLayout());
-	layout += edgeLayout->getLayout();
+	EdgeLayout edgeLayout(edge, ctxt);
+	layout += edgeLayout.getLayout();
 }
 
 std::string GraphEasyVisitor::getLayout() const {

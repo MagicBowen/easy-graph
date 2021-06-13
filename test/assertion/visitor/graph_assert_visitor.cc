@@ -14,28 +14,28 @@ bool GraphAssertVisitor::hasNode(const NodeId& id) const {
 	return graph->findNode(id) != nullptr;
 }
 
-template<typename PRED>
-bool GraphAssertVisitor::isEdgeExisted(EdgeType type, PRED pred) const {
-	if (!graph) return false;
-	for (const auto& edge : edges) {
-		if ((type == edge->getType()) && (pred(*edge))) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool GraphAssertVisitor::hasEdge(const NodeId& src, const NodeId& dst, EdgeType type) const {
-	return isEdgeExisted(type, [&src, &dst](const Edge& edge) {
-		return (src == edge.getSrc().getNodeId()) && (dst ==  edge.getDst().getNodeId());
-	});
-}
-
-bool GraphAssertVisitor::hasEdge(const Endpoint& src, const Endpoint& dst, EdgeType type) const {
-	return isEdgeExisted(type, [&src, &dst](const Edge& edge) {
-		return (src == edge.getSrc()) && (dst ==  edge.getDst());
-	});
-}
+//template<typename PRED>
+//bool GraphAssertVisitor::isEdgeExisted(EdgeType type, PRED pred) const {
+//	if (!graph) return false;
+//	for (const auto& edge : edges) {
+//		if ((type == edge->getType()) && (pred(*edge))) {
+//			return true;
+//		}
+//	}
+//	return false;
+//}
+//
+//bool GraphAssertVisitor::hasEdge(const NodeId& src, const NodeId& dst, EdgeType type) const {
+//	return isEdgeExisted(type, [&src, &dst](const Edge& edge) {
+//		return (src == edge.getSrc().getNodeId()) && (dst ==  edge.getDst().getNodeId());
+//	});
+//}
+//
+//bool GraphAssertVisitor::hasEdge(const Endpoint& src, const Endpoint& dst, EdgeType type) const {
+//	return isEdgeExisted(type, [&src, &dst](const Edge& edge) {
+//		return (src == edge.getSrc()) && (dst ==  edge.getDst());
+//	});
+//}
 
 void GraphAssertVisitor::visit(const Graph& graph) {
 	this->graph = &graph;

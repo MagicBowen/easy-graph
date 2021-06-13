@@ -19,13 +19,13 @@ struct GraphAssertVisitor: GraphVisitor {
 
 	bool hasNode(const NodeId&) const;
 
-	bool hasEdge(const NodeId& src,
-			     const NodeId& dst,
-				 EdgeType type = EdgeType::DATA) const;
-
-	bool hasEdge(const Endpoint& src,
-			     const Endpoint& dst,
-				 EdgeType type = EdgeType::DATA) const;
+//	bool hasEdge(const NodeId& src,
+//			     const NodeId& dst,
+//				 EdgeType type = EdgeType::DATA) const;
+//
+//	bool hasEdge(const Endpoint& src,
+//			     const Endpoint& dst,
+//				 EdgeType type = EdgeType::DATA) const;
 
 private:
 	void visit(const Graph&) override;
@@ -33,8 +33,8 @@ private:
 	void visit(const Edge&) override;
 
 private:
-	template<typename PRED>
-	bool isEdgeExisted(EdgeType type, PRED pred) const;
+//	template<typename PRED>
+//	bool isEdgeExisted(EdgeType type, PRED pred) const;
 
 private:
 	const Graph* graph{nullptr};

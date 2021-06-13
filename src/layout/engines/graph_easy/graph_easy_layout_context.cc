@@ -21,18 +21,6 @@ void GraphEasyLayoutContext::exitGraph() {
 	graphs.pop_back();
 }
 
-void GraphEasyLayoutContext::linkBegin() {
-	isLinking = true;
-}
-
-void GraphEasyLayoutContext::linkEnd(){
-	isLinking = false;
-}
-
-bool GraphEasyLayoutContext::inLinking() const {
-	return isLinking;
-}
-
 std::string GraphEasyLayoutContext::getGroupPath() const {
 	if (graphs.empty()) return "";
 	std::string result("");

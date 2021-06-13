@@ -41,6 +41,10 @@ Node& Node::addSubgraph(const Subgraph& graph) {
 	return *this;
 }
 
+bool Node::hasSubgraph() const {
+	return subgraphs.size() != 0;
+}
+
 void Node::accept(SubgraphVisitor& visitor) const {
 	std::for_each(subgraphs.begin(), subgraphs.end(),  [&visitor](const auto& subgraph){visitor.visit(subgraph);});
 }

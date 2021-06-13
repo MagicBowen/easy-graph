@@ -2,7 +2,7 @@
 
 EG_NS_BEGIN
 
-Edge::Edge(const EdgeType type,
+Edge::Edge(const EdgeType& type,
 		   const Endpoint& src,
 		   const Endpoint& dst)
 : type(type), src(src),dst(dst) {
@@ -21,7 +21,7 @@ __DEF_COMP(Edge)
 	return false;
 }
 
-EdgeType Edge::getType() const {
+const EdgeType& Edge::getType() const {
 	return type;
 }
 

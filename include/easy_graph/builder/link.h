@@ -9,7 +9,7 @@
 EG_NS_BEGIN
 
 struct Link {
-	explicit Link(EdgeType type) : type(type) {
+	explicit Link(const EdgeType& type) {
 		reset(type);
 	}
 
@@ -21,14 +21,14 @@ struct Link {
 		}
 	}
 
-	void reset(EdgeType type) {
-		this->type = type;
+	void reset(const EdgeType& type) {
+		this->type = const_cast<EdgeType*>(&type);
 		this->srcPortId = UNDEFINED_PORT_ID;
 		this->dstPortId = UNDEFINED_PORT_ID;
 		this->attrs.clear();
 	}
 
-	EdgeType type;
+	EdgeType* type{nullptr};
 	PortId srcPortId{UNDEFINED_PORT_ID};
 	PortId dstPortId{UNDEFINED_PORT_ID};
 	Attributes attrs;

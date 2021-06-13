@@ -5,7 +5,7 @@
 
 EG_NS_BEGIN
 
-struct AttributesMixin {
+struct AttributesTrait {
 
 	void setAttr(const Attribute& attr) {
 		attributes.set(attr);

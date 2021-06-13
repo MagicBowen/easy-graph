@@ -13,14 +13,14 @@ struct Graph;
 struct Edge;
 
 struct ChainBuilder {
-	ChainBuilder(GraphBuilder& graphBuilder, EdgeType defaultEdgeType);
+	ChainBuilder(GraphBuilder& graphBuilder, const EdgeType& defaultEdgeType);
 
 	struct LinkBuilder {
 
 		using NodeObj = Node;
 		using EdgeObj = Edge;
 
-		LinkBuilder(ChainBuilder& chain, EdgeType defaultEdgeType);
+		LinkBuilder(ChainBuilder& chain, const EdgeType& defaultEdgeType);
 
 		ChainBuilder& Node(const NodeObj& node);
 
@@ -36,7 +36,7 @@ struct ChainBuilder {
 		template<typename T, typename ...TS>
 		ChainBuilder& Edge(T && t, TS && ...ts) {
 			if constexpr (std::is_same_v<EdgeType, std::decay_t<T>>) {
-				this->fromLink.type = t;
+				this->fromLink.type = &t;
 			} else if constexpr (std::is_convertible_v<std::decay_t<T>, PortId>) {
 				this->fromLink.setPortId(t);
 			} else if constexpr (std::is_same_v<Attribute, std::decay_t<T>>) {
@@ -50,11 +50,11 @@ struct ChainBuilder {
 		}
 		template<typename ...TS>
 		ChainBuilder& Ctrl(TS && ...ts) {
-			return this->Edge(EdgeType::CTRL, std::forward<TS>(ts)...);
+			return this->Edge(EdgeType::CTRL(), std::forward<TS>(ts)...);
 		}
 		template<typename ...TS>
 		ChainBuilder& Data(TS && ...ts) {
-			return this->Edge(EdgeType::DATA, std::forward<TS>(ts)...);
+			return this->Edge(EdgeType::DATA(), std::forward<TS>(ts)...);
 		}
 
 	private:
@@ -64,7 +64,7 @@ struct ChainBuilder {
 
 	private:
 		ChainBuilder& chain;
-		EdgeType defaultEdgeType;
+		const EdgeType& defaultEdgeType;
 		Link fromLink;
 	} linker;
 

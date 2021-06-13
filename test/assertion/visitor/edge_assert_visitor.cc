@@ -13,14 +13,14 @@ bool EdgeAssertVisitor::linked(const PortId& src, const PortId& dst) const {
 
 bool EdgeAssertVisitor::isCtrlType() const {
 	if (count != 1) return false;
-	return edges[0]->getType() == EdgeType::CTRL;
+	return edges[0]->getType() == EdgeType::CTRL();
 }
 
 bool EdgeAssertVisitor::isDataType(const PortId& src, const PortId& dst) const {
 	auto edge = findEdge(src, dst);
 	if (!edge) return false;
 
-	return edge->getType() == EdgeType::DATA;
+	return edge->getType() == EdgeType::DATA();
 }
 
 const Edge* EdgeAssertVisitor::findEdge(const PortId& src, const PortId& dst) const {

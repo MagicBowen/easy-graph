@@ -37,7 +37,7 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g2) {
-		CHAIN(Node("a") -> Edge(EdgeType::CTRL, ATTR("label", "to")) -> Node("b") -> Node("c") -> Node("d") -> Node("e"));
+		CHAIN(Node("a") -> Edge(EdgeType::CTRL(), ATTR("label", "to")) -> Node("b") -> Node("c") -> Node("d") -> Node("e"));
 		CHAIN(Node("a") -> Ctrl(ATTR("label", "condition")) -> Node("c"));
 	});
 

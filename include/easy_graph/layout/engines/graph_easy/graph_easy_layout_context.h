@@ -13,23 +13,17 @@ struct Graph;
 struct GraphEasyLayoutContext {
 	GraphEasyLayoutContext(const GraphEasyOption&);
 
-	const Graph* getCurrentGraph() const;
-
 	void enterGraph(const Graph&);
 	void exitGraph();
 
-	void linkBegin();
-	void linkEnd();
-
-	bool inLinking() const;
-
 	std::string getGroupPath() const;
+	const Graph* getCurrentGraph() const;
+
 	const GraphEasyOption& getOptions() const;
 
 private:
 	std::deque<const Graph*> graphs;
 	const GraphEasyOption& options;
-	bool isLinking{false};
 };
 
 EG_NS_END

@@ -3,7 +3,7 @@
 
 EG_NS_BEGIN
 
-ChainBuilder::ChainBuilder(GraphBuilder& graphBuilder, EdgeType defaultEdgeType)
+ChainBuilder::ChainBuilder(GraphBuilder& graphBuilder, const EdgeType& defaultEdgeType)
 : graphBuilder(graphBuilder),
   linker(*this, defaultEdgeType) {
 }
@@ -25,7 +25,7 @@ const Node* ChainBuilder::findNode(const NodeId& id) const {
 	return graphBuilder->findNode(id);
 }
 
-ChainBuilder::LinkBuilder::LinkBuilder(ChainBuilder& chain, EdgeType defaultEdgeType)
+ChainBuilder::LinkBuilder::LinkBuilder(ChainBuilder& chain, const EdgeType& defaultEdgeType)
 : chain(chain), defaultEdgeType(defaultEdgeType), fromLink(defaultEdgeType){
 }
 
