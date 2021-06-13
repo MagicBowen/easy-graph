@@ -1,8 +1,9 @@
 #include "easy_graph/layout/engines/graph_easy/graph_easy_visitor.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
-#include "easy_graph/layout/engines/graph_easy/graph_easy_edge_layout.h"
+#include "easy_graph/layout/engines/graph_easy/graph_easy_edge_layout_trait.h"
 #include "easy_graph/graph/subgraph_visitor.h"
 #include "easy_graph/infra/scope_guard.h"
+#include "easy_graph/infra/trait_cast.h"
 #include "easy_graph/graph/edge_type.h"
 #include "easy_graph/graph/subgraph.h"
 #include "easy_graph/graph/graph.h"
@@ -86,12 +87,12 @@ namespace {
 
 	private:
 		std::string getAttrLayout() const {
-			auto edgeTypeLayout = edge_type_trait_cast<GraphEasyEdgeLayoutTrait>(edge.getType());
+			auto edgeTypeLayout = trait_cast<GraphEasyEdgeLayoutTrait>(edge.getType());
 			return edgeTypeLayout ? edgeTypeLayout->getAttrLayout(edge, ctxt) : "";
 		}
 
 		std::string getArrowLayout() const {
-			auto edgeTypeLayout = edge_type_trait_cast<GraphEasyEdgeLayoutTrait>(edge.getType());
+			auto edgeTypeLayout = trait_cast<GraphEasyEdgeLayoutTrait>(edge.getType());
 			return edgeTypeLayout ? edgeTypeLayout->getArrowLayout(edge, ctxt) : " --> ";
 		}
 

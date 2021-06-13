@@ -3,11 +3,11 @@
 
 #include "easy_graph/graph/edge_type.h"
 #include "easy_graph/graph/endpoint.h"
-#include "easy_graph/graph/attributes_trait.h"
+#include "easy_graph/graph/attributes_mixin.h"
 
 EG_NS_BEGIN
 
-struct Edge : AttributesTrait
+struct Edge : AttributesMixin
 {
 	Edge(const EdgeType& type,
 		 const Endpoint& src,

@@ -4,7 +4,7 @@
 #include "easy_graph/graph/node_id.h"
 #include "easy_graph/infra/operator.h"
 #include "easy_graph/graph/subgraph.h"
-#include "easy_graph/graph/attributes_trait.h"
+#include "easy_graph/graph/attributes_mixin.h"
 #include "easy_graph/graph/box.h"
 #include <type_traits>
 #include <vector>
@@ -13,7 +13,7 @@ EG_NS_BEGIN
 
 struct SubgraphVisitor;
 
-struct Node : AttributesTrait
+struct Node : AttributesMixin
 {
 	template<typename ...TS>
 	Node(const NodeId& id, TS && ...ts) : id(id) {

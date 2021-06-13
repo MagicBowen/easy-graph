@@ -1,4 +1,6 @@
 #include "easy_graph/builder/graph_builder.h"
+#include "easy_graph/builder/auto_link_port_trait.h"
+#include "easy_graph/infra/trait_cast.h"
 #include "easy_graph/graph/edge_type.h"
 #include "easy_graph/graph/endpoint.h"
 #include "easy_graph/builder/link.h"
@@ -8,7 +10,7 @@ EG_NS_BEGIN
 
 namespace {
 	PortId getPortIdBy(const EdgeType& type, const PortId& specifiedPortId, PortId& reservedPortId) {
-		if (!edge_type_trait_cast<AutoLinkPortTrait>(type)) return 0;
+		if (!trait_cast<AutoLinkPortTrait>(type)) return 0;
 		if (specifiedPortId == UNDEFINED_PORT_ID) return reservedPortId++;
 		if (specifiedPortId < reservedPortId) return specifiedPortId;
 		reservedPortId = specifiedPortId;

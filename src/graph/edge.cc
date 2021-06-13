@@ -10,7 +10,7 @@ Edge::Edge(const EdgeType& type,
 
 __DEF_EQUALS(Edge)
 {
-	return  (type == rhs.type) && (src == rhs.src) && (dst == rhs.dst);
+	return  (src == rhs.src) && (dst == rhs.dst) && (type == rhs.type);
 }
 
 __DEF_COMP(Edge)

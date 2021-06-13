@@ -1,8 +1,10 @@
 #include "easy_graph/graph/edge_type.h"
 
-#include "easy_graph/graph/edge.h"
+#include "easy_graph/layout/engines/graph_easy/graph_easy_edge_layout_trait.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_layout_context.h"
 #include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
+#include "easy_graph/builder/auto_link_port_trait.h"
+#include "easy_graph/graph/edge.h"
 
 EG_NS_BEGIN
 
