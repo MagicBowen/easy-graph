@@ -10,7 +10,7 @@ EG_NS_BEGIN
 SINGLETON(DefaultEdgeType) EXTENDS(EdgeType, PortAwareTrait) {
 };
 
-#define DEFAULT_EDGE_TYPE  ::EG_NS::DefaultEdgeType::getInstance()
+#define DEFAULT_EDGE  ::EG_NS::DefaultEdgeType::getInstance()
 
 EG_NS_END
 

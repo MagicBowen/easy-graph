@@ -3,8 +3,8 @@
 
 #include "easy_graph/builder/link.h"
 #include "easy_graph/graph/node.h"
-
-#include "easy_graph/graph/edge_type.h"
+#include "easy_graph/builder/edge_type/ctrl_edge_type.h"
+#include "easy_graph/builder/edge_type/data_edge_type.h"
 
 EG_NS_BEGIN
 
@@ -35,7 +35,7 @@ struct ChainBuilder {
 
 		template<typename T, typename ...TS>
 		ChainBuilder& Edge(T && t, TS && ...ts) {
-			if constexpr (std::is_same_v<EdgeType, std::decay_t<T>>) {
+			if constexpr (std::is_convertible_v<std::decay_t<T>, EdgeType>) {
 				this->fromLink.type = &t;
 			} else if constexpr (std::is_convertible_v<std::decay_t<T>, PortId>) {
 				this->fromLink.setPortId(t);
@@ -50,11 +50,11 @@ struct ChainBuilder {
 		}
 		template<typename ...TS>
 		ChainBuilder& Ctrl(TS && ...ts) {
-			return this->Edge(EdgeType::CTRL(), std::forward<TS>(ts)...);
+			return this->Edge(CTRL_EDGE, std::forward<TS>(ts)...);
 		}
 		template<typename ...TS>
 		ChainBuilder& Data(TS && ...ts) {
-			return this->Edge(EdgeType::DATA(), std::forward<TS>(ts)...);
+			return this->Edge(DATA_EDGE, std::forward<TS>(ts)...);
 		}
 
 	private:

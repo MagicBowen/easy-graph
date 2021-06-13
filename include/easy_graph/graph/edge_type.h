@@ -7,9 +7,6 @@
 EG_NS_BEGIN
 
 INTERFACE(EdgeType) {
-	static EdgeType& CTRL();
-	static EdgeType& DATA();
-
 	__DECL_COMP(EdgeType);
 };
 

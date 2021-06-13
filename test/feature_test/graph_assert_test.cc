@@ -13,7 +13,7 @@ FIXTURE(GraphAssertTest) {
 
 	GRAPH(sample) {
 		CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", SUB_G(g1, "se")));
-		CHAIN(Node("a") -> Data(1, 1) -> Node("b") -> Edge(EdgeType::CTRL(), ATTR("label", "to")) -> Node("e"));
+		CHAIN(Node("a") -> Data(1, 1) -> Node("b") -> Edge(CTRL_EDGE, ATTR("label", "to")) -> Node("e"));
 	});
 
 	TEST("should assert graph info") {
@@ -62,7 +62,7 @@ FIXTURE(GraphAssertTest) {
 			GRAPH(expect) {
 				CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", SUB_G(g1)));
 				CHAIN(Node("a") -> Data(1, 1) -> Node("b"));
-				CHAIN(Node("b") -> Edge(EdgeType::CTRL()) -> Node("e"));
+				CHAIN(Node("b") -> Edge(CTRL_EDGE) -> Node("e"));
 			});
 
 			ASSERT_TRUE(graph.isEqualTo(expect));
