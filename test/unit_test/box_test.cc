@@ -29,7 +29,7 @@ FIXTURE(BoxTest) {
 	}
 
 	TEST("box unpacking interface") {
-		auto box = BOX_OF(JellyCandy, JellyCandy::CIRCLE);
+		auto box = BOX_OF(JellyCandy, JellyShape::CIRCLE);
 		auto candy = box_unpacking<Candy>(box);
 		ASSERT_TRUE(candy);
 		ASSERT_EQ("Jelly (Shape:Circle)", candy->getLabel());

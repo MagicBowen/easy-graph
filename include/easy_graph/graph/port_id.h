@@ -5,7 +5,7 @@
 
 EG_NS_BEGIN
 
-typedef unsigned int PortId;
+using PortId = unsigned int;
 
 static const PortId UNDEFINED_PORT_ID = 0xFFFFFFFF;
 

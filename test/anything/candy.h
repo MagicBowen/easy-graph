@@ -41,30 +41,30 @@ private:
 };
 
 ///////////////////////////////////////////////////////////////
-struct JellyCandy : Candy {
-	enum Shape{
-		TRIANGLE,
-		RECTANGLE,
-		CIRCLE,
-	};
+enum class JellyShape {
+	TRIANGLE,
+	RECTANGLE,
+	CIRCLE,
+};
 
-	JellyCandy(Shape type) : type(type) {
+struct JellyCandy : Candy {
+	JellyCandy(JellyShape type) : type(type) {
 	}
 
 private:
 	std::string getLabel() const override {
 		std::string jellyType;
 		switch (type) {
-		case Shape::TRIANGLE  : jellyType = "Triangle"; break;
-		case Shape::RECTANGLE : jellyType = "Rectangle"; break;
-		case Shape::CIRCLE    : jellyType = "Circle"; break;
+		case JellyShape::TRIANGLE  : jellyType = "Triangle"; break;
+		case JellyShape::RECTANGLE : jellyType = "Rectangle"; break;
+		case JellyShape::CIRCLE    : jellyType = "Circle"; break;
 		default: jellyType = "None";
 		}
 		return std::string("Jelly (Shape:") + jellyType + ")";
 	}
 
 private:
-	Shape type;
+	JellyShape type;
 };
 
 ///////////////////////////////////////////////////////////////

@@ -7,7 +7,7 @@
 
 EG_NS_BEGIN
 
-typedef uint32_t Status;
+using Status = uint32_t;
 
 #define EG_SUCC_STATUS(status) (EG_NS::Status) status
 #define EG_FAIL_STATUS(status) (EG_NS::Status) (status | EG_RESERVED_FAIL)
