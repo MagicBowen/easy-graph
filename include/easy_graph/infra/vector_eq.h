@@ -10,7 +10,7 @@ template<typename T>
 bool is_vector_unorder_equal(const std::vector<T>& lhs, const std::vector<T>& rhs) {
 	if (lhs.size() != rhs.size()) return false;
 	for (auto item : lhs) {
-		auto result = std::find_if(rhs.begin(), rhs.end(), [&item](const auto& other) {
+		auto result = std::find_if(rhs.cbegin(), rhs.cend(), [&item](const auto& other) {
 			return item == other;
 		});
 		if (result == rhs.end()) return false;

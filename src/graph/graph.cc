@@ -76,8 +76,8 @@ bool Graph::hasEdge(const Edge& edge) const {
 
 void Graph::accept(GraphVisitor& visitor) const {
 	visitor.visit(*this);
-	std::for_each(nodes.begin(), nodes.end(), [&visitor](const auto& node){visitor.visit(node.second);});
-	std::for_each(edges.begin(), edges.end(), [&visitor](const auto& edge){visitor.visit(edge);});
+	std::for_each(nodes.cbegin(), nodes.cend(), [&visitor](const auto& node){visitor.visit(node.second);});
+	std::for_each(edges.cbegin(), edges.cend(), [&visitor](const auto& edge){visitor.visit(edge);});
 }
 
 Status Graph::layout(const LayoutOption* option) const {

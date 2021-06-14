@@ -24,7 +24,7 @@ void GraphEasyLayoutContext::exitGraph() {
 std::string GraphEasyLayoutContext::getGroupPath() const {
 	if (graphs.empty()) return "";
 	std::string result("");
-	std::for_each(graphs.begin(), graphs.end(), [&result](const auto& graph) {
+	std::for_each(graphs.cbegin(), graphs.cend(), [&result](const auto& graph) {
 		result += (std::string("/") + graph->getName());
 	});
 	return (result + "/");

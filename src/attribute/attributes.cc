@@ -43,7 +43,7 @@ void Attributes::clear() {
 }
 
 void Attributes::accept(AttributeVisitor& visitor) const {
-	std::for_each(dict.begin(), dict.end(),  [&visitor](const auto& attr){visitor.visit(attr);});
+	std::for_each(dict.cbegin(), dict.cend(),  [&visitor](const auto& attr){visitor.visit(attr);});
 }
 
 EG_NS_END

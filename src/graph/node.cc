@@ -39,7 +39,7 @@ Node& Node::addSubgraph(const Subgraph& graph) {
 }
 
 void Node::accept(SubgraphVisitor& visitor) const {
-	std::for_each(subgraphs.begin(), subgraphs.end(),  [&visitor](const auto& subgraph){visitor.visit(subgraph);});
+	std::for_each(subgraphs.cbegin(), subgraphs.cend(),  [&visitor](const auto& subgraph){visitor.visit(subgraph);});
 }
 
 EG_NS_END
