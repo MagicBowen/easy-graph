@@ -25,6 +25,10 @@ __DEF_EQUALS(Subgraph) {
 		   isWiresEqual(outputWires, rhs.outputWires);
 }
 
+void Subgraph::setName(const std::string& name) {
+	this->name = name;
+}
+
 std::string Subgraph::getName() const {
 	return name;
 }
@@ -33,11 +37,11 @@ const Graph& Subgraph::getGraph() const {
 	return graph;
 }
 
-void Subgraph::wireUpInput(const Wire& wire) {
+void Subgraph::wireUp(const InputWire& wire) {
 	inputWires.push_back(wire);
 }
 
-void Subgraph::wireUpOutput(const Wire& wire) {
+void Subgraph::wireUp(const OutputWire& wire) {
 	outputWires.push_back(wire);
 }
 

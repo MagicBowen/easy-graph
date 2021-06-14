@@ -16,7 +16,9 @@ FIXTURE(GraphAssertTest) {
 	});
 
 	GRAPH(sample) {
-		CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", SUB_G(g1, "se")));
+		auto subgraph = SUBGRAPH_OF(g1, "se", InputWire(1, Endpoint("a", 1)));
+
+		CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", subgraph));
 		CHAIN(Node("a") -> Data(1, 1) -> Node("b") -> Edge(EDGE_CTRL, ATTR("label", "to")) -> Node("e"));
 	});
 
@@ -64,7 +66,7 @@ FIXTURE(GraphAssertTest) {
 			});
 
 			GRAPH(expect) {
-				CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", SUB_G(g1)));
+				CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", SUB_G(g1, InputWire(1, Endpoint("a", 1)))));
 				CHAIN(Node("a") -> Data(1, 1) -> Node("b"));
 				CHAIN(Node("b") -> Edge(EDGE_CTRL) -> Node("e"));
 			});

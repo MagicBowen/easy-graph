@@ -112,11 +112,14 @@ int main() {
 	});
 
 	GRAPH(graph) {
-		auto loop = NODE_OF("loop", SUB_G(cond), SUB_G(body, "loop body"));
-		auto foreach = NODE_OF("foreach", SUB_G(cond), SUB_G(body, "for body"), ATTR("loop", true));
+		auto sg_cond = SUBGRAPH_OF(cond, InputWire(0, Endpoint("a", 1)));
+		auto sg_body = SUBGRAPH_OF(body, OutputWire(Endpoint("c", 1), 1));
+
+		auto loop    = NODE_OF("loop", sg_cond, sg_body);
+		auto foreach = NODE_OF("foreach", sg_cond, sg_body, ATTR("loop", true));
 
 		DATA_CHAIN(Node("const_1") -> Node(loop) -> Node("unique") -> Node("softmax"));
-		DATA_CHAIN(Node("const_2") -> Node("while", SUB_G(cond), SUB_G(body, "while body")));
+		DATA_CHAIN(Node("const_2") -> Node("while", SUB_G(cond, InputWire(1, Endpoint("a", 1))), SUB_G(body, "while body")));
 		CTRL_CHAIN(Node("case") -> Node("unique"));
 		CTRL_CHAIN(Node(loop) -> Node(foreach));
 	});

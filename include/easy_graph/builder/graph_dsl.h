@@ -4,6 +4,7 @@
 #include "easy_graph/builder/graph_builder.h"
 #include "easy_graph/builder/chain_builder.h"
 #include "easy_graph/builder/box_builder.h"
+#include "easy_graph/builder/subgraph_builder.h"
 #include "easy_graph/builder/edge_types/default_edge_type.h"
 #include "easy_graph/builder/edge_types/ctrl_edge_type.h"
 #include "easy_graph/builder/edge_types/data_edge_type.h"
@@ -36,7 +37,7 @@ namespace detail {
 #define ATTR(...)               Attribute(__VA_ARGS__)
 #define ATTRS(...)              Attributes({__VA_ARGS__})
 
-#define SUB_G(G, ...)           Subgraph(::EG_NS::detail::getGraphName(#G, ##__VA_ARGS__), G)
+#define SUB_G(G, ...)           SUBGRAPH_OF(G, ##__VA_ARGS__)
 
 #define GRAPH(G, ...)           Graph G = ::EG_NS::detail::buildGraph(										\
 													     ::EG_NS::detail::getGraphName(#G, ##__VA_ARGS__),	\

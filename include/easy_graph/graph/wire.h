@@ -19,6 +19,18 @@ private:
 	PortId   port;
 };
 
+struct InputWire : Wire {
+	InputWire(const PortId& port, const Endpoint& endpoint)
+	: Wire(endpoint, port) {
+	}
+};
+
+struct OutputWire : Wire {
+	OutputWire(const Endpoint& endpoint, const PortId& port)
+	: Wire(endpoint, port) {
+	}
+};
+
 EG_NS_END
 
 #endif

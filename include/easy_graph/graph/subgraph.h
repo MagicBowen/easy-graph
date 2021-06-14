@@ -17,11 +17,13 @@ struct Subgraph {
 
 	__DECL_EQUALS(Subgraph);
 
+	void setName(const std::string&);
 	std::string getName() const;
+
 	const Graph& getGraph() const;
 
-	void wireUpInput(const Wire&);
-	void wireUpOutput(const Wire&);
+	void wireUp(const InputWire&);
+	void wireUp(const OutputWire&);
 
 	void accept(WireVisitor&) const;
 
