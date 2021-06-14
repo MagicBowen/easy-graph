@@ -37,7 +37,7 @@ namespace detail {
 #define ATTR(...)               Attribute(__VA_ARGS__)
 #define ATTRS(...)              Attributes({__VA_ARGS__})
 
-#define SUB_G(G, ...)           SUBGRAPH_OF(G, ##__VA_ARGS__)
+#define SUBGRAPH(G, ...)        SUBGRAPH_OF(G, ##__VA_ARGS__)
 
 #define GRAPH(G, ...)           Graph G = ::EG_NS::detail::buildGraph(										\
 													     ::EG_NS::detail::getGraphName(#G, ##__VA_ARGS__),	\

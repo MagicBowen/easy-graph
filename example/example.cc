@@ -115,11 +115,11 @@ int main() {
 		auto sg_cond = SUBGRAPH_OF(cond, InputWire(0, Endpoint("a", 1)));
 		auto sg_body = SUBGRAPH_OF(body, OutputWire(Endpoint("c", 1), 1));
 
-		auto loop    = NODE_OF("loop", sg_cond, sg_body);
-		auto foreach = NODE_OF("foreach", sg_cond, sg_body, ATTR("loop", true));
+		HAS_NODE(foreach, sg_cond, sg_body, ATTR("loop", true));
+		HAS_NODE(loop, sg_cond, SUBGRAPH(body, "loop body", OutputWire(Endpoint("b", 1), 0)));
 
 		DATA_CHAIN(Node("const_1") -> Node(loop) -> Node("unique") -> Node("softmax"));
-		DATA_CHAIN(Node("const_2") -> Node("while", SUB_G(cond, InputWire(1, Endpoint("a", 1))), SUB_G(body, "while body")));
+		DATA_CHAIN(Node("const_2") -> Node("while", SUBGRAPH(cond, InputWire(1, Endpoint("a", 1))), SUBGRAPH(body, "while body")));
 		CTRL_CHAIN(Node("case") -> Node("unique"));
 		CTRL_CHAIN(Node(loop) -> Node(foreach));
 	});

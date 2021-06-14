@@ -66,7 +66,7 @@ FIXTURE(GraphAssertTest) {
 			});
 
 			GRAPH(expect) {
-				CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", SUB_G(g1, InputWire(1, Endpoint("a", 1)))));
+				CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e", SUBGRAPH(g1, InputWire(1, Endpoint("a", 1)))));
 				CHAIN(Node("a") -> Data(1, 1) -> Node("b"));
 				CHAIN(Node("b") -> Edge(EDGE_CTRL) -> Node("e"));
 			});

@@ -46,11 +46,11 @@ FIXTURE(GraphLayoutTest) {
 		});
 
 		GRAPH(candy) {
-			HAS_NODE(jelly,   BOX_OF(JellyCandy, JellyCandy::CIRCLE), SUB_G(c1,"dove"), SUB_G(c2,"circle"));
+			HAS_NODE(jelly,   BOX_OF(JellyCandy, JellyCandy::CIRCLE), SUBGRAPH(c1,"dove"), SUBGRAPH(c2,"circle"));
 			HAS_NODE(rainbow, BOX_OF(ColorCandy, 3, 2, 1));
 
 			CHAIN(Node("dove", BOX_OF(ToffeeCandy, "Dove")) -> Node(jelly) -> Node("sweet", BOX_OF(HardCandy, 3)));
-			CHAIN(Node("dove") -> Node(rainbow) -> Node("toffee", BOX_OF(ToffeeCandy, "Haribo"), SUB_G(c2), SUB_G(c1)));
+			CHAIN(Node("dove") -> Node(rainbow) -> Node("toffee", BOX_OF(ToffeeCandy, "Haribo"), SUBGRAPH(c2), SUBGRAPH(c1)));
 		});
 
 		ASSERT_TRUE(__EG_OK(c1.layout()));
