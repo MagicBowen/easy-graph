@@ -23,11 +23,17 @@ struct InputWire : Wire {
 	InputWire(const PortId& port, const Endpoint& endpoint)
 	: Wire(endpoint, port) {
 	}
+	InputWire(const Wire& wire)
+	: Wire(wire) {
+	}
 };
 
 struct OutputWire : Wire {
 	OutputWire(const Endpoint& endpoint, const PortId& port)
 	: Wire(endpoint, port) {
+	}
+	OutputWire(const Wire& wire)
+	: Wire(wire) {
 	}
 };
 

@@ -46,8 +46,12 @@ void Subgraph::wireUp(const OutputWire& wire) {
 }
 
 void Subgraph::accept(WireVisitor& visitor) const {
-	std::for_each(inputWires.begin(), inputWires.end(),  [&visitor](const auto& wire){visitor.visitInput(wire);});
-	std::for_each(outputWires.begin(), outputWires.end(),  [&visitor](const auto& wire){visitor.visitOutput(wire);});
+	std::for_each(inputWires.begin(), inputWires.end(),  [&visitor](const auto& wire) {
+		visitor.visit(static_cast<InputWire>(wire));
+	});
+	std::for_each(outputWires.begin(), outputWires.end(),  [&visitor](const auto& wire) {
+		visitor.visit(static_cast<OutputWire>(wire));
+	});
 }
 
 EG_NS_END

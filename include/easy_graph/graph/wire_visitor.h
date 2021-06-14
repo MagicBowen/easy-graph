@@ -5,11 +5,12 @@
 
 EG_NS_BEGIN
 
-struct Wire;
+struct InputWire;
+struct OutputWire;
 
 INTERFACE(WireVisitor) {
-	ABSTRACT(void visitInput(const Wire&));
-	ABSTRACT(void visitOutput(const Wire&));
+	ABSTRACT(void visit(const InputWire&));
+	ABSTRACT(void visit(const OutputWire&));
 };
 
 EG_NS_END

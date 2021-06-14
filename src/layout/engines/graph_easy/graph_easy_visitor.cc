@@ -3,6 +3,7 @@
 #include "easy_graph/layout/engines/graph_easy/graph_easy_edge_layout_trait.h"
 #include "easy_graph/builder/port_aware_trait.h"
 #include "easy_graph/graph/subgraph_visitor.h"
+#include "easy_graph/graph/wire_visitor.h"
 #include "easy_graph/infra/scope_guard.h"
 #include "easy_graph/infra/trait_cast.h"
 #include "easy_graph/graph/edge_type.h"
@@ -15,9 +16,71 @@
 EG_NS_BEGIN
 
 namespace {
+	std::string to_layout(const std::string& str) {
+		return str;
+	}
+
+	std::string to_layout(const PortId& id) {
+		return std::to_string(id);
+	}
+
+	std::string to_layout(const Endpoint& ep) {
+		return ep.getNodeId() + "." + to_layout(ep.getPortId());
+	}
+
+	std::string to_layout(const InputWire& iw) {
+		return std::string("(") + to_layout(iw.getPortId()) + ", " + to_layout(iw.getEndpoint()) + ")";
+	}
+
+	std::string to_layout(const OutputWire& ow) {
+		return std::string("(") + to_layout(ow.getEndpoint()) + ", " + to_layout(ow.getPortId()) + ")";
+	}
+
+	std::string to_layout(const Node& node) {
+		return std::string("[") + node.getId() + "]";
+	}
+
+	std::string to_layout(const NodeId& id, const Subgraph& subgraph, bool isBref = true) {
+		auto result = std::string("[") + id + "/" + subgraph.getName() + "]";
+		auto display = "{class : subgraph; label : " + subgraph.getName() + ";}";
+		return isBref ? result : result + display;
+	}
+
+	template<typename T>
+	std::string to_label_layout(const T& t){
+		return std::string("{ label : ") + to_layout(t)  + " }";
+	}
+
+	/////////////////////////////////////////////////////////////////////////
+	struct SubgraphWireLayoutVisitor : WireVisitor {
+		SubgraphWireLayoutVisitor(const std::string& node, const std::string& subgraph, GraphEasyLayoutContext& ctxt)
+		: nodeLayout(node), subgraphLayout(subgraph), ctxt(ctxt) {
+		}
+		std::string layout;
+		bool hasWired{false};
+
+	private:
+		void visit(const InputWire& wire) override {
+			layout += (nodeLayout + arrow + to_label_layout(wire) + subgraphLayout);
+			hasWired = true;
+		}
+
+		void visit(const OutputWire& wire) override {
+			layout += (subgraphLayout + arrow + to_label_layout(wire) + nodeLayout);
+			hasWired = true;
+		}
+
+	private:
+		const std::string nodeLayout;
+		const std::string subgraphLayout;
+		GraphEasyLayoutContext& ctxt;
+		static constexpr const char* arrow = " ..-> ";
+	};
+
+	/////////////////////////////////////////////////////////////////////////
 	struct SubgraphLayoutVisitor : SubgraphVisitor {
-		SubgraphLayoutVisitor(const NodeId& id, GraphEasyLayoutContext& ctxt)
-		: id(id), ctxt(ctxt) {
+		SubgraphLayoutVisitor(const Node& node, GraphEasyLayoutContext& ctxt)
+		: node(node), ctxt(ctxt) {
 		}
 		std::string layout;
 		bool hasSubgraph{false};
@@ -25,12 +88,25 @@ namespace {
 	private:
 		void visit(const Subgraph& subgraph) override {
 			ScopeGuard guard([this, &subgraph](){ctxt.enterGraph(subgraph.getGraph());}, [this](){ctxt.exitGraph();});
-			layout += (std::string(" -- [") + id + "/" + subgraph.getName() + "]" + "{class : subgraph; label : " + subgraph.getName() + ";}");
+
+			layout += to_layout(node.getId(), subgraph, false);
+
+			SubgraphWireLayoutVisitor wireVisitor(to_layout(node), to_layout(node.getId(), subgraph), ctxt);
+			subgraph.accept(wireVisitor);
+
+			if (wireVisitor.hasWired) {
+				layout += wireVisitor.layout;
+			} else {
+				layout += (to_layout(node) + arrow + to_layout(node.getId(), subgraph));
+			}
+
 			hasSubgraph = true;
 		}
+
 	private:
-		NodeId id;
+		const Node& node;
 		GraphEasyLayoutContext& ctxt;
+		static constexpr const char* arrow = " .. ";
 	};
 
 	/////////////////////////////////////////////////////////////////////////
@@ -42,15 +118,11 @@ namespace {
 							   + flowDirection + " ; } node.subgraph { border : double-dash; }";
 		return graphTitle;
 	}
-	/////////////////////////////////////////////////////////////////////////
-	std::string getNodeBaseLayout(const Node& node) {
-		return std::string("[") + node.getId() + "]";
-	}
 
 	/////////////////////////////////////////////////////////////////////////
 	std::string getNodeLayout(const Node& node, GraphEasyLayoutContext& ctxt) {
 		auto id = node.getId();
-		std::string nodeLayout = getNodeBaseLayout(node);
+		std::string nodeLayout = to_layout(node);
 
 		SubgraphLayoutVisitor visitor(id, ctxt);
 		node.accept(visitor);
@@ -85,7 +157,7 @@ namespace {
 				return "";
 			}
 
-			return getNodeBaseLayout(*src) + getArrowLayout() + getAttrLayout() + getNodeBaseLayout(*dst);
+			return to_layout(*src) + getArrowLayout() + getAttrLayout() + to_layout(*dst);
 		}
 
 	private:
@@ -97,7 +169,7 @@ namespace {
 			}
 
 			if (label == "") return "";
-			return std::string("{ label : ") + label  + " }";
+			return to_label_layout(label);
 		}
 
 		std::string getArrowLayout() const {

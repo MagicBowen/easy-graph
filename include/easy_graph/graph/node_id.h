@@ -6,7 +6,7 @@
 
 EG_NS_BEGIN
 
-typedef std::string NodeId;
+using NodeId = std::string;
 
 EG_NS_END
 
