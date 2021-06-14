@@ -14,7 +14,7 @@ EG_NS_BEGIN
 ////////////////////////////////////////////////////////////////
 namespace detail {
 	constexpr const char* getGraphName(const char* defaultName,
-										 const char* specifiedName = nullptr) {
+									   const char* specifiedName = nullptr) noexcept {
 		return specifiedName ? specifiedName : defaultName;
 	}
 
