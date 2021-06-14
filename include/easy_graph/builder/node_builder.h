@@ -7,12 +7,12 @@
 EG_NS_BEGIN
 
 template<typename ...TS>
-Node makeNode(const NodeId& id, TS && ...ts) {
+auto makeNode(const NodeId& id, TS && ...ts) {
 	Node node(id);
 	if constexpr (sizeof...(ts) > 0) {
 		makeNodeImpl(node, std::forward<TS>(ts)...);
 	}
-	return std::move(node);
+	return node;
 }
 
 template<typename T, typename ... TS>

@@ -19,10 +19,10 @@ namespace detail {
 	}
 
 	template<typename GRAPH_BUILDER>
-	Graph buildGraph(const char* name, GRAPH_BUILDER builderInDSL) {
+	auto buildGraph(const char* name, GRAPH_BUILDER builderInDSL) {
 		GraphBuilder builder(name);
 		builderInDSL(builder);
-		return std::move(*builder);
+		return *builder;
 	}
 }
 

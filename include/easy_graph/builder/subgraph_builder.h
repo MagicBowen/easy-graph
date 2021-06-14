@@ -7,12 +7,12 @@
 EG_NS_BEGIN
 
 template<typename ...TS>
-Subgraph makeSubgraph(const Graph& graph, TS && ...ts) {
+auto makeSubgraph(const Graph& graph, TS && ...ts) {
 	Subgraph subgraph(graph);
 	if constexpr (sizeof...(ts) > 0) {
 		makeSubgraphImpl(subgraph, std::forward<TS>(ts)...);
 	}
-	return std::move(subgraph);
+	return subgraph;
 }
 
 template<typename T, typename ... TS>

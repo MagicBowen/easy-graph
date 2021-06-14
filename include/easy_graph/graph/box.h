@@ -17,7 +17,7 @@ BoxPtr box_packing(ARGS && ...args) {
 }
 
 template<typename ANYTHING>
-ANYTHING* box_unpacking(const BoxPtr& box) {
+auto box_unpacking(const BoxPtr& box) {
 	return dynamic_cast<ANYTHING*>(box.get());
 }
 
