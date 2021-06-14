@@ -1,4 +1,5 @@
 #include "layout/engines/graph_easy/utils/shell_executor.h"
+#include "easy_graph/infra/status.h"
 #include "easy_graph/infra/log.h"
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -14,13 +15,13 @@ Status ShellExecutor::execute(const std::string& script) {
 	if (-1 == status)
 	{
 		EG_ERR("system execute return error!");
-		return EG_FAILURE;
+		return Status::FAILURE;
 	}
 
-	if (WIFEXITED(status) &&  (0 == WEXITSTATUS(status))) return EG_SUCCESS;
+	if (WIFEXITED(status) &&  (0 == WEXITSTATUS(status))) return Status::SUCCESS;
 
 	EG_ERR("system execute {%s} exit status value = [0x%x], exit code: %d\n", script.c_str(), status, WEXITSTATUS(status));
-	return EG_FAILURE;
+	return Status::FAILURE;
 }
 
 EG_NS_END

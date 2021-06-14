@@ -34,7 +34,7 @@ $ chmod a+x ./ccup.sh
 # help
 ./ccup.sh -h
 
-# update dependents
+# update dependencies
 # cmake generating
 ./ccup.sh -u
 
@@ -74,5 +74,6 @@ $ chmod a+x ./ccup.sh
 - [x]: relation between node and subgraph;
 - [x]: forward declare enum class (Status);
 - [ ]: support rvalue construct and assignment;
+- [ ]: reduce macro by compile time computing;
 - [ ]: support api to modity graph;
 - [ ]: docs;

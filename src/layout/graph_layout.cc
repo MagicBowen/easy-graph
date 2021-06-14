@@ -1,6 +1,8 @@
 #include "easy_graph/layout/graph_layout.h"
 #include "easy_graph/layout/layout_engine.h"
 #include "easy_graph/graph/graph.h"
+#include "easy_graph/infra/status.h"
+
 
 EG_NS_BEGIN
 
@@ -11,7 +13,7 @@ void GraphLayout::config(LayoutEngine& executor, const LayoutOption* opts) {
 
 Status GraphLayout::layout(const Graph& graph, const LayoutOption* opts) {
 	const LayoutOption* options = opts ? opts : this->options;
-	if (!executor) return EG_UNIMPLEMENTED;
+	if (!executor) return Status::UNIMPLEMENTED;
 	return executor->layout(graph, options);
 }
 

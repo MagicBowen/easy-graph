@@ -3,7 +3,6 @@
 
 #include "easy_graph/graph/node.h"
 #include "easy_graph/graph/edge.h"
-#include "easy_graph/infra/status.h"
 #include <string>
 #include <set>
 #include <map>
@@ -12,6 +11,7 @@ EG_NS_BEGIN
 
 struct GraphVisitor;
 struct LayoutOption;
+enum class Status;
 
 struct Graph
 {

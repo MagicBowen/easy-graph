@@ -2,10 +2,11 @@
 #define HB141A993_B14A_4A1D_A1DD_353D33AE77A2
 
 #include "easy_graph/eg.h"
-#include "easy_graph/infra/status.h"
 #include <string>
 
 EG_NS_BEGIN
+
+enum class Status;
 
 struct ShellExecutor {
 	static Status execute(const std::string& script);

@@ -3,6 +3,7 @@
 #include "easy_graph/layout/engines/graph_easy/graph_easy_option.h"
 #include "easy_graph/layout/graph_layout.h"
 #include "easy_graph/builder/graph_dsl.h"
+#include "easy_graph/infra/status.h"
 #include "anything/calculator.h"
 #include "anything/candy.h"
 

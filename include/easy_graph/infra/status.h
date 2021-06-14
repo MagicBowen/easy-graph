@@ -2,31 +2,23 @@
 #define HA25033D6_1564_4748_B2C8_4DE2C5A286DE
 
 #include "easy_graph/eg.h"
-#include <stdbool.h>
-#include <stdint.h>
 
 EG_NS_BEGIN
 
-using Status = uint32_t;
+enum class Status {
+	SUCCESS = 0,
 
-#define EG_SUCC_STATUS(status) (EG_NS::Status) status
-#define EG_FAIL_STATUS(status) (EG_NS::Status) (status | EG_RESERVED_FAIL)
-
-
-/* OK */
-#define EG_SUCCESS              EG_SUCC_STATUS(0)
-
-/* Error Status */
-#define EG_RESERVED_FAIL       (EG_NS::Status) 0x80000000
-#define EG_FAILURE             EG_FAIL_STATUS(1)
-#define EG_FATAL_BUG           EG_FAIL_STATUS(2)
-#define EG_TIMEDOUT            EG_FAIL_STATUS(3)
-#define EG_OUT_OF_RANGE        EG_FAIL_STATUS(4)
-#define EG_UNIMPLEMENTED       EG_FAIL_STATUS(5)
+	RESERVED_FAIL = -1,
+	FAILURE       = -2,
+	FATAL_BUG     = -3,
+	TIMEDOUT      = -4,
+	OUT_OF_RANGE  = -5,
+	UNIMPLEMENTED = -6,
+};
 
 static inline bool eg_status_is_ok(Status status)
 {
-    return (status & EG_RESERVED_FAIL) == 0;
+    return (status > Status::RESERVED_FAIL);
 }
 
 static inline bool eg_status_is_fail(Status status)
