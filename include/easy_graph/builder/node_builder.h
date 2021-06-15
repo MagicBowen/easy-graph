@@ -7,16 +7,16 @@
 EG_NS_BEGIN
 
 template<typename ...TS>
-auto makeNode(const NodeId& id, TS && ...ts) {
+auto make_node(const NodeId& id, TS && ...ts) {
 	Node node(id);
 	if constexpr (sizeof...(ts) > 0) {
-		makeNodeImpl(node, std::forward<TS>(ts)...);
+		make_node_impl(node, std::forward<TS>(ts)...);
 	}
 	return node;
 }
 
 template<typename T, typename ... TS>
-void makeNodeImpl(Node& node, T && t, TS && ...ts) {
+void make_node_impl(Node& node, T && t, TS && ...ts) {
 	if constexpr (std::is_same_v<Subgraph, std::decay_t<T>>) {
 		node.addSubgraph(std::forward<T>(t));
 	} else if constexpr (std::is_same_v<BoxPtr, std::decay_t<T>>) {
@@ -29,11 +29,11 @@ void makeNodeImpl(Node& node, T && t, TS && ...ts) {
 		static_assert(!sizeof(T), "Unsupported node construction type!");
 	}
 	if constexpr (sizeof...(ts) > 0) {
-		makeNodeImpl(node, std::forward<TS>(ts)...);
+		make_node_impl(node, std::forward<TS>(ts)...);
 	}
 }
 
-#define NODE_OF(...)		::EG_NS::makeNode(__VA_ARGS__)
+#define NODE_OF(...)		::EG_NS::make_node(__VA_ARGS__)
 
 EG_NS_END
 

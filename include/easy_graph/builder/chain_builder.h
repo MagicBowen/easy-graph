@@ -31,12 +31,12 @@ struct ChainBuilder {
 			if (node) {
 				return this->Node(*node);
 			}
-			return this->Node(makeNode(id, std::forward<PARAMS>(params)...));
+			return this->Node(NODE_OF(id, std::forward<PARAMS>(params)...));
 		}
 
 		template<typename ...PARAMS>
 		ChainBuilder& Edge(PARAMS && ...params) {
-			makeLink(this->fromLink, std::forward<PARAMS>(params)...);
+			fromLink = LINK_OF(defaultEdgeType, std::forward<PARAMS>(params)...);
 			return chain;
 		}
 

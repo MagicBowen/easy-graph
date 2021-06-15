@@ -31,7 +31,6 @@ ChainBuilder::LinkBuilder::LinkBuilder(ChainBuilder& chain, const EdgeType& defa
 
 ChainBuilder& ChainBuilder::LinkBuilder::Node(const NodeObj& node) {
 	chain.linkTo(node, fromLink);
-	fromLink.reset(defaultEdgeType);
 	return chain;
 }
 

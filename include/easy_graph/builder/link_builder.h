@@ -7,14 +7,16 @@
 EG_NS_BEGIN
 
 template<typename ...TS>
-void makeLink(Link& link, TS && ...ts) {
+Link make_link(const EdgeType& type, TS && ...ts) {
+	Link link(type);
 	if constexpr (sizeof...(ts) > 0) {
-		makeLinkImpl(link, std::forward<TS>(ts)...);
+		make_link_impl(link, std::forward<TS>(ts)...);
 	}
+	return link;
 }
 
 template<typename T, typename ...TS>
-void makeLinkImpl(Link& link, T && t, TS && ...ts) {
+void make_link_impl(Link& link, T && t, TS && ...ts) {
 	if constexpr (std::is_convertible_v<std::decay_t<T>, EdgeType>) {
 		link.type = &t;
 	} else if constexpr (std::is_same_v<PortPair, std::decay_t<T>>) {
@@ -29,9 +31,11 @@ void makeLinkImpl(Link& link, T && t, TS && ...ts) {
 		static_assert(!sizeof(T), "Unsupported edge construction type!");
 	}
 	if constexpr (sizeof...(ts) > 0) {
-		makeLinkImpl(link, std::forward<TS>(ts)...);
+		make_link_impl(link, std::forward<TS>(ts)...);
 	}
 }
+
+#define LINK_OF(...)		::EG_NS::make_link(__VA_ARGS__)
 
 EG_NS_END
 

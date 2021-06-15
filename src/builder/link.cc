@@ -2,8 +2,7 @@
 
 EG_NS_BEGIN
 
-Link::Link(const EdgeType& type) {
-	reset(type);
+Link::Link(const EdgeType& type) : type(&type) {
 }
 
 void Link::setPorts(const PortPair& pp) {
@@ -19,13 +18,6 @@ void Link::setPort(const PortId& id) {
 	if (dstPortId == UNDEFINED_PORT_ID) {
 		dstPortId = id;
 	}
-}
-
-void Link::reset(const EdgeType& type) {
-	this->type = const_cast<EdgeType*>(&type);
-	this->srcPortId = UNDEFINED_PORT_ID;
-	this->dstPortId = UNDEFINED_PORT_ID;
-	this->attrs.clear();
 }
 
 EG_NS_END

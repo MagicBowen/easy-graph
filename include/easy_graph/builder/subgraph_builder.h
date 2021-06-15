@@ -7,16 +7,16 @@
 EG_NS_BEGIN
 
 template<typename ...TS>
-auto makeSubgraph(const Graph& graph, TS && ...ts) {
+auto make_subgraph(const Graph& graph, TS && ...ts) {
 	Subgraph subgraph(graph);
 	if constexpr (sizeof...(ts) > 0) {
-		makeSubgraphImpl(subgraph, std::forward<TS>(ts)...);
+		make_subgraph_impl(subgraph, std::forward<TS>(ts)...);
 	}
 	return subgraph;
 }
 
 template<typename T, typename ... TS>
-void makeSubgraphImpl(Subgraph& subgraph, T && t, TS && ...ts) {
+void make_subgraph_impl(Subgraph& subgraph, T && t, TS && ...ts) {
 	if constexpr (std::is_convertible_v<std::decay_t<T>, std::string>) {
 		subgraph.setName(std::forward<T>(t));
 	} else if constexpr (std::is_same_v<InputWire, std::decay_t<T>>) {
@@ -27,11 +27,11 @@ void makeSubgraphImpl(Subgraph& subgraph, T && t, TS && ...ts) {
 		static_assert(!sizeof(T), "Unsupported subgraph construction type!");
 	}
 	if constexpr (sizeof...(ts) > 0) {
-		makeSubgraphImpl(subgraph, std::forward<TS>(ts)...);
+		make_subgraph_impl(subgraph, std::forward<TS>(ts)...);
 	}
 }
 
-#define SUBGRAPH_OF(...)		::EG_NS::makeSubgraph(__VA_ARGS__)
+#define SUBGRAPH_OF(...)		::EG_NS::make_subgraph(__VA_ARGS__)
 
 EG_NS_END
 

@@ -19,7 +19,7 @@ namespace detail {
 	}
 
 	template<typename GRAPH_BUILDER>
-	auto buildGraph(const char* name, GRAPH_BUILDER builderInDSL) {
+	auto make_graph(const char* name, GRAPH_BUILDER builderInDSL) {
 		GraphBuilder builder(name);
 		builderInDSL(builder);
 		return *builder;
@@ -39,7 +39,7 @@ namespace detail {
 
 #define SUBGRAPH(G, ...)        SUBGRAPH_OF(G, ##__VA_ARGS__)
 
-#define GRAPH(G, ...)           Graph G = ::EG_NS::detail::buildGraph(										\
+#define GRAPH(G, ...)           Graph G = ::EG_NS::detail::make_graph(										\
 													     ::EG_NS::detail::getGraphName(#G, ##__VA_ARGS__),	\
 												           [&](GraphBuilder& BUILDER)
 

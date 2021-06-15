@@ -12,11 +12,11 @@ struct EdgeType;
 
 struct Link {
 	explicit Link(const EdgeType&);
+
 	void setPorts(const PortPair&);
 	void setPort(const PortId&);
-	void reset(const EdgeType&);
 
-	EdgeType* type{nullptr};
+	const EdgeType* type{nullptr};
 	PortId srcPortId{UNDEFINED_PORT_ID};
 	PortId dstPortId{UNDEFINED_PORT_ID};
 	Attributes attrs;
