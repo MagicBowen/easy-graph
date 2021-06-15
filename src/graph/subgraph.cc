@@ -15,10 +15,6 @@ Subgraph::Subgraph(const Graph& graph)
 : name(graph.getName()), graph(graph){
 }
 
-Subgraph::Subgraph(const std::string& name, const Graph& graph)
-: name(name), graph(graph) {
-}
-
 __DEF_EQUALS(Subgraph) {
 	return (this->graph == rhs.graph) &&
 		   isWiresEqual(inputWires, rhs.inputWires) &&

@@ -13,7 +13,6 @@ struct WireVisitor;
 
 struct Subgraph {
 	Subgraph(const Graph&);
-	Subgraph(const std::string& name, const Graph&);
 
 	__DECL_EQUALS(Subgraph);
 
