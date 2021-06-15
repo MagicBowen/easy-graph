@@ -9,9 +9,7 @@ EG_NS_BEGIN
 template<typename ...TS>
 auto make_subgraph(const Graph& graph, TS && ...ts) {
 	Subgraph subgraph(graph);
-	if constexpr (sizeof...(ts) > 0) {
-		make_subgraph_impl(subgraph, std::forward<TS>(ts)...);
-	}
+	make_subgraph_impl(subgraph, std::forward<TS>(ts)...);
 	return subgraph;
 }
 
@@ -26,9 +24,10 @@ void make_subgraph_impl(Subgraph& subgraph, T && t, TS && ...ts) {
 	} else {
 		static_assert(!sizeof(T), "Unsupported subgraph construction type!");
 	}
-	if constexpr (sizeof...(ts) > 0) {
-		make_subgraph_impl(subgraph, std::forward<TS>(ts)...);
-	}
+	make_subgraph_impl(subgraph, std::forward<TS>(ts)...);
+}
+
+static inline void make_subgraph_impl(Subgraph&) {
 }
 
 #define SUBGRAPH_OF(...)		::EG_NS::make_subgraph(__VA_ARGS__)

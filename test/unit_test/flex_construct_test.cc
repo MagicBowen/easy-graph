@@ -22,7 +22,7 @@ namespace {
 				static_assert(!sizeof(T), "unsupported construction type!");
 			}
 
-			if constexpr (sizeof...(TS) != 0) {
+			if constexpr (sizeof...(TS) > 0) {
 				classify(std::forward<TS>(ts)...);
 			}
 		}

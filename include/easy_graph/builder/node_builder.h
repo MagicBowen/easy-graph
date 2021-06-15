@@ -9,9 +9,7 @@ EG_NS_BEGIN
 template<typename ...TS>
 auto make_node(const NodeId& id, TS && ...ts) {
 	Node node(id);
-	if constexpr (sizeof...(ts) > 0) {
-		make_node_impl(node, std::forward<TS>(ts)...);
-	}
+	make_node_impl(node, std::forward<TS>(ts)...);
 	return node;
 }
 
@@ -28,9 +26,10 @@ void make_node_impl(Node& node, T && t, TS && ...ts) {
 	} else {
 		static_assert(!sizeof(T), "Unsupported node construction type!");
 	}
-	if constexpr (sizeof...(ts) > 0) {
-		make_node_impl(node, std::forward<TS>(ts)...);
-	}
+	make_node_impl(node, std::forward<TS>(ts)...);
+}
+
+static inline void make_node_impl(Node&) {
 }
 
 #define NODE_OF(...)		::EG_NS::make_node(__VA_ARGS__)

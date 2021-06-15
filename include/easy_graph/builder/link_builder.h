@@ -9,9 +9,7 @@ EG_NS_BEGIN
 template<typename ...TS>
 Link make_link(const EdgeType& type, TS && ...ts) {
 	Link link(type);
-	if constexpr (sizeof...(ts) > 0) {
-		make_link_impl(link, std::forward<TS>(ts)...);
-	}
+	make_link_impl(link, std::forward<TS>(ts)...);
 	return link;
 }
 
@@ -30,9 +28,10 @@ void make_link_impl(Link& link, T && t, TS && ...ts) {
 	} else {
 		static_assert(!sizeof(T), "Unsupported edge construction type!");
 	}
-	if constexpr (sizeof...(ts) > 0) {
-		make_link_impl(link, std::forward<TS>(ts)...);
-	}
+	make_link_impl(link, std::forward<TS>(ts)...);
+}
+
+static inline void make_link_impl(Link&) {
 }
 
 #define LINK_OF(...)		::EG_NS::make_link(__VA_ARGS__)
