@@ -112,14 +112,14 @@ int main() {
 	});
 
 	GRAPH(graph) {
-		auto sg_cond = subgraph_of(cond, InputWire(0, Endpoint("a", 1)));
-		auto sg_body = subgraph_of(body, OutputWire(Endpoint("c", 1), 1));
+		auto sg_cond = subgraph_of(cond, iw_of(0, ep_of("a", 1)));
+		auto sg_body = subgraph_of(body, ow_of(ep_of("c", 1), 1));
 
-		HAS_NODE(foreach, sg_cond, sg_body, attr_of("loop", true));
-		HAS_NODE(loop, sg_cond, subgraph_of(body, "loop body", OutputWire(Endpoint("b", 1), 0)));
+		auto foreach = node_of("foreach", sg_cond, sg_body, attr_of("loop", true));
+		auto loop    = node_of("loop", sg_cond, subgraph_of(body, "loop body", ow_of(ep_of("b", 1), 0)));
 
 		DATA_CHAIN(Node("const_1") -> Node(loop) -> Node("unique") -> Node("softmax"));
-		DATA_CHAIN(Node("const_2") -> Node("while", subgraph_of(cond, InputWire(1, Endpoint("a", 1))), subgraph_of(body, "while body")));
+		DATA_CHAIN(Node("const_2") -> Node("while", subgraph_of(cond, iw_of(1, ep_of("a", 1))), subgraph_of(body, "while body")));
 		CTRL_CHAIN(Node("case") -> Node("unique"));
 		CTRL_CHAIN(Node(loop) -> Node(foreach));
 	});
