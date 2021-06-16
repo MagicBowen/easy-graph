@@ -65,15 +65,5 @@ $ chmod a+x ./ccup.sh
 
 ### TODO
 
-- [X]: support assertion dsl for graph;
-- [x]: support specify graph name for subgraph;
-- [x]: support set attributes on node;
-- [x]: support set attributes on edge;
-- [x]: support user specified edge type;
-- [x]: unify the node making;
-- [x]: relation between node and subgraph;
-- [x]: forward declare enum class (Status);
-- [ ]: support rvalue construct and assignment;
-- [ ]: reduce macro by compile time computing;
-- [ ]: support api to modity graph;
+- [ ]: modify graph;
 - [ ]: docs;
