@@ -3,7 +3,7 @@
 
 #include "easy_graph/infra/scope_guard.h"
 #include "easy_graph/infra/symbol.h"
-#include "easy_graph/builder/edge_types/default_edge_type.h"
+#include "easy_graph/edges/default_edge_type.h"
 
 EG_NS_BEGIN
 

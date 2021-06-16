@@ -8,7 +8,9 @@ EG_NS_BEGIN
 
 using PortPair = std::pair<PortId, PortId>;
 
-#define PP(SRC, DST)  std::make_pair(PortId(SRC), PortId(DST))
+static inline PortPair pp_of(PortId src, PortId dst) {
+	return std::make_pair(src, dst);
+}
 
 EG_NS_END
 

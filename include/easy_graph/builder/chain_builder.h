@@ -3,10 +3,9 @@
 
 #include "easy_graph/builder/link.h"
 #include "easy_graph/builder/link_builder.h"
+#include "easy_graph/builder/edge_builder.h"
 #include "easy_graph/builder/node_builder.h"
 #include "easy_graph/builder/graph_builder.h"
-#include "easy_graph/builder/edge_types/ctrl_edge_type.h"
-#include "easy_graph/builder/edge_types/data_edge_type.h"
 #include "easy_graph/infra/ext_traits.h"
 
 EG_NS_BEGIN
@@ -36,23 +35,23 @@ struct ChainBuilder {
 			if (node) {
 				return this->Node(*node);
 			}
-			return this->Node(std::move(NODE_OF(id, std::forward<PARAMS>(params)...)));
+			return this->Node(std::move(node_of(id, std::forward<PARAMS>(params)...)));
 		}
 
 		template<typename ...PARAMS>
 		ChainBuilder& Edge(PARAMS && ...params) {
-			fromLink = std::move(LINK_OF(defaultEdgeType, std::forward<PARAMS>(params)...));
+			fromLink = std::move(link_of(defaultEdgeType, std::forward<PARAMS>(params)...));
 			return chain;
 		}
 
 		template<typename ...TS>
 		ChainBuilder& Ctrl(TS && ...ts) {
-			return this->Edge(EDGE_CTRL, std::forward<TS>(ts)...);
+			return this->Edge(ctrl_edge(), std::forward<TS>(ts)...);
 		}
 
 		template<typename ...TS>
 		ChainBuilder& Data(TS && ...ts) {
-			return this->Edge(EDGE_DATA, std::forward<TS>(ts)...);
+			return this->Edge(data_edge(), std::forward<TS>(ts)...);
 		}
 
 	private:

@@ -21,7 +21,7 @@ FIXTURE(BoxTest) {
 	}
 
 	TEST("box unpacking something not inherited from box") {
-		auto box = box_packing<BOX_WRAPPER(ToffeeCandy)>("Dove");
+		auto box = box_packing<box_wrapper<ToffeeCandy>>("Dove");
 		auto something = box_unpacking<ToffeeCandy>(box);
 
 		ASSERT_TRUE(something);
@@ -29,7 +29,7 @@ FIXTURE(BoxTest) {
 	}
 
 	TEST("box unpacking interface") {
-		auto box = BOX_OF(JellyCandy, JellyShape::CIRCLE);
+		auto box = box_of<JellyCandy>(JellyShape::CIRCLE);
 		auto candy = box_unpacking<Candy>(box);
 		ASSERT_TRUE(candy);
 		ASSERT_EQ("Jelly (Shape:Circle)", candy->getLabel());

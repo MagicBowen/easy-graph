@@ -5,8 +5,15 @@
 
 EG_NS_BEGIN
 
-#define ATTR(...)		    ::EG_NS::Attribute(__VA_ARGS__)
-#define ATTRS(...)		    ::EG_NS::Attributes({__VA_ARGS__})
+template<typename ANY>
+Attribute attr_of(const std::string& key, ANY && any) {
+	return Attribute(key, std::forward<ANY>(any));
+}
+
+static inline Attributes attrs_of(std::initializer_list<Attribute> attrs) {
+	Attributes result(std::move(attrs));
+	return result;
+}
 
 EG_NS_END
 

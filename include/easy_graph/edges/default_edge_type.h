@@ -16,8 +16,6 @@ private:
 	const EdgeType* type{nullptr};
 };
 
-#define EDGE_DEFAULT   ::EG_NS::DefaultEdgeType::getInstance().get()
-
 EG_NS_END
 
 #endif

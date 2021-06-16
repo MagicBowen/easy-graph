@@ -37,8 +37,8 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g2) {
-		CHAIN(Node("a") -> Edge(EDGE_CTRL, ATTR("label", "to")) -> Node("b") -> Node("c") -> Node("d") -> Node("e"));
-		CHAIN(Node("a") -> Ctrl(ATTR("label", "condition")) -> Node("c"));
+		CHAIN(Node("a") -> Edge(ctrl_edge(), attr_of("label", "to")) -> Node("b") -> Node("c") -> Node("d") -> Node("e"));
+		CHAIN(Node("a") -> Ctrl(attr_of("label", "condition")) -> Node("c"));
 	});
 
 	g2.layout();
@@ -78,8 +78,8 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g5) {
-		CHAIN(Node("a") -> Node("b") -> Ctrl(ATTR("label", "condition")) -> Node("c") -> Node("d") -> Data(1, 1) -> Node("e"));
-		CHAIN(Node("a") -> Data(0, 1) -> Node("c") -> Ctrl(ATTRS({"label", "to"}, {"border", true})) -> Node("e"));
+		CHAIN(Node("a") -> Node("b") -> Ctrl(attr_of("label", "condition")) -> Node("c") -> Node("d") -> Data(1, 1) -> Node("e"));
+		CHAIN(Node("a") -> Data(0, 1) -> Node("c") -> Ctrl(attrs_of({{"label", "to"}, {"border", true}})) -> Node("e"));
 		CHAIN(Node("a") -> Data(1, 0) -> Node("d"));
 		CHAIN(Node("b") -> Node("e"));
 		CHAIN(Node("c") -> Node("e"));
@@ -92,7 +92,7 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g6) {
-		CHAIN(Node("a", ATTRS({"source", true}, {"length", 3})) -> Data(1, 0) -> Node("d"));
+		CHAIN(Node("a", attrs_of({{"source", true}, {"length", 3}})) -> Data(1, 0) -> Node("d"));
 		CHAIN(Node("b") -> Node("e"));
 		CHAIN(Node("c") -> Node("e"));
 	});
@@ -112,14 +112,14 @@ int main() {
 	});
 
 	GRAPH(graph) {
-		auto sg_cond = SUBGRAPH_OF(cond, InputWire(0, Endpoint("a", 1)));
-		auto sg_body = SUBGRAPH_OF(body, OutputWire(Endpoint("c", 1), 1));
+		auto sg_cond = subgraph_of(cond, InputWire(0, Endpoint("a", 1)));
+		auto sg_body = subgraph_of(body, OutputWire(Endpoint("c", 1), 1));
 
-		HAS_NODE(foreach, sg_cond, sg_body, ATTR("loop", true));
-		HAS_NODE(loop, sg_cond, SUBGRAPH(body, "loop body", OutputWire(Endpoint("b", 1), 0)));
+		HAS_NODE(foreach, sg_cond, sg_body, attr_of("loop", true));
+		HAS_NODE(loop, sg_cond, subgraph_of(body, "loop body", OutputWire(Endpoint("b", 1), 0)));
 
 		DATA_CHAIN(Node("const_1") -> Node(loop) -> Node("unique") -> Node("softmax"));
-		DATA_CHAIN(Node("const_2") -> Node("while", SUBGRAPH(cond, InputWire(1, Endpoint("a", 1))), SUBGRAPH(body, "while body")));
+		DATA_CHAIN(Node("const_2") -> Node("while", subgraph_of(cond, InputWire(1, Endpoint("a", 1))), subgraph_of(body, "while body")));
 		CTRL_CHAIN(Node("case") -> Node("unique"));
 		CTRL_CHAIN(Node(loop) -> Node(foreach));
 	});

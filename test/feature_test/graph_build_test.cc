@@ -7,14 +7,14 @@ USING_EG_NS
 FIXTURE(GraphBuildTest) {
 
 	GRAPH(calculator) {
-		auto plus  = NODE_OF("plus", BOX_OF(Plus), ATTRS({"danger", false}, {"input", 2}));
-		auto minus = NODE_OF("minus", BOX_OF(Minus));
-		auto i1    = NODE_OF("2", BOX_OF(Integer, 2));
-		auto i2    = NODE_OF("5", BOX_OF(Integer, 5));
+		auto plus  = node_of("plus", box_of<Plus>(), attrs_of({{"danger", false}, {"input", 2}}));
+		auto minus = node_of("minus", box_of<Minus>());
+		auto i1    = node_of("2", box_of<Integer>(2));
+		auto i2    = node_of("5", box_of<Integer>(5));
 
-		CHAIN(Node(i1) -> Node(plus) -> Node(minus) -> Node("div", BOX_OF(Divides)));
-		CHAIN(Node(i2) -> Node(plus));
-		CHAIN(Node("3", BOX_OF(Integer, 3), ATTR("const", true)) -> Node(minus));
+		CHAIN(Node(i1) -> Node(plus) -> Node(minus) -> Node("div", box_of<Divides>()));
+		CHAIN(Node(i2) -> Edge(data_edge(), pp_of(1,2)) -> Node(plus));
+		CHAIN(Node("3", box_of<Integer>(3), attr_of("const", true)) -> Node(minus));
 		CHAIN(Node(i1) -> Node("div"));
 	});
 

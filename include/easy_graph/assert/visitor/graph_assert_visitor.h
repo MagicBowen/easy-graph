@@ -3,7 +3,7 @@
 
 #include "easy_graph/graph/graph_visitor.h"
 #include "easy_graph/assert/visitor/base_types.h"
-#include "easy_graph/builder/edge_types/default_edge_type.h"
+#include "easy_graph/builder/edge_builder.h"
 #include <map>
 
 EG_NS_BEGIN
@@ -21,11 +21,11 @@ struct GraphAssertVisitor: GraphVisitor {
 
 	bool hasEdge(const NodeId& src,
 			     const NodeId& dst,
-				 const EdgeType& type = EDGE_DEFAULT) const;
+				 const EdgeType& type = default_edge()) const;
 
 	bool hasEdge(const Endpoint& src,
 			     const Endpoint& dst,
-				 const EdgeType& type = EDGE_DEFAULT) const;
+				 const EdgeType& type = default_edge()) const;
 
 private:
 	void visit(const Graph&) override;

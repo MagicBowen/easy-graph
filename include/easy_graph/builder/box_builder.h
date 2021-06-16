@@ -11,13 +11,15 @@ namespace detail {
 	struct BoxWrapper : ANYTHING, Box {
 		using ANYTHING::ANYTHING;
 	};
-
-	template<typename ANYTHING>
-	using BoxedAnything = std::conditional_t<std::is_base_of_v<Box, ANYTHING>, ANYTHING, BoxWrapper<ANYTHING>>;
 }
 
-#define BOX_WRAPPER(ANYTHING)  ::EG_NS::detail::BoxedAnything<ANYTHING>
-#define BOX_OF(ANYTHING, ...)  ::EG_NS::box_packing<BOX_WRAPPER(ANYTHING)>(__VA_ARGS__)
+template<typename ANYTHING>
+using box_wrapper = std::conditional_t<std::is_base_of_v<Box, ANYTHING>, ANYTHING, detail::BoxWrapper<ANYTHING>>;
+
+template<typename ANYTHING, typename ...ARGS>
+BoxPtr box_of(ARGS && ...args) {
+	return box_packing<box_wrapper<ANYTHING>>(std::forward<ARGS>(args)...);
+}
 
 EG_NS_END
 

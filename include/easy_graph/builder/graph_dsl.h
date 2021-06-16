@@ -1,14 +1,11 @@
 #ifndef H46D07001_D54E_497C_B1BA_878A47164DA5
 #define H46D07001_D54E_497C_B1BA_878A47164DA5
 
-#include "easy_graph/builder/graph_builder.h"
 #include "easy_graph/builder/chain_builder.h"
 #include "easy_graph/builder/box_builder.h"
 #include "easy_graph/builder/subgraph_builder.h"
 #include "easy_graph/builder/attrs_builder.h"
-#include "easy_graph/builder/edge_types/default_edge_type.h"
-#include "easy_graph/builder/edge_types/ctrl_edge_type.h"
-#include "easy_graph/builder/edge_types/data_edge_type.h"
+#include "easy_graph/builder/wire_builder.h"
 
 EG_NS_BEGIN
 
@@ -28,14 +25,12 @@ namespace detail {
 }
 
 ////////////////////////////////////////////////////////////////
-#define CHAIN(...)            ::EG_NS::ChainBuilder(BUILDER, EDGE_DEFAULT) -> __VA_ARGS__
-#define DATA_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, EDGE_DATA) -> __VA_ARGS__
-#define CTRL_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, EDGE_CTRL) -> __VA_ARGS__
+#define CHAIN(...)            ::EG_NS::ChainBuilder(BUILDER, default_edge()) -> __VA_ARGS__
+#define DATA_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, data_edge()) -> __VA_ARGS__
+#define CTRL_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, ctrl_edge()) -> __VA_ARGS__
 
-#define HAS_NODE(N, ...)       	auto N = NODE_OF(#N, ##__VA_ARGS__);		\
+#define HAS_NODE(N, ...)       	auto N = node_of(#N, ##__VA_ARGS__);		\
 								BUILDER->addNode(N)
-
-#define SUBGRAPH(G, ...)        SUBGRAPH_OF(G, ##__VA_ARGS__)
 
 #define GRAPH(G, ...)           Graph G = ::EG_NS::detail::make_graph(										\
 													     ::EG_NS::detail::getGraphName(#G, ##__VA_ARGS__),	\

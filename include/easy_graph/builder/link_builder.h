@@ -6,35 +6,35 @@
 
 EG_NS_BEGIN
 
+namespace detail {
+	static inline void make_link(Link&) {
+	}
+
+	template<typename T, typename ...TS>
+	void make_link(Link& link, T && t, TS && ...ts) {
+		if constexpr (std::is_convertible_v<std::decay_t<T>, EdgeType>) {
+			link.type = &t;
+		} else if constexpr (std::is_same_v<PortPair, std::decay_t<T>>) {
+			link.setPorts(std::forward<T>(t));
+		} else if constexpr (std::is_convertible_v<std::decay_t<T>, PortId>) {
+			link.setPort(std::forward<T>(t));
+		} else if constexpr (std::is_same_v<Attribute, std::decay_t<T>>) {
+			link.attrs.set(std::forward<T>(t));
+		} else if constexpr (std::is_same_v<Attributes, std::decay_t<T>>) {
+			link.attrs.replace(std::forward<T>(t));
+		} else {
+			static_assert(!sizeof(T), "Unsupported edge construction type!");
+		}
+		make_link(link, std::forward<TS>(ts)...);
+	}
+}
+
 template<typename ...TS>
-Link make_link(const EdgeType& type, TS && ...ts) {
+Link link_of(const EdgeType& type, TS && ...ts) {
 	Link link(type);
-	make_link_impl(link, std::forward<TS>(ts)...);
+	detail::make_link(link, std::forward<TS>(ts)...);
 	return link;
 }
-
-template<typename T, typename ...TS>
-void make_link_impl(Link& link, T && t, TS && ...ts) {
-	if constexpr (std::is_convertible_v<std::decay_t<T>, EdgeType>) {
-		link.type = &t;
-	} else if constexpr (std::is_same_v<PortPair, std::decay_t<T>>) {
-		link.setPorts(std::forward<T>(t));
-	} else if constexpr (std::is_convertible_v<std::decay_t<T>, PortId>) {
-		link.setPort(std::forward<T>(t));
-	} else if constexpr (std::is_same_v<Attribute, std::decay_t<T>>) {
-		link.attrs.set(std::forward<T>(t));
-	} else if constexpr (std::is_same_v<Attributes, std::decay_t<T>>) {
-		link.attrs.replace(std::forward<T>(t));
-	} else {
-		static_assert(!sizeof(T), "Unsupported edge construction type!");
-	}
-	make_link_impl(link, std::forward<TS>(ts)...);
-}
-
-static inline void make_link_impl(Link&) {
-}
-
-#define LINK_OF(...)		::EG_NS::make_link(__VA_ARGS__)
 
 EG_NS_END
 

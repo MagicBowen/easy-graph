@@ -6,31 +6,31 @@
 
 EG_NS_BEGIN
 
+namespace detail {
+	static inline void make_subgraph(Subgraph&) {
+	}
+
+	template<typename T, typename ... TS>
+	void make_subgraph(Subgraph& subgraph, T && t, TS && ...ts) {
+		if constexpr (std::is_convertible_v<std::decay_t<T>, std::string>) {
+			subgraph.setName(std::forward<T>(t));
+		} else if constexpr (std::is_same_v<InputWire, std::decay_t<T>>) {
+			subgraph.wireUp(std::forward<T>(t));
+		} else if constexpr (std::is_same_v<OutputWire, std::decay_t<T>>) {
+			subgraph.wireUp(std::forward<T>(t));
+		} else {
+			static_assert(!sizeof(T), "Unsupported subgraph construction type!");
+		}
+		make_subgraph(subgraph, std::forward<TS>(ts)...);
+	}
+}
+
 template<typename ...TS>
-auto make_subgraph(const Graph& graph, TS && ...ts) {
+auto subgraph_of(const Graph& graph, TS && ...ts) {
 	Subgraph subgraph(graph);
-	make_subgraph_impl(subgraph, std::forward<TS>(ts)...);
+	detail::make_subgraph(subgraph, std::forward<TS>(ts)...);
 	return subgraph;
 }
-
-template<typename T, typename ... TS>
-void make_subgraph_impl(Subgraph& subgraph, T && t, TS && ...ts) {
-	if constexpr (std::is_convertible_v<std::decay_t<T>, std::string>) {
-		subgraph.setName(std::forward<T>(t));
-	} else if constexpr (std::is_same_v<InputWire, std::decay_t<T>>) {
-		subgraph.wireUp(std::forward<T>(t));
-	} else if constexpr (std::is_same_v<OutputWire, std::decay_t<T>>) {
-		subgraph.wireUp(std::forward<T>(t));
-	} else {
-		static_assert(!sizeof(T), "Unsupported subgraph construction type!");
-	}
-	make_subgraph_impl(subgraph, std::forward<TS>(ts)...);
-}
-
-static inline void make_subgraph_impl(Subgraph&) {
-}
-
-#define SUBGRAPH_OF(...)		::EG_NS::make_subgraph(__VA_ARGS__)
 
 EG_NS_END
 

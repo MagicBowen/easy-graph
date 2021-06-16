@@ -1,4 +1,4 @@
-#include "easy_graph/builder/edge_types/default_edge_type.h"
+#include "easy_graph/edges/default_edge_type.h"
 #include "easy_graph/builder/port_aware_trait.h"
 #include "easy_graph/graph/edge_type.h"
 
