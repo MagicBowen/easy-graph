@@ -28,16 +28,6 @@ NodeId Node::getId() const {
 	return id;
 }
 
-Node& Node::packing(const BoxPtr& box) {
-	this->box = box;
-	return *this;
-}
-
-Node& Node::addSubgraph(const Subgraph& graph) {
-	subgraphs.push_back(graph);
-	return *this;
-}
-
 void Node::accept(SubgraphVisitor& visitor) const {
 	std::for_each(subgraphs.cbegin(), subgraphs.cend(),  [&visitor](const auto& subgraph){visitor.visit(subgraph);});
 }

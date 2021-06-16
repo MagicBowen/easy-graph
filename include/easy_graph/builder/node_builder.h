@@ -22,7 +22,7 @@ void make_node_impl(Node& node, T && t, TS && ...ts) {
 	} else if constexpr (std::is_same_v<Attribute, std::decay_t<T>>) {
 		node.setAttr(std::forward<T>(t));
 	} else if constexpr (std::is_same_v<Attributes, std::decay_t<T>>) {
-		node.mergeAttrs(std::forward<T>(t));
+		node.replaceAttrs(std::forward<T>(t));
 	} else {
 		static_assert(!sizeof(T), "Unsupported node construction type!");
 	}

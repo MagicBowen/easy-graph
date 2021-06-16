@@ -24,7 +24,7 @@ void make_link_impl(Link& link, T && t, TS && ...ts) {
 	} else if constexpr (std::is_same_v<Attribute, std::decay_t<T>>) {
 		link.attrs.set(std::forward<T>(t));
 	} else if constexpr (std::is_same_v<Attributes, std::decay_t<T>>) {
-		link.attrs.merge(std::forward<T>(t));
+		link.attrs.replace(std::forward<T>(t));
 	} else {
 		static_assert(!sizeof(T), "Unsupported edge construction type!");
 	}

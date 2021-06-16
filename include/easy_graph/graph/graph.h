@@ -21,8 +21,17 @@ struct Graph
 
 	std::string getName() const;
 
-	Node* addNode(const Node&);
-	Edge* addEdge(const Edge&);
+	template<typename NODE>
+	Node* addNode(NODE && node) {
+		auto result = nodes.emplace(node.getId(), std::forward<NODE>(node));
+		return &(result.first->second);
+	}
+
+	template<typename EDGE>
+	Edge* addEdge(EDGE && edge) {
+		auto result = edges.emplace(std::forward<EDGE>(edge));
+		return &(const_cast<Edge&>(*(result.first)));
+	}
 
 	Node* findNode(const NodeId&);
 	const Node* findNode(const NodeId&) const;

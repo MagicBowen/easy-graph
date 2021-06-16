@@ -12,26 +12,12 @@ ChainBuilder::LinkBuilder* ChainBuilder::operator->() {
 	return &linker;
 }
 
-ChainBuilder& ChainBuilder::linkTo(const Node& node, const Link& link) {
-	Node* currentNode = graphBuilder.buildNode(node);
-	if (prevNode) {
-		graphBuilder.buildEdge(*prevNode, *currentNode, link);
-	}
-	prevNode = currentNode;
-	return *this;
-}
-
 const Node* ChainBuilder::findNode(const NodeId& id) const {
 	return graphBuilder->findNode(id);
 }
 
 ChainBuilder::LinkBuilder::LinkBuilder(ChainBuilder& chain, const EdgeType& defaultEdgeType)
 : chain(chain), defaultEdgeType(defaultEdgeType), fromLink(defaultEdgeType){
-}
-
-ChainBuilder& ChainBuilder::LinkBuilder::Node(const NodeObj& node) {
-	chain.linkTo(node, fromLink);
-	return chain;
 }
 
 EG_NS_END

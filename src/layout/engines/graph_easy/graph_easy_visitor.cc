@@ -124,7 +124,7 @@ namespace {
 		auto id = node.getId();
 		std::string nodeLayout = to_layout(node);
 
-		SubgraphLayoutVisitor visitor(id, ctxt);
+		SubgraphLayoutVisitor visitor(node, ctxt);
 		node.accept(visitor);
 		if (!visitor.hasSubgraph) return nodeLayout;
 

@@ -8,8 +8,11 @@ Attributes::Attributes() {
 
 Attributes::Attributes(std::initializer_list<Attribute> attrs) {
 	for (auto& attr : attrs) {
-		dict.insert(attr);
+		dict.insert(std::move(attr));
 	}
+}
+void Attributes::set(Attribute attr) {
+	this->set(attr.first, std::move(attr.second));
 }
 
 const std::any* Attributes::get(const AttrKey& key) const{
@@ -20,18 +23,14 @@ const std::any* Attributes::get(const AttrKey& key) const{
 	return &(it->second);
 }
 
-void Attributes::set(const Attribute& attr) {
-	this->set(attr.first, attr.second);
-}
-
-void Attributes::set(const AttrKey& key, const std::any& any) {
-	dict.insert_or_assign(key, any);
-}
-
 void Attributes::merge(const Attributes& attrs) {
-	for (auto& attr : attrs.dict) {
+	for (const auto& attr : attrs.dict) {
 		this->set(attr.first, attr.second);
 	}
+}
+
+void Attributes::replace(Attributes attrs) {
+	dict = std::move(attrs.dict);
 }
 
 void Attributes::remove(const AttrKey& key) {

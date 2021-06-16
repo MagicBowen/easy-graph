@@ -12,20 +12,21 @@ struct Attributes {
 	Attributes();
 	Attributes(std::initializer_list<Attribute>);
 
-	void set(const Attribute&);
-	void set(const AttrKey&, const std::any&);
-
-	const std::any* get(const AttrKey&) const;
+	template<typename VALUE>
+	void set(const AttrKey& key, VALUE&& any) {
+		dict.insert_or_assign(key, std::forward<VALUE>(any));
+	}
 
 	template<typename VALUE>
 	const VALUE* get(const AttrKey& key) const {
 		return std::any_cast<VALUE>(this->get(key));
 	}
 
-	void remove(const AttrKey&);
-
+	void set(Attribute);
+	const std::any* get(const AttrKey&) const;
+	void replace(Attributes);
 	void merge(const Attributes&);
-
+	void remove(const AttrKey&);
 	void clear();
 
 	void accept(AttributeVisitor&) const;

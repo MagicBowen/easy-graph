@@ -14,13 +14,17 @@ struct SubgraphVisitor;
 
 struct Node : AttributesMixin
 {
-	Node(const NodeId&);
+	explicit Node(const NodeId&);
 
     __DECL_COMP(Node);
 
     NodeId getId() const;
 
-    Node& packing(const BoxPtr&);
+    template<typename BOX>
+    Node& packing(BOX && box) {
+    	this->box = std::forward<BOX>(box);
+    	return *this;
+    }
 
     template<typename ANYTHING>
     ANYTHING* unpacking() const {
@@ -28,7 +32,11 @@ struct Node : AttributesMixin
     	return box_unpacking<ANYTHING>(box);
     }
 
-    Node& addSubgraph(const Subgraph&);
+    template<typename SUBGRAPH>
+    Node& addSubgraph(SUBGRAPH && subgraph) {
+    	subgraphs.emplace_back(std::forward<SUBGRAPH>(subgraph));
+    	return *this;
+    }
 
     void accept(SubgraphVisitor&) const;
 

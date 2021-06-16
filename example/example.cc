@@ -79,7 +79,7 @@ int main() {
 
 	GRAPH(g5) {
 		CHAIN(Node("a") -> Node("b") -> Ctrl(ATTR("label", "condition")) -> Node("c") -> Node("d") -> Data(1, 1) -> Node("e"));
-		CHAIN(Node("a") -> Data(0, 1) -> Node("c") -> Ctrl(ATTR("label", "to"), ATTR("border", true)) -> Node("e"));
+		CHAIN(Node("a") -> Data(0, 1) -> Node("c") -> Ctrl(ATTRS({"label", "to"}, {"border", true})) -> Node("e"));
 		CHAIN(Node("a") -> Data(1, 0) -> Node("d"));
 		CHAIN(Node("b") -> Node("e"));
 		CHAIN(Node("c") -> Node("e"));

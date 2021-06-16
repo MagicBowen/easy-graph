@@ -34,15 +34,7 @@ const GraphBuilder::NodeInfo* GraphBuilder::findNode(const NodeId& id) const {
 	return const_cast<GraphBuilder&>(*this).findNode(id);
 }
 
-Node* GraphBuilder::buildNode(const Node& node) {
-	auto it = nodes.find(node.getId());
-	if (it == nodes.end()) {
-		nodes.emplace(std::make_pair(node.getId(), NodeInfo()));
-	}
-	return graph.addNode(node);
-}
-
-Edge* GraphBuilder::buildEdge(const Node& src, const Node& dst, const Link& link) {
+Edge* GraphBuilder::buildEdge(const Node& src, const Node& dst, Link& link) {
 	NodeInfo* srcInfo = findNode(src.getId());
 	NodeInfo* dstInfo = findNode(dst.getId());
 
@@ -57,7 +49,7 @@ Edge* GraphBuilder::buildEdge(const Node& src, const Node& dst, const Link& link
 	EG_DBG("link edge(%s) from (%s:%d) to (%s:%d)", typeid(*link.type).name(), src.getId().c_str(), srcPortId, dst.getId().c_str(), dstPortId);
 
 	Edge edge(*link.type, Endpoint(src.getId(), srcPortId), Endpoint(dst.getId(), dstPortId));
-	edge.mergeAttrs(link.attrs);
+	edge.replaceAttrs(std::move(link.attrs));
 	return graph.addEdge(std::move(edge));
 }
 

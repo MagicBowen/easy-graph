@@ -5,6 +5,7 @@
 #include "easy_graph/builder/chain_builder.h"
 #include "easy_graph/builder/box_builder.h"
 #include "easy_graph/builder/subgraph_builder.h"
+#include "easy_graph/builder/attrs_builder.h"
 #include "easy_graph/builder/edge_types/default_edge_type.h"
 #include "easy_graph/builder/edge_types/ctrl_edge_type.h"
 #include "easy_graph/builder/edge_types/data_edge_type.h"
@@ -33,9 +34,6 @@ namespace detail {
 
 #define HAS_NODE(N, ...)       	auto N = NODE_OF(#N, ##__VA_ARGS__);		\
 								BUILDER->addNode(N)
-
-#define ATTR(...)               Attribute(__VA_ARGS__)
-#define ATTRS(...)              Attributes({__VA_ARGS__})
 
 #define SUBGRAPH(G, ...)        SUBGRAPH_OF(G, ##__VA_ARGS__)
 

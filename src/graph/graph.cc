@@ -39,16 +39,6 @@ std::string Graph::getName() const {
 	return name;
 }
 
-Node* Graph::addNode(const Node& node) {
-	auto result = nodes.emplace(node.getId(), node);
-	return &(result.first->second);
-}
-
-Edge* Graph::addEdge(const Edge& edge) {
-	auto result = edges.emplace(edge);
-	return &(const_cast<Edge&>(*(result.first)));
-}
-
 Node* Graph::findNode(const NodeId& id) {
 	auto it = nodes.find(id);
 	if (it == nodes.end()) {

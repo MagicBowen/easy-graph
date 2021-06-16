@@ -10,8 +10,16 @@ struct Link;
 struct GraphBuilder {
 	GraphBuilder(const std::string& name);
 
-	Node*  buildNode(const Node&);
-	Edge*  buildEdge(const Node& src, const Node& dst, const Link&);
+	template<typename NODE>
+	Node*  buildNode(NODE && node) {
+		auto it = nodes.find(node.getId());
+		if (it == nodes.end()) {
+			nodes.emplace(std::make_pair(node.getId(), NodeInfo()));
+		}
+		return graph.addNode(std::forward<NODE>(node));
+	}
+
+	Edge* buildEdge(const Node& src, const Node& dst, Link&);
 
 	Graph& operator*()
     {

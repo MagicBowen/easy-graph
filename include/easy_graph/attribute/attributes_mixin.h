@@ -7,12 +7,14 @@ EG_NS_BEGIN
 
 struct AttributesMixin {
 
-	void setAttr(const Attribute& attr) {
-		attributes.set(attr);
+	template<typename ATTR>
+	void setAttr(ATTR && attr) {
+		attributes.set(std::forward<ATTR>(attr));
 	}
 
-	void setAttr(const AttrKey& key, const std::any& value) {
-		attributes.set(key, value);
+	template<typename VALUE>
+	void setAttr(const AttrKey& key, VALUE && value) {
+		attributes.set(key, std::forward<VALUE>(value));
 	}
 
 	const std::any* getAny(const AttrKey& key) const {
@@ -24,12 +26,17 @@ struct AttributesMixin {
 		return attributes.get<VALUE>(key);
 	}
 
-	void removeAttr(const AttrKey& key) {
-		attributes.remove(key);
+	template<typename ATTRS>
+	void replaceAttrs(ATTRS && attrs) {
+		attributes.replace(std::forward<ATTRS>(attrs));
 	}
 
 	void mergeAttrs(const Attributes& attrs) {
 		attributes.merge(attrs);
+	}
+
+	void removeAttr(const AttrKey& key) {
+		attributes.remove(key);
 	}
 
 	void accept(AttributeVisitor& visitor) const {
