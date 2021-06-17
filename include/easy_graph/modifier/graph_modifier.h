@@ -18,8 +18,11 @@ struct GraphModifier {
 		return *this;
 	}
 
-	Status commit();
+	Status commit(bool atom = false);
 	void clear();
+
+private:
+	Status doCommit(bool atom);
 
 private:
 	Graph& graph;

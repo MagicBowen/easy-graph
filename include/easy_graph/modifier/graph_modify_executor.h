@@ -8,10 +8,17 @@ EG_NS_BEGIN
 enum class Status;
 
 template<typename ...RS>
-Status modifier_exec(Graph& graph, RS && ...rs) {
+Status graph_modify_execute(Graph& graph, RS && ...rs) {
 	GraphModifier modifier(graph);
 	(modifier.addRevise(std::forward<RS>(rs)), ...);
 	return modifier.commit();
+}
+
+template<typename ...RS>
+Status graph_modify_atom_execute(Graph& graph, RS && ...rs) {
+	GraphModifier modifier(graph);
+	(modifier.addRevise(std::forward<RS>(rs)), ...);
+	return modifier.commit(true);
 }
 
 EG_NS_END

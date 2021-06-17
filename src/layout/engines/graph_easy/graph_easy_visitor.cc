@@ -87,7 +87,7 @@ namespace {
 
 	private:
 		void visit(const Subgraph& subgraph) override {
-			ScopeGuard guard([this, &subgraph](){ctxt.enterGraph(subgraph.getGraph());}, [this](){ctxt.exitGraph();});
+			AUTO_GUARD([this, &subgraph](){ctxt.enterGraph(subgraph.getGraph());}, [this](){ctxt.exitGraph();});
 
 			layout += to_layout(node.getId(), subgraph, false);
 
