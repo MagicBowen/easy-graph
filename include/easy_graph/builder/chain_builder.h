@@ -25,8 +25,7 @@ struct ChainBuilder {
 
 		template<typename NODE, IS_SAME_CONCEPT(NODE, Node)>
 		ChainBuilder& Node(NODE && node) {
-			chain.linkTo(std::forward<NODE>(node), fromLink);
-			return chain;
+			return chain.linkTo(std::forward<NODE>(node), fromLink);
 		}
 
 		template<typename ...PARAMS>
