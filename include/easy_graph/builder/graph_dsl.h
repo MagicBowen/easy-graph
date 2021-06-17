@@ -6,6 +6,7 @@
 #include "easy_graph/builder/subgraph_builder.h"
 #include "easy_graph/builder/attrs_builder.h"
 #include "easy_graph/builder/wire_builder.h"
+#include "easy_graph/builder/endpoint_builder.h"
 
 EG_NS_BEGIN
 

@@ -34,7 +34,7 @@ FIXTURE(GraphLayoutTest) {
 			CHAIN(Node("2") -> Node("div"));
 		});
 
-		ASSERT_TRUE(__EG_OK(calculator.layout()));
+		ASSERT_TRUE(eg_status_ok(calculator.layout()));
 	}
 
 	TEST("should layout candy graph") {
@@ -54,8 +54,8 @@ FIXTURE(GraphLayoutTest) {
 			CHAIN(Node("dove") -> Node(rainbow) -> Node("toffee", box_of<ToffeeCandy>("Haribo"), subgraph_of(c2), subgraph_of(c1)));
 		});
 
-		ASSERT_TRUE(__EG_OK(c1.layout()));
-		ASSERT_TRUE(__EG_OK(c2.layout()));
-		ASSERT_TRUE(__EG_OK(candy.layout()));
+		ASSERT_TRUE(eg_status_ok(c1.layout()));
+		ASSERT_TRUE(eg_status_ok(c2.layout()));
+		ASSERT_TRUE(eg_status_ok(candy.layout()));
 	}
 };

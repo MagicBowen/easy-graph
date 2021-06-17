@@ -1,0 +1,14 @@
+#ifndef HE5572875_5B0D_4A0C_AECF_B0522480BC5D
+#define HE5572875_5B0D_4A0C_AECF_B0522480BC5D
+
+#include "easy_graph/modifier/revises/node_eraser.h"
+#include "easy_graph/modifier/revises/edge_eraser.h"
+#include <variant>
+
+EG_NS_BEGIN
+
+using Revise = std::variant<NodeEraser, EdgeEraser>;
+
+EG_NS_END
+
+#endif

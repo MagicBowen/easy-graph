@@ -64,6 +64,14 @@ bool Graph::hasEdge(const Edge& edge) const {
 	return result != edges.end();
 }
 
+void Graph::remove(const NodeId& id) {
+	nodes.erase(id);
+}
+
+void Graph::remove(const Edge& edge) {
+	edges.erase(edge);
+}
+
 void Graph::accept(GraphVisitor& visitor) const {
 	visitor.visit(*this);
 	std::for_each(nodes.cbegin(), nodes.cend(), [&visitor](const auto& node){visitor.visit(node.second);});

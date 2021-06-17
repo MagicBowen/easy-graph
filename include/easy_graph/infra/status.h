@@ -16,18 +16,15 @@ enum class Status {
 	UNIMPLEMENTED = -6,
 };
 
-static inline bool eg_status_is_ok(Status status)
+static inline bool eg_status_ok(Status status)
 {
     return (status > Status::RESERVED_FAIL);
 }
 
-static inline bool eg_status_is_fail(Status status)
+static inline bool eg_status_failed(Status status)
 {
-    return !eg_status_is_ok(status);
+    return !eg_status_ok(status);
 }
-
-#define __EG_FAILED(result)   eg_status_is_fail(result)
-#define __EG_OK(result)       eg_status_is_ok(result)
 
 EG_NS_END
 

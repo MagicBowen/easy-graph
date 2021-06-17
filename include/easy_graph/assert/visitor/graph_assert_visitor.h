@@ -2,7 +2,7 @@
 #define HEBB3A35C_0E93_4823_94CE_64E7F2006AF2
 
 #include "easy_graph/graph/graph_visitor.h"
-#include "easy_graph/assert/visitor/base_types.h"
+#include "easy_graph/assert/visitor/container_types.h"
 #include "easy_graph/builder/edge_builder.h"
 #include <map>
 

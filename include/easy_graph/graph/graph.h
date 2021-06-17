@@ -41,6 +41,9 @@ struct Graph
 
 	bool hasEdge(const Edge&) const;
 
+	void remove(const NodeId&);
+	void remove(const Edge&);
+
 	void accept(GraphVisitor&) const;
 
 	Status layout(const LayoutOption* option = nullptr) const;
