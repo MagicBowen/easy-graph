@@ -8,12 +8,15 @@ USING_EG_NS
 FIXTURE(BoxTest) {
 	TEST("box unpacking nothing") {
 		auto box = box_packing<Integer>(5);
+
 		auto nonething = box_unpacking<Plus>(box);
+
 		ASSERT_FALSE(nonething);
 	}
 
 	TEST("box unpacking something inherited box") {
 		auto box = box_packing<Integer>(5);
+
 		auto something = box_unpacking<Integer>(box);
 
 		ASSERT_TRUE(something);
@@ -22,6 +25,7 @@ FIXTURE(BoxTest) {
 
 	TEST("box unpacking something not inherited from box") {
 		auto box = box_packing<box_wrapper<ToffeeCandy>>("Dove");
+
 		auto something = box_unpacking<ToffeeCandy>(box);
 
 		ASSERT_TRUE(something);
@@ -30,7 +34,9 @@ FIXTURE(BoxTest) {
 
 	TEST("box unpacking interface") {
 		auto box = box_of<JellyCandy>(JellyShape::CIRCLE);
+
 		auto candy = box_unpacking<Candy>(box);
+
 		ASSERT_TRUE(candy);
 		ASSERT_EQ("Jelly (Shape:Circle)", candy->getLabel());
 	}

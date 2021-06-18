@@ -62,8 +62,3 @@ $ chmod a+x ./ccup.sh
 # clean all
 ./ccup.sh -C
 ```
-
-### TODO
-
-- [ ]: pass examples;
-- [ ]: docs;
