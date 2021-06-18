@@ -1,6 +1,7 @@
 #include <cctest/cctest.h>
 #include "easy_graph/modifier/graph_modify_executor.h"
 #include "easy_graph/assert/graph_assert.h"
+#include "easy_graph/assert/node_assert.h"
 #include "easy_graph/builder/graph_dsl.h"
 #include "easy_graph/infra/status.h"
 
@@ -100,6 +101,25 @@ FIXTURE(GraphModifyTest) {
     		});
         	ASSERT_TRUE(graph.isEqualTo(expect));
         });
+	}
+
+	TEST("should modify node attribute by revise_of") {
+		GRAPH(graph) {
+			CHAIN(Node("a") -> Node(node_of("b", attr_of("sink" , true))));
+		});
+
+		graph_modify_execute(graph, ReviseOf{[](Graph& graph) {
+			auto node = graph.findNode("b");
+			if (!node) return Status::FAILURE;
+			node->setAttr("sink", false);
+			return Status::SUCCESS;
+		}});
+
+		ASSERT_NODE(graph, "b") {
+			auto sink = node.getAttr<bool>("sink");
+			ASSERT_TRUE(sink);
+			ASSERT_FALSE(*sink);
+		});
 	}
 
 	TEST("should omit error when not in transaction") {
