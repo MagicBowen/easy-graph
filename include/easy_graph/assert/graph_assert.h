@@ -2,6 +2,7 @@
 #define H7D82AF79_7C21_4FF8_9AFB_4BB7FFF9B86D
 
 #include "easy_graph/assert/visitor/graph_assert_visitor.h"
+#include "easy_graph/assert/assert_error.h"
 #include "easy_graph/graph/graph.h"
 #include "easy_graph/infra/log.h"
 
@@ -22,6 +23,14 @@ namespace detail {
 }
 
 #define ASSERT_GRAPH(GRAPH)  ::EG_NS::detail::assert_graph(GRAPH, [&](const GraphAssertVisitor& graph)
+
+#define ASSERT_GRAPH_EQ(expect)						\
+		if (!graph.isEqualTo(expect)) {				\
+			graph.dump();							\
+			expect.layout();						\
+			throw AssertError(__FILE__, __LINE__, 	\
+				"graph is not equal to expected!");	\
+		}
 
 EG_NS_END
 

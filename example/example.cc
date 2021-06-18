@@ -6,22 +6,6 @@
 USING_EG_NS
 
 int main() {
-
-	/////////////////////////////////////////////////
-	///  global layout configuration
-	/////////////////////////////////////////////////
-
-	GraphEasyLayoutEngine executor;
-
-	GraphEasyOption options;
-	options.format = LayoutFormat::BOXART;
-    options.output = LayoutOutput::CONSOLE;
-	options.dir = FlowDir::LR;
-	options.type = LayoutType::FREE;
-	options.scale = 1;
-
-	GraphLayout::getInstance().config(executor, &options);
-
 	/////////////////////////////////////////////////
 	///  basic graph
 	/////////////////////////////////////////////////

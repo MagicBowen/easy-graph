@@ -27,6 +27,8 @@ struct GraphAssertVisitor: GraphVisitor {
 			     const Endpoint& dst,
 				 const EdgeType& type = default_edge()) const;
 
+	void dump() const;
+
 private:
 	void visit(const Graph&) override;
 	void visit(const Node&) override;

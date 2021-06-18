@@ -62,13 +62,13 @@ FIXTURE(GraphModifyTest) {
 			CHAIN(Node("a") -> Edge(ctrl_edge()) -> Node("b"));
 		});
 
-		graph_modify_execute(graph, EdgeEraser(edge_of(ep_of("a"), ep_of("b"), data_edge())));
+		graph_modify_execute(graph, EdgeEraser(edge_of("a", "b", data_edge())));
 
         ASSERT_GRAPH(graph) {
     		GRAPH(expect) {
     			CHAIN(Node("a") -> Edge(ctrl_edge()) -> Node("b"));
     		});
-        	ASSERT_TRUE(graph.isEqualTo(expect));
+    		ASSERT_GRAPH_EQ(expect);
         });
 	}
 

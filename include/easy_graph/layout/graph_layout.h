@@ -13,6 +13,7 @@ enum class Status;
 SINGLETON(GraphLayout) {
 	void config(LayoutEngine&, const LayoutOption* = nullptr);
 	Status layout(const Graph&, const LayoutOption* = nullptr);
+	void reset();
 
 private:
 	LayoutEngine* executor{nullptr};

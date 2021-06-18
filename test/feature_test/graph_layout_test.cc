@@ -23,6 +23,10 @@ FIXTURE(GraphLayoutTest) {
 		GraphLayout::getInstance().config(executor, &options);
 	}
 
+	AFTER {
+		GraphLayout::getInstance().reset();
+	}
+
 	TEST("should layout calculator graph") {
 		GRAPH(calculator) {
 			auto i1 = node_of("2", box_of<Integer>(2));

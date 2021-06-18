@@ -71,7 +71,7 @@ FIXTURE(GraphAssertTest) {
 				CHAIN(Node("b") -> Edge(ctrl_edge()) -> Node("e"));
 			});
 
-			ASSERT_TRUE(graph.isEqualTo(expect));
+			ASSERT_GRAPH_EQ(expect);
 		});
 	}
 

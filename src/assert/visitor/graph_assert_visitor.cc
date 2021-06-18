@@ -1,6 +1,7 @@
 #include "easy_graph/assert/visitor/graph_assert_visitor.h"
 #include "easy_graph/graph/graph.h"
 #include "easy_graph/graph/endpoint.h"
+#include "easy_graph/infra/log.h"
 
 EG_NS_BEGIN
 
@@ -35,6 +36,10 @@ bool GraphAssertVisitor::hasEdge(const Endpoint& src, const Endpoint& dst, const
 	return isEdgeExisted(type, [&src, &dst](const Edge& edge) {
 		return (src == edge.getSrc()) && (dst ==  edge.getDst());
 	});
+}
+
+void GraphAssertVisitor::dump() const {
+	if (graph) graph->layout();
 }
 
 void GraphAssertVisitor::visit(const Graph& graph) {
