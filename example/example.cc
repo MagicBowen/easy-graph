@@ -21,8 +21,8 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g2) {
-		CHAIN(Node("a") -> Edge(ctrl_edge(), attr_of("label", "to")) -> Node("b") -> Node("c") -> Node("d") -> Node("e"));
-		CHAIN(Node("a") -> Ctrl(attr_of("label", "condition")) -> Node("c"));
+		CHAIN(Node("a") -> Edge(1, 1) -> Node("b") -> Node("c") -> Node("d") -> Node("e"));
+		CHAIN(Node("a") -> Edge(ctrl_edge(), attr_of("label", "condition")) -> Node("c"));
 	});
 
 	g2.layout();
@@ -38,7 +38,7 @@ int main() {
 
 		DATA_CHAIN(Node(a) -> Node(b) -> Node(c) -> Node("d") -> Node("e"));
 		DATA_CHAIN(Node(a) -> Node("e"));
-		DATA_CHAIN(Node(b) -> Node("d"));
+		CTRL_CHAIN(Node(b) -> Node("d"));
 	});
 
 	g3.layout();
@@ -48,7 +48,7 @@ int main() {
 	/////////////////////////////////////////////////
 
 	GRAPH(g4) {
-		CHAIN(Node("a") -> Node("b") -> Node("d") -> Node("f"));
+		CHAIN(Node("a") -> Node("b") -> Node("d") -> Node("f", attr_of("sink", true)));
 		CHAIN(Node("a") -> Node("c") -> Node("e") -> Node("f"));
 		CHAIN(Node("a") -> Node("d") -> Node("e"));
 		CHAIN(Node("a") -> Node("e"));

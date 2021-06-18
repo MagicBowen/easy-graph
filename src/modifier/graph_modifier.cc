@@ -19,9 +19,8 @@ Status GraphModifier::commit(bool atom) {
 }
 
 Status GraphModifier::doCommit(bool atom) {
-	auto executor = [this](const auto &revise) { return revise.execute(graph); };
 	for (const auto& revise : revises) {
-		if (eg_status_failed(std::visit(executor, revise))) {
+		if (eg_status_failed(revise->execute(graph))) {
 			EG_WARN("graph modifier commit error!");
 			if (atom) return Status::FAILURE;
 		}

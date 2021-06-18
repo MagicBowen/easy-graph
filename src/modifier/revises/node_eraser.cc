@@ -4,8 +4,8 @@
 
 EG_NS_BEGIN
 
-NodeEraser::NodeEraser(const NodeId& id)
-: id(id) {
+NodeEraser::NodeEraser(const Node& node)
+: id(node.getId()) {
 }
 
 Status NodeEraser::execute(Graph& graph) const {

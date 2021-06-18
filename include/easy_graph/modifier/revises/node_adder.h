@@ -1,17 +1,17 @@
 #ifndef H92B288AE_D7F8_4EEB_B0D8_526760F09507
 #define H92B288AE_D7F8_4EEB_B0D8_526760F09507
 
+#include "easy_graph/modifier/revise.h"
 #include "easy_graph/graph/node.h"
 
 EG_NS_BEGIN
 
-enum class Status;
-struct Graph;
+struct NodeAdder : Revise  {
 
-struct NodeAdder {
-	NodeAdder(Node);
+	explicit NodeAdder(Node);
 
-	Status execute(Graph&) const;
+private:
+	Status execute(Graph&) const override;
 
 private:
 	Node node;

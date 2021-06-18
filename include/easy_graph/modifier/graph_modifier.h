@@ -26,7 +26,7 @@ private:
 
 private:
 	Graph& graph;
-	std::vector<Revise> revises;
+	std::vector<RevisePtr> revises;
 };
 
 EG_NS_END
