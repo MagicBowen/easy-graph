@@ -12,7 +12,7 @@ namespace detail {
 
 	template<typename T, typename ...TS>
 	void make_link(Link& link, T && t, TS && ...ts) {
-		if constexpr (std::is_convertible_v<std::decay_t<T>, EdgeType>) {
+		if constexpr (std::is_base_of_v<EdgeType, std::decay_t<T>>) {
 			link.type = &t;
 		} else if constexpr (std::is_same_v<PortPair, std::decay_t<T>>) {
 			link.setPorts(std::forward<T>(t));

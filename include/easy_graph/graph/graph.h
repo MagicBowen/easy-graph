@@ -30,6 +30,7 @@ struct Graph
 	template<typename EDGE>
 	Edge* addEdge(EDGE && edge) {
 		auto result = edges.emplace(std::forward<EDGE>(edge));
+		if (!result.second) return nullptr;
 		return &(const_cast<Edge&>(*(result.first)));
 	}
 

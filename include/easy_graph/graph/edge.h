@@ -1,11 +1,12 @@
 #ifndef HE62943BF_1F7C_4EF9_B306_D9C94634EA74
 #define HE62943BF_1F7C_4EF9_B306_D9C94634EA74
 
-#include "easy_graph/graph/edge_type.h"
 #include "easy_graph/graph/endpoint.h"
 #include "easy_graph/attribute/attributes_mixin.h"
 
 EG_NS_BEGIN
+
+struct EdgeType;
 
 struct Edge : AttributesMixin
 {

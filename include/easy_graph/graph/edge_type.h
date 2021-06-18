@@ -3,6 +3,7 @@
 
 #include "easy_graph/infra/keywords.h"
 #include "easy_graph/infra/operator.h"
+#include <string>
 
 EG_NS_BEGIN
 
