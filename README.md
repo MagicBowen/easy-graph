@@ -65,5 +65,5 @@ $ chmod a+x ./ccup.sh
 
 ### TODO
 
-- [ ]: modify graph;
+- [ ]: pass examples;
 - [ ]: docs;

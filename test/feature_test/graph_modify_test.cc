@@ -153,5 +153,4 @@ FIXTURE(GraphModifyTest) {
 			ASSERT_FALSE(*sink);
 		});
 	}
-
 };

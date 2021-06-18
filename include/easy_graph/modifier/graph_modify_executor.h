@@ -22,7 +22,7 @@ namespace {
 		} else {
 			static_assert(!sizeof(R), "Unsupported modifier construction type!");
 		}
-		make_graph_modifier(modifier);
+		make_graph_modifier(modifier, std::forward<RS>(rs)...);
 	};
 }
 
