@@ -1,27 +1,29 @@
 
 ## Easy Graph
 
-Easy graph is a C++ library for describing graph topology and attributes by DSL;
-It support layouting the graph in console by `Graph-Easy` module of perl;
-It also support to modify or assert the graph topology and attributes.
+`Easy graph` is a C + + library, which supports the description of graph topology and attributes through DSL. 
+It also supports the display of graph to command line terminal through Perl's grapheeasy module. 
+In addition, it supports the modification and assertion of graph structure.
+
+The design goal of it is to make it easy for anyone to expand its functions.
 
 ### Graph DSL
 
-See `example/example.cc` for usage.
+See `example/example.cc` for DSL usage.
 
 ### Graph Modify
 
-See `test/feature_test/graph_modify_test.cc` for usage.
+Preview usage of graph modifier by `test/feature_test/graph_modify_test.cc`.
 
 ### Graph Assertion
 
-See `test/feature_test/graph_assert_test.cc` for usage.
+Preview usage of graph asertion by  `test/feature_test/graph_assert_test.cc`.
 
 ### Graph Layout
 
-See `test/feature_test/graph_layout_test.cc` for usage.
+Preview usage of graph layout by  `test/feature_test/graph_layout_test.cc`.
 
-Graph layout feature needs `Graph::Easy` module of perl pre-installed.
+The graph layout function needs to pre install `Graph::Easy` module of perl.
 
 ```sh
 # install Graph::Easy by cpan which pre-installed in Ubuntu or MacOS
@@ -33,11 +35,11 @@ cpan install Graph::Easy
 echo "[a]->[b]->[c]->[d][b]->{ start: right, 0; }[e],[d]" | graph-easy
 ```
 
-Usage of `Graph::Easy` module of perl in reference section;
+Usage of `Graph::Easy` of perl in reference section.
 
 ### Core Design
 
-Core design of `easy graph`:
+The design of `easy graph` makes it very easy for anyone to extend functions for it.
 
 ![](docs/images/model.png)
 
