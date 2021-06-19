@@ -3,11 +3,11 @@
 
 #include "easy_graph/graph/graph_visitor.h"
 #include "easy_graph/graph/node.h"
-#include "easy_graph/assert/visitor/container_types.h"
 #include <string>
 
 EG_NS_BEGIN
 
+using Edges = std::vector<const Edge*>;
 struct Endpoint;
 
 struct NodeAssertVisitor: GraphVisitor {

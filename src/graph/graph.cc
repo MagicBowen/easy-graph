@@ -16,7 +16,7 @@ namespace {
 
 	bool isAllEdgesEqual(const std::set<Edge>& edges, const Graph& graph) {
 		for (const auto& le : edges) {
-			if (!graph.hasEdge(le)) return false;
+			if (!graph.findEdge(le)) return false;
 		}
 		return true;
 	}
@@ -41,9 +41,7 @@ std::string Graph::getName() const {
 
 Node* Graph::findNode(const NodeId& id) {
 	auto it = nodes.find(id);
-	if (it == nodes.end()) {
-		return nullptr;
-	}
+	if (it == nodes.end()) return nullptr;
 	return &(it->second);
 }
 
@@ -51,17 +49,22 @@ const Node* Graph::findNode(const NodeId& id) const {
 	return const_cast<Graph&>(*this).findNode(id);
 }
 
-std::pair<const Node*, const Node*> Graph::findNodePair(const Edge& edge) const {
-	return std::make_pair(findNode(edge.getSrc().getNodeId()), findNode(edge.getDst().getNodeId()));
-}
-
-std::pair<Node*, Node*> Graph::findNodePair(const Edge& edge) {
-	return std::make_pair(findNode(edge.getSrc().getNodeId()), findNode(edge.getDst().getNodeId()));
-}
-
-bool Graph::hasEdge(const Edge& edge) const {
+Edge* Graph::findEdge(const Edge& edge) {
 	auto result = edges.find(edge);
-	return result != edges.end();
+	if (result == edges.end()) return nullptr;
+	return &(const_cast<Edge&>(*result));
+}
+
+const Edge* Graph::findEdge(const Edge& edge) const {
+	return const_cast<Graph&>(*this).findEdge(edge);
+}
+
+std::pair<const Node*, const Node*> Graph::findNodesOn(const Edge& edge) const {
+	return std::make_pair(findNode(edge.getSrc().getNodeId()), findNode(edge.getDst().getNodeId()));
+}
+
+std::pair<Node*, Node*> Graph::findNodesOn(const Edge& edge) {
+	return const_cast<Graph&>(*this).findNodesOn(edge);
 }
 
 void Graph::remove(const NodeId& id) {

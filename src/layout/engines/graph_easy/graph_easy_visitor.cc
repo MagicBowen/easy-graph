@@ -147,7 +147,7 @@ namespace {
 				return "";
 			}
 
-			auto [src, dst] = graph->findNodePair(edge);
+			auto [src, dst] = graph->findNodesOn(edge);
 
 			if ((!src) || (!dst)) {
 				EG_FATAL("Layout context graph(%s) has not found nodes(%s, %s)!",

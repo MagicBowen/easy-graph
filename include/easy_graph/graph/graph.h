@@ -37,10 +37,11 @@ struct Graph
 	Node* findNode(const NodeId&);
 	const Node* findNode(const NodeId&) const;
 
-	std::pair<const Node*, const Node*> findNodePair(const Edge&) const;
-	std::pair<Node*, Node*> findNodePair(const Edge&);
+	Edge* findEdge(const Edge&);
+	const Edge* findEdge(const Edge&) const;
 
-	bool hasEdge(const Edge&) const;
+	std::pair<const Node*, const Node*> findNodesOn(const Edge&) const;
+	std::pair<Node*, Node*> findNodesOn(const Edge&);
 
 	void remove(const NodeId&);
 	void remove(const Edge&);

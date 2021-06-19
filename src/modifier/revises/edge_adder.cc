@@ -9,7 +9,7 @@ EdgeAdder::EdgeAdder(const Edge& edge)
 }
 
 Status EdgeAdder::execute(Graph& graph) const {
-	if (graph.hasEdge(edge)) return Status::FAILURE;
+	if (graph.findEdge(edge)) return Status::FAILURE;
 	graph.addEdge(std::move(edge));
 	return Status::SUCCESS;
 }

@@ -1,6 +1,5 @@
 #include "easy_graph/assert/visitor/graph_assert_visitor.h"
 #include "easy_graph/graph/graph.h"
-#include "easy_graph/graph/endpoint.h"
 
 EG_NS_BEGIN
 
@@ -14,27 +13,8 @@ bool GraphAssertVisitor::hasNode(const NodeId& id) const {
 	return graph->findNode(id) != nullptr;
 }
 
-template<typename PRED>
-bool GraphAssertVisitor::isEdgeExisted(const EdgeType& type, PRED pred) const {
-	if (!graph) return false;
-	for (const auto& edge : edges) {
-		if ((type == edge->getType()) && (pred(*edge))) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool GraphAssertVisitor::hasEdge(const NodeId& src, const NodeId& dst, const EdgeType& type) const {
-	return isEdgeExisted(type, [&src, &dst](const Edge& edge) {
-		return (src == edge.getSrc().getNodeId()) && (dst ==  edge.getDst().getNodeId());
-	});
-}
-
-bool GraphAssertVisitor::hasEdge(const Endpoint& src, const Endpoint& dst, const EdgeType& type) const {
-	return isEdgeExisted(type, [&src, &dst](const Edge& edge) {
-		return (src == edge.getSrc()) && (dst ==  edge.getDst());
-	});
+bool GraphAssertVisitor::hasEdge(const Edge& edge) const {
+	return graph->findEdge(edge) != nullptr;
 }
 
 void GraphAssertVisitor::dump() const {
@@ -51,7 +31,6 @@ void GraphAssertVisitor::visit(const Node& node) {
 }
 
 void GraphAssertVisitor::visit(const Edge& edge) {
-	edges.push_back(&edge);
 	this->edgeCount++;
 }
 

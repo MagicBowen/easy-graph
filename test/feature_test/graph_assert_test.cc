@@ -39,25 +39,20 @@ FIXTURE(GraphAssertTest) {
 		});
 
 		ASSERT_GRAPH(sample) {
-			ASSERT_TRUE(graph.hasEdge("a", "b"));
-			ASSERT_TRUE(graph.hasEdge("b", "c"));
-			ASSERT_TRUE(graph.hasEdge("c", "d"));
-			ASSERT_TRUE(graph.hasEdge("b", "e", ctrl_edge()));
-			ASSERT_TRUE(graph.hasEdge("d", "e", data_edge()));
-		});
-
-		ASSERT_GRAPH(sample) {
-			ASSERT_TRUE(graph.hasEdge(Endpoint{"a", 0}, {"b", 0}));
-			ASSERT_TRUE(graph.hasEdge(Endpoint{"c", 0}, {"d", 0}, data_edge()));
+			ASSERT_TRUE(graph.hasEdge(edge_of("a", "b")));
+			ASSERT_TRUE(graph.hasEdge(edge_of("b", "c")));
+			ASSERT_TRUE(graph.hasEdge(edge_of("c", "d")));
+			ASSERT_TRUE(graph.hasEdge(edge_of("b", "e", ctrl_edge())));
+			ASSERT_TRUE(graph.hasEdge(edge_of("d", "e", data_edge())));
 		});
 
 		ASSERT_GRAPH(sample) {
 			ASSERT_FALSE(graph.hasNode("f"));
-			ASSERT_FALSE(graph.hasEdge("a", "e"));
-			ASSERT_FALSE(graph.hasEdge("e", "f"));
-			ASSERT_FALSE(graph.hasEdge("c", "d", ctrl_edge()));
-			ASSERT_FALSE(graph.hasEdge(Endpoint{"a", 1}, {"b", 0}));
-			ASSERT_FALSE(graph.hasEdge(Endpoint{"a", 0}, {"b", 0}, ctrl_edge()));
+			ASSERT_FALSE(graph.hasEdge(edge_of("a", "e")));
+			ASSERT_FALSE(graph.hasEdge(edge_of("e", "f")));
+			ASSERT_FALSE(graph.hasEdge(edge_of("c", "d", ctrl_edge())));
+			ASSERT_FALSE(graph.hasEdge(edge_of(ep_of("a", 1), ep_of("b", 0))));
+			ASSERT_FALSE(graph.hasEdge(edge_of(ep_of("a"), ep_of("b"), ctrl_edge())));
 		});
 
 		ASSERT_GRAPH(sample) {
@@ -117,19 +112,7 @@ FIXTURE(GraphAssertTest) {
 	}
 
 	TEST("should assert edge info") {
-
-		ASSERT_EDGE(sample, "a", "b") {
-			ASSERT_EQ(2, edge.count);
-			ASSERT_TRUE(edge.linked(0, 0));
-			ASSERT_TRUE(edge.linked(1, 1));
-			ASSERT_TRUE(edge.isDataType(0, 0));
-			ASSERT_TRUE(edge.isDataType(1, 1));
-			ASSERT_FALSE(edge.linked(0, 1));
-		});
-
-		ASSERT_EDGE(sample, "b", "e") {
-			ASSERT_EQ(1, edge.count);
-			ASSERT_TRUE(edge.isCtrlType());
+		ASSERT_EDGE(sample, edge_of("b", "e", ctrl_edge())) {
 			ASSERT_TRUE(edge.getAttr<const char*>("label"));
 			ASSERT_EQ("to", *edge.getAttr<const char*>("label"));
 			ASSERT_FALSE(edge.getAttr<const char*>("cond"));

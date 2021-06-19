@@ -9,7 +9,7 @@ EdgeEraser::EdgeEraser(const Edge& edge)
 }
 
 Status EdgeEraser::execute(Graph& graph) const {
-	if (!graph.hasEdge(edge)) return Status::FAILURE;
+	if (!graph.findEdge(edge)) return Status::FAILURE;
 	graph.remove(edge);
 	return Status::SUCCESS;
 }
