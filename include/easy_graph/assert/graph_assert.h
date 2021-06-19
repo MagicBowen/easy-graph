@@ -16,7 +16,7 @@ namespace detail {
 		try {
 			graphAssert(visitor);
 		} catch(std::exception& e) {
-			EG_ERR("Graph(%s) assert failed!\n%s", graph.getName().c_str(), e.what());
+			EG_ERR("Graph(%s) assert failed!\n%s", graph.getName(), e.what());
 			throw(e);
 		}
 	}

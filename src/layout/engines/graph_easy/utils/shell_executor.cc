@@ -9,7 +9,7 @@
 EG_NS_BEGIN
 
 Status ShellExecutor::execute(const std::string& script) {
-	EG_DBG("%s", script.c_str());
+	EG_DBG("%s", script);
 
 	pid_t status = system(script.c_str());
 	if (-1 == status)
@@ -20,7 +20,7 @@ Status ShellExecutor::execute(const std::string& script) {
 
 	if (WIFEXITED(status) &&  (0 == WEXITSTATUS(status))) return Status::SUCCESS;
 
-	EG_ERR("system execute {%s} exit status value = [0x%x], exit code: %d\n", script.c_str(), status, WEXITSTATUS(status));
+	EG_ERR("system execute {%s} exit status value = [0x%x], exit code: %d\n", script, status, WEXITSTATUS(status));
 	return Status::FAILURE;
 }
 

@@ -151,9 +151,7 @@ namespace {
 
 			if ((!src) || (!dst)) {
 				EG_FATAL("Layout context graph(%s) has not found nodes(%s, %s)!",
-						graph->getName().c_str(),
-						edge.getSrc().getNodeId().c_str(),
-						edge.getDst().getNodeId().c_str());
+						graph->getName(), edge.getSrc().getNodeId(), edge.getDst().getNodeId());
 				return "";
 			}
 

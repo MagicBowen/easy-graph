@@ -12,13 +12,13 @@ namespace detail {
 	template<typename NODE_ASSERT>
 	void assert_node(const Graph& graph, const NodeId& nodeId, NODE_ASSERT nodeAssert) {
 		auto node = graph.findNode(nodeId);
-		if (!node) EG_FATAL("Node(%s) not found in graph(%s)", nodeId.c_str(), graph.getName().c_str());
+		if (!node) EG_FATAL("Node(%s) not found in graph(%s)", nodeId, graph.getName());
 		NodeAssertVisitor visitor(*node);
 		graph.accept(visitor);
 		try {
 			nodeAssert(visitor);
 		} catch(std::exception& e) {
-			EG_ERR("Graph(%s)' node(%s) assert failed!\n%s", graph.getName().c_str(), nodeId.c_str(), e.what());
+			EG_ERR("Graph(%s)' node(%s) assert failed!\n%s", graph.getName(), nodeId, e.what());
 			throw(e);
 		}
 	}

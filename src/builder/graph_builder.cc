@@ -39,14 +39,14 @@ Edge* GraphBuilder::buildEdge(const Node& src, const Node& dst, Link& link) {
 	NodeInfo* dstInfo = findNode(dst.getId());
 
 	if(!srcInfo || !dstInfo) {
-		EG_ERR("link edge{endpoint : (&s , %s) , type : %s} error!", src.getId().c_str(), dst.getId().c_str(), typeid(*link.type).name());
+		EG_ERR("link edge{endpoint : (&s , %s) , type : %s} error!", src.getId(), dst.getId(), typeid(*link.type).name());
 		return nullptr;
 	}
 
 	PortId srcPortId = getPortIdBy(*link.type, link.srcPortId, srcInfo->outPortMax);
 	PortId dstPortId = getPortIdBy(*link.type, link.dstPortId, dstInfo->inPortMax);
 
-	EG_DBG("link edge(%s) from (%s:%d) to (%s:%d)", typeid(*link.type).name(), src.getId().c_str(), srcPortId, dst.getId().c_str(), dstPortId);
+	EG_DBG("link edge(%s) from (%s:%d) to (%s:%d)", typeid(*link.type).name(), src.getId(), srcPortId, dst.getId(), dstPortId);
 
 	Edge edge(*link.type, Endpoint(src.getId(), srcPortId), Endpoint(dst.getId(), dstPortId));
 	edge.replaceAttrs(std::move(link.attrs));
