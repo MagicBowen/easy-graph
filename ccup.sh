@@ -2,7 +2,7 @@
 
 # project config
 project_path=$(cd "$(dirname "$0")"; pwd)
-project_name="${project_path##*/}"
+project_name=easy_graph
 build="build"
 cpm_cache="./deps"
 doc_gitbook="./docs/gitbook"

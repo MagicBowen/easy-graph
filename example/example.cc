@@ -12,7 +12,7 @@ int main() {
 
 	GRAPH(g1) {
 		CHAIN(Node("a") -> Node("b") -> Node("c") -> Node("d") -> Node("e"));
-	});
+	};
 
 	g1.layout();
 
@@ -23,7 +23,7 @@ int main() {
 	GRAPH(g2) {
 		CHAIN(Node("a") -> Edge(1, 1) -> Node("b") -> Node("c") -> Node("d") -> Node("e"));
 		CHAIN(Node("a") -> Edge(ctrl_edge(), attr_of("label", "condition")) -> Node("c"));
-	});
+	};
 
 	g2.layout();
 
@@ -39,7 +39,7 @@ int main() {
 		DATA_CHAIN(Node(a) -> Node(b) -> Node(c) -> Node("d") -> Node("e"));
 		DATA_CHAIN(Node(a) -> Node("e"));
 		CTRL_CHAIN(Node(b) -> Node("d"));
-	});
+	};
 
 	g3.layout();
 
@@ -53,7 +53,7 @@ int main() {
 		CHAIN(Node("a") -> Node("d") -> Node("e"));
 		CHAIN(Node("a") -> Node("e"));
 		CHAIN(Node("a") -> Node("f"));
-	});
+	};
 
 	g4.layout();
 
@@ -67,7 +67,7 @@ int main() {
 		CHAIN(Node("a") -> Data(1, 0) -> Node("d"));
 		CHAIN(Node("b") -> Node("e"));
 		CHAIN(Node("c") -> Node("e"));
-	});
+	};
 
 	g5.layout();
 
@@ -79,7 +79,7 @@ int main() {
 		CHAIN(Node("a", attrs_of({{"source", true}, {"length", 3}})) -> Data(1, 0) -> Node("d"));
 		CHAIN(Node("b") -> Node("e"));
 		CHAIN(Node("c") -> Node("e"));
-	});
+	};
 
 	g6.layout();
 
@@ -89,11 +89,11 @@ int main() {
 
 	GRAPH(cond, "condition") {
 		CTRL_CHAIN(Node("a") -> Node("b"));
-	});
+	};
 
 	GRAPH(body) {
 		CHAIN(Node("a") -> Node("b") -> Node("c"));
-	});
+	};
 
 	GRAPH(graph) {
 		auto sg_cond = subgraph_of(cond, iw_of(0, ep_of("a", 1)));
@@ -106,7 +106,7 @@ int main() {
 		DATA_CHAIN(Node("const_2") -> Node("while", subgraph_of(cond, iw_of(1, ep_of("a", 1))), subgraph_of(body, "while body")));
 		CTRL_CHAIN(Node("case") -> Node("unique"));
 		CTRL_CHAIN(Node(loop) -> Node(foreach));
-	});
+	};
 
 	graph.layout();
 }

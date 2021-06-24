@@ -8,27 +8,35 @@
 EG_NS_BEGIN
 
 namespace detail {
-	template<typename EDGE_ASSERT>
-	void assert_edge(const Graph& graph, const Edge& e, EDGE_ASSERT edgeAssert) {
-		auto edge = graph.findEdge(e);
-		if (!edge) {
-			EG_FATAL("Edge not found in graph(%s)", graph.getName());
+	struct EdgeAssert {
+		EdgeAssert(const Graph& graph, const Edge& edge)
+		: graph(graph), edge(edge) {
 		}
-		EdgeAssertVisitor visitor(*edge);
-		graph.accept(visitor);
 
-		try {
-			edgeAssert(visitor);
+		template<typename USER_ASSERT>
+		auto operator | (USER_ASSERT && edgeAssert) {
+			auto result = graph.findEdge(edge);
+			if (!result) {
+				EG_FATAL("Edge not found in graph(%s)", graph.getName());
+			}
+			EdgeAssertVisitor visitor(*result);
+			graph.accept(visitor);
 
-		} catch(std::exception& e) {
-			EG_ERR("Edge of graph(%s) assert failed!\n%s", graph.getName(), e.what());
-			throw(e);
+			try {
+				std::forward<USER_ASSERT>(edgeAssert)(visitor);
+			} catch(std::exception& e) {
+				EG_ERR("Edge of graph(%s) assert failed!\n%s", graph.getName(), e.what());
+				throw(e);
+			}
 		}
-	}
+
+	private:
+		const Graph& graph;
+		const Edge& edge;
+	};
 }
 
-#define ASSERT_EDGE(GRAPH, EDGE)  ::EG_NS::detail::assert_edge(GRAPH, EDGE, [&](const EdgeAssertVisitor& edge)
-
+#define ASSERT_EDGE(GRAPH, EDGE)  ::EG_NS::detail::EdgeAssert(GRAPH, EDGE) | [&](const EdgeAssertVisitor& edge)
 
 EG_NS_END
 

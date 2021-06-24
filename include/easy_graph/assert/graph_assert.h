@@ -9,20 +9,29 @@
 EG_NS_BEGIN
 
 namespace detail {
-	template<typename GRAPH_ASSERT>
-	void assert_graph(const Graph& graph, GRAPH_ASSERT graphAssert) {
-		GraphAssertVisitor visitor;
-		graph.accept(visitor);
-		try {
-			graphAssert(visitor);
-		} catch(std::exception& e) {
-			EG_ERR("Graph(%s) assert failed!\n%s", graph.getName(), e.what());
-			throw(e);
+	struct GraphAssert {
+		GraphAssert(const Graph& graph)
+		: graph(graph) {
 		}
-	}
+
+		template<typename USER_ASSERT>
+		auto operator | (USER_ASSERT && graphAssert) {
+			GraphAssertVisitor visitor;
+			graph.accept(visitor);
+			try {
+				std::forward<USER_ASSERT>(graphAssert)(visitor);
+			} catch(std::exception& e) {
+				EG_ERR("Graph(%s) assert failed!\n%s", graph.getName(), e.what());
+				throw(e);
+			}
+		}
+
+	private:
+		const Graph& graph;
+	};
 }
 
-#define ASSERT_GRAPH(GRAPH)  ::EG_NS::detail::assert_graph(GRAPH, [&](const GraphAssertVisitor& graph)
+#define ASSERT_GRAPH(GRAPH)  ::EG_NS::detail::GraphAssert(GRAPH) | [&](const GraphAssertVisitor& graph)
 
 #define ASSERT_GRAPH_EQ(expect)						\
 		if (!graph.isEqualTo(expect)) {				\
