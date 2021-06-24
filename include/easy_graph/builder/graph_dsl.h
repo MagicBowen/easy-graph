@@ -19,9 +19,9 @@ namespace detail {
 
 		template<typename USER_BUILDER>
 		auto operator | (USER_BUILDER && userBuilder) {
-			GraphBuilder graphBuilder{name};
-			std::forward<USER_BUILDER>(userBuilder)(graphBuilder);
-			return *graphBuilder;
+			GraphBuilder builder{name};
+			std::forward<USER_BUILDER>(userBuilder)(builder);
+			return *builder;
 		}
 
 	private:
