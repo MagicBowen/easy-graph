@@ -12,17 +12,21 @@ EG_NS_BEGIN
 
 ////////////////////////////////////////////////////////////////
 namespace detail {
-	constexpr const char* getGraphName(const char* defaultName,
-									   const char* specifiedName = nullptr) noexcept {
-		return specifiedName ? specifiedName : defaultName;
-	}
+	struct GraphDefiner {
+		GraphDefiner(const char* defaultName, const char* specifiedName = nullptr) {
+			name = specifiedName ? specifiedName : defaultName;
+		}
 
-	template<typename GRAPH_BUILDER>
-	auto make_graph(const char* name, GRAPH_BUILDER builderInDSL) {
-		GraphBuilder builder(name);
-		builderInDSL(builder);
-		return *builder;
-	}
+		template<typename USER_BUILDER>
+		auto operator | (USER_BUILDER && userBuilder) {
+			GraphBuilder graphBuilder{name};
+			std::forward<USER_BUILDER>(userBuilder)(graphBuilder);
+			return *graphBuilder;
+		}
+
+	private:
+		const char* name;
+	};
 }
 
 ////////////////////////////////////////////////////////////////
@@ -30,12 +34,10 @@ namespace detail {
 #define DATA_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, data_edge()) -> __VA_ARGS__
 #define CTRL_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, ctrl_edge()) -> __VA_ARGS__
 
-#define HAS_NODE(N, ...)       	auto N = node_of(#N, ##__VA_ARGS__);		\
-								BUILDER->addNode(N)
+#define HAS_NODE(N, ...)        auto N = ::EG_NS::node_of(#N, ##__VA_ARGS__);		\
+							    BUILDER->addNode(N)
 
-#define GRAPH(G, ...)           Graph G = ::EG_NS::detail::make_graph(										\
-													     ::EG_NS::detail::getGraphName(#G, ##__VA_ARGS__),	\
-												           [&](GraphBuilder& BUILDER)
+#define GRAPH(G, ...)         ::EG_NS::Graph G = ::EG_NS::detail::GraphDefiner(#G, ##__VA_ARGS__) | [&](auto && BUILDER)
 
 EG_NS_END
 

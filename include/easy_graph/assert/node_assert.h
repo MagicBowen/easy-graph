@@ -9,22 +9,32 @@
 EG_NS_BEGIN
 
 namespace detail {
-	template<typename NODE_ASSERT>
-	void assert_node(const Graph& graph, const NodeId& nodeId, NODE_ASSERT nodeAssert) {
-		auto node = graph.findNode(nodeId);
-		if (!node) EG_FATAL("Node(%s) not found in graph(%s)", nodeId, graph.getName());
-		NodeAssertVisitor visitor(*node);
-		graph.accept(visitor);
-		try {
-			nodeAssert(visitor);
-		} catch(std::exception& e) {
-			EG_ERR("Graph(%s)' node(%s) assert failed!\n%s", graph.getName(), nodeId, e.what());
-			throw(e);
+	struct NodeAssert {
+		NodeAssert(const Graph& graph, const NodeId& nodeId)
+		: graph(graph), nodeId(nodeId) {
 		}
-	}
+
+		template<typename USER_ASSERT>
+		auto operator | (USER_ASSERT && nodeAssert) {
+			auto node = graph.findNode(nodeId);
+			if (!node) EG_FATAL("Node(%s) not found in graph(%s)", nodeId, graph.getName());
+			NodeAssertVisitor visitor(*node);
+			graph.accept(visitor);
+			try {
+				std::forward<USER_ASSERT>(nodeAssert)(visitor);
+			} catch(std::exception& e) {
+				EG_ERR("Graph(%s)' node(%s) assert failed!\n%s", graph.getName(), nodeId, e.what());
+				throw(e);
+			}
+		}
+
+	private:
+		const Graph& graph;
+		const NodeId& nodeId;
+	};
 }
 
-#define ASSERT_NODE(GRAPH, NODE_ID)  ::EG_NS::detail::assert_node(GRAPH, NODE_ID, [&](const NodeAssertVisitor& node)
+#define ASSERT_NODE(GRAPH, NODE_ID)  ::EG_NS::detail::NodeAssert(GRAPH, NODE_ID) | [&](const NodeAssertVisitor& node)
 
 EG_NS_END
 

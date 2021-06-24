@@ -16,7 +16,7 @@ FIXTURE(GraphBuildTest) {
 		CHAIN(Node(i2) -> Edge(data_edge(), pp_of(1,2)) -> Node(plus));
 		CHAIN(Node("3", box_of<Integer>(3), attr_of("const", true)) -> Node(minus));
 		CHAIN(Node(i1) -> Node("div"));
-	});
+	};
 
 	TEST("should get none box when node not in graph") {
 		auto multi = calculator.findNode("multi");

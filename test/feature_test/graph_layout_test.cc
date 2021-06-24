@@ -36,7 +36,7 @@ FIXTURE(GraphLayoutTest) {
 			CHAIN(Node("5") -> Node("plus"));
 			CHAIN(Node("3", box_of<Integer>(3)) -> Node("minus"));
 			CHAIN(Node("2") -> Node("div"));
-		});
+		};
 
 		ASSERT_TRUE(eg_status_ok(calculator.layout()));
 	}
@@ -44,11 +44,11 @@ FIXTURE(GraphLayoutTest) {
 	TEST("should layout candy graph") {
 		GRAPH(c1) {
 			CHAIN(Node("dove", box_of<ToffeeCandy>("Dove")) -> Node("sweet", box_of<HardCandy>(5)));
-		});
+		};
 
 		GRAPH(c2) {
 			CHAIN(Node("circle", box_of<JellyCandy>(JellyShape::CIRCLE)) -> Node("rainbow", box_of<ColorCandy>(3, 2, 1)));
-		});
+		};
 
 		GRAPH(candy) {
 			HAS_NODE(jelly,   box_of<JellyCandy>(JellyShape::CIRCLE), subgraph_of(c1,"dove"), subgraph_of(c2,"circle"));
@@ -56,7 +56,7 @@ FIXTURE(GraphLayoutTest) {
 
 			CHAIN(Node("dove", box_of<ToffeeCandy>("Dove")) -> Node(jelly) -> Node("sweet", box_of<HardCandy>(3)));
 			CHAIN(Node("dove") -> Node(rainbow) -> Node("toffee", box_of<ToffeeCandy>("Haribo"), subgraph_of(c2), subgraph_of(c1)));
-		});
+		};
 
 		ASSERT_TRUE(eg_status_ok(c1.layout()));
 		ASSERT_TRUE(eg_status_ok(c2.layout()));
