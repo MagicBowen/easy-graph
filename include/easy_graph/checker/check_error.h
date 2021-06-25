@@ -7,8 +7,8 @@
 
 EG_NS_BEGIN
 
-struct AssertError : std::exception {
-	AssertError(const char* file, int line, const std::string& info);
+struct CheckError : std::exception {
+	CheckError(const char* file, int line, const std::string& info);
 
 private:
 	const char* what() const noexcept override;

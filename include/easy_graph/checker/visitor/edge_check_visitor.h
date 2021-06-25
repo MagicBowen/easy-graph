@@ -6,8 +6,8 @@
 
 EG_NS_BEGIN
 
-struct EdgeAssertVisitor: GraphVisitor {
-	EdgeAssertVisitor(const Edge& edge);
+struct EdgeCheckVisitor: GraphVisitor {
+	EdgeCheckVisitor(const Edge& edge);
 
 	bool isTypeEqual(const EdgeType&) const;
 

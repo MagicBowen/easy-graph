@@ -10,8 +10,8 @@ EG_NS_BEGIN
 using Edges = std::vector<const Edge*>;
 struct Endpoint;
 
-struct NodeAssertVisitor: GraphVisitor {
-	NodeAssertVisitor(const Node&);
+struct NodeCheckVisitor: GraphVisitor {
+	NodeCheckVisitor(const Node&);
 
 	size_t inputCount{0};
 	size_t outputCount{0};

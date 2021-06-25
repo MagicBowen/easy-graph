@@ -2,8 +2,8 @@
 #include "easy_graph/infra/status.h"
 #include "easy_graph/builder/graph_dsl.h"
 #include "easy_graph/modifier/revise_of.h"
-#include "easy_graph/assert/node_assert.h"
-#include "easy_graph/assert/graph_assert.h"
+#include "easy_graph/checker/node_checker.h"
+#include "easy_graph/checker/graph_checker.h"
 #include "easy_graph/modifier/graph_modify_executor.h"
 
 USING_EG_NS
@@ -18,7 +18,7 @@ FIXTURE(GraphModifyTest) {
 
 		graph_modify_execute(graph, erase_node_of("a"));
 
-        ASSERT_GRAPH(graph) {
+        CHECK_GRAPH(graph) {
     		GRAPH(expect) {
     			HAS_NODE(b);
     		};
@@ -33,7 +33,7 @@ FIXTURE(GraphModifyTest) {
 
 		graph_modify_execute(graph, erase_edge_of("a", "b"));
 
-        ASSERT_GRAPH(graph) {
+        CHECK_GRAPH(graph) {
     		GRAPH(expect) {
     			HAS_NODE(a);
     			HAS_NODE(b);
@@ -50,7 +50,7 @@ FIXTURE(GraphModifyTest) {
 
 		graph_modify_execute(graph, erase_edge_of(ep_of("a", 1), ep_of("b", 1)));
 
-        ASSERT_GRAPH(graph) {
+        CHECK_GRAPH(graph) {
     		GRAPH(expect) {
     			CHAIN(Node("a") -> Node("b"));
     		};
@@ -66,7 +66,7 @@ FIXTURE(GraphModifyTest) {
 
 		graph_modify_execute(graph, erase_edge_of("a", "b", data_edge()));
 
-        ASSERT_GRAPH(graph) {
+        CHECK_GRAPH(graph) {
     		GRAPH(expect) {
     			CHAIN(Node("a") -> Edge(ctrl_edge()) -> Node("b"));
     		};
@@ -81,7 +81,7 @@ FIXTURE(GraphModifyTest) {
 
 		graph_modify_execute(graph, erase_node_of("a"), erase_edge_of("a", "b"));
 
-        ASSERT_GRAPH(graph) {
+        CHECK_GRAPH(graph) {
     		GRAPH(expect) {
     			CHAIN(Node("b") -> Node("c"));
     		};
@@ -96,7 +96,7 @@ FIXTURE(GraphModifyTest) {
 
 		graph_modify_execute(graph, add_node_of("c", attr_of("sink", true)), add_edge_of("b", "c"));
 
-        ASSERT_GRAPH(graph) {
+        CHECK_GRAPH(graph) {
     		GRAPH(expect) {
     			CHAIN(Node("a") -> Node("b") -> Node("c", attr_of("sink", true)));
     		};
@@ -111,7 +111,7 @@ FIXTURE(GraphModifyTest) {
 
 		graph_modify_execute(graph, add_node_of("c"), erase_node_of("d"));
 
-        ASSERT_GRAPH(graph) {
+        CHECK_GRAPH(graph) {
     		GRAPH(expect) {
     			HAS_NODE(c);
     			CHAIN(Node("a") -> Node("b"));
@@ -127,7 +127,7 @@ FIXTURE(GraphModifyTest) {
 
 		graph_modify_atom_execute(graph, add_node_of("c"), erase_node_of("d"));
 
-        ASSERT_GRAPH(graph) {
+        CHECK_GRAPH(graph) {
     		GRAPH(expect) {
     			CHAIN(Node("a") -> Node("b"));
     		};
@@ -147,7 +147,7 @@ FIXTURE(GraphModifyTest) {
 			return Status::SUCCESS;
 		});
 
-		ASSERT_NODE(graph, "b") {
+		CHECK_NODE(graph, "b") {
 			auto sink = node.getAttr<bool>("sink");
 			ASSERT_TRUE(sink);
 			ASSERT_FALSE(*sink);
