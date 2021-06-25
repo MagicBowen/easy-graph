@@ -1,10 +1,10 @@
 ## Easy Graph
 
-`Easy graph` is a C + + library, which supports the description of graph topology and attributes through DSL. 
+`Easy graph` is a C++ library, which supports the description of graph topology and attributes through DSL. 
 It also supports the display of graph to command line terminal through `Graph::Easy` module of perl. 
 In addition, it supports the modification and assertion of graph structure.
 
-The design goal of `easy graph` is to make it easy for anyone to expand.
+The design goal of `easy graph` is to make it easy for anyone to extend it in appropriate domain.
 
 ### Graph DSL
 
@@ -38,7 +38,7 @@ Usage of `Graph::Easy` of perl in reference section.
 
 ### Core Design
 
-The design of `easy graph` makes it very easy for anyone to extend functions for it.
+The design of `easy graph` makes it easy for anyone to extend.
 
 ![](docs/images/model.png)
 

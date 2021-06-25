@@ -7,7 +7,7 @@
 
 EG_NS_BEGIN
 
-struct GraphAssertVisitor: GraphVisitor {
+struct GraphCheckVisitor: GraphVisitor {
 	std::string name;
 	size_t nodeCount{0};
 	size_t edgeCount{0};

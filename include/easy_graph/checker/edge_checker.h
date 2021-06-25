@@ -1,15 +1,15 @@
 #ifndef H4F77218F_964D_4BEC_ACA8_DD9846BC7507
 #define H4F77218F_964D_4BEC_ACA8_DD9846BC7507
 
-#include "easy_graph/assert/visitor/edge_assert_visitor.h"
+#include "easy_graph/checker/visitor/edge_check_visitor.h"
 #include "easy_graph/graph/graph.h"
 #include "easy_graph/infra/log.h"
 
 EG_NS_BEGIN
 
 namespace detail {
-	struct EdgeAssert {
-		EdgeAssert(const Graph& graph, const Edge& edge)
+	struct EdgeChecker {
+		EdgeChecker(const Graph& graph, const Edge& edge)
 		: graph(graph), edge(edge) {
 		}
 
@@ -19,7 +19,7 @@ namespace detail {
 			if (!result) {
 				EG_FATAL("Edge not found in graph(%s)", graph.getName());
 			}
-			EdgeAssertVisitor visitor(*result);
+			EdgeCheckVisitor visitor(*result);
 			graph.accept(visitor);
 
 			try {
@@ -36,7 +36,7 @@ namespace detail {
 	};
 }
 
-#define ASSERT_EDGE(GRAPH, EDGE)  ::EG_NS::detail::EdgeAssert(GRAPH, EDGE) | [&](const EdgeAssertVisitor& edge)
+#define CHECK_EDGE(GRAPH, EDGE)  ::EG_NS::detail::EdgeChecker(GRAPH, EDGE) | [&](const EdgeCheckVisitor& edge)
 
 EG_NS_END
 

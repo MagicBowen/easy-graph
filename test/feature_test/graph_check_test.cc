@@ -1,15 +1,15 @@
 #include <cctest/cctest.h>
 #include "easy_graph/builder/graph_dsl.h"
-#include "easy_graph/assert/graph_assert.h"
-#include "easy_graph/assert/node_assert.h"
-#include "easy_graph/assert/edge_assert.h"
+#include "easy_graph/checker/graph_checker.h"
+#include "easy_graph/checker/node_checker.h"
+#include "easy_graph/checker/edge_checker.h"
 #include "easy_graph/edges/default_edge_type_register.h"
 
 USING_EG_NS
 
 REG_DEFAULT_EDGE_TYPE(data_edge());
 
-FIXTURE(GraphAssertTest) {
+FIXTURE(GraphCheckTest) {
 
 	GRAPH(g1, "subgraph") {
 		CHAIN(Node("a") -> Node("b", attr_of("sink", true)));
@@ -24,13 +24,13 @@ FIXTURE(GraphAssertTest) {
 
 	TEST("should assert graph info") {
 
-		ASSERT_GRAPH(sample) {
+		CHECK_GRAPH(sample) {
 			ASSERT_EQ("sample", graph.name);
 			ASSERT_EQ(5       , graph.nodeCount);
 			ASSERT_EQ(6       , graph.edgeCount);
 		};
 
-		ASSERT_GRAPH(sample) {
+		CHECK_GRAPH(sample) {
 			ASSERT_TRUE(graph.hasNode("a"));
 			ASSERT_TRUE(graph.hasNode("b"));
 			ASSERT_TRUE(graph.hasNode("c"));
@@ -38,7 +38,7 @@ FIXTURE(GraphAssertTest) {
 			ASSERT_TRUE(graph.hasNode("e"));
 		};
 
-		ASSERT_GRAPH(sample) {
+		CHECK_GRAPH(sample) {
 			ASSERT_TRUE(graph.hasEdge(edge_of("a", "b")));
 			ASSERT_TRUE(graph.hasEdge(edge_of("b", "c")));
 			ASSERT_TRUE(graph.hasEdge(edge_of("c", "d")));
@@ -46,7 +46,7 @@ FIXTURE(GraphAssertTest) {
 			ASSERT_TRUE(graph.hasEdge(edge_of("d", "e", data_edge())));
 		};
 
-		ASSERT_GRAPH(sample) {
+		CHECK_GRAPH(sample) {
 			ASSERT_FALSE(graph.hasNode("f"));
 			ASSERT_FALSE(graph.hasEdge(edge_of("a", "e")));
 			ASSERT_FALSE(graph.hasEdge(edge_of("e", "f")));
@@ -55,7 +55,7 @@ FIXTURE(GraphAssertTest) {
 			ASSERT_FALSE(graph.hasEdge(edge_of(ep_of("a"), ep_of("b"), ctrl_edge())));
 		};
 
-		ASSERT_GRAPH(sample) {
+		CHECK_GRAPH(sample) {
 			GRAPH(g1) {
 				CHAIN(Node("a") -> Node("b"));
 			};
@@ -72,7 +72,7 @@ FIXTURE(GraphAssertTest) {
 
 	TEST("should assert node info") {
 
-		ASSERT_NODE(g1, "b") {
+		CHECK_NODE(g1, "b") {
 			ASSERT_EQ(1, node.inputCount);
 			ASSERT_EQ(0, node.outputCount);
 			ASSERT_EQ(0, node.subgraphCount);
@@ -81,28 +81,28 @@ FIXTURE(GraphAssertTest) {
 			ASSERT_FALSE(node.getAttr<bool>("source"));
 		};
 
-		ASSERT_NODE(sample, "a") {
+		CHECK_NODE(sample, "a") {
 			ASSERT_EQ(0, node.inputCount);
 			ASSERT_EQ(2, node.outputCount);
 		};
 
-		ASSERT_NODE(sample, "a") {
+		CHECK_NODE(sample, "a") {
 			ASSERT_TRUE(node.isSource());
 			ASSERT_TRUE(node.prevNextTo("b"));
 		};
 
-		ASSERT_NODE(sample, "a") {
+		CHECK_NODE(sample, "a") {
 			ASSERT_FALSE(node.isSink());
 			ASSERT_FALSE(node.isIsolated());
 			ASSERT_FALSE(node.prevNextTo("d"));
 		};
 
-		ASSERT_NODE(sample, "b") {
+		CHECK_NODE(sample, "b") {
 			ASSERT_TRUE(node.prevNextTo("c"));
 			ASSERT_TRUE(node.postNextTo("a"));
 		};
 
-		ASSERT_NODE(sample, "e") {
+		CHECK_NODE(sample, "e") {
 			ASSERT_EQ(1, node.subgraphCount);
 			ASSERT_TRUE(node.isSink());
 			ASSERT_TRUE(node.postNextTo("d"));
@@ -112,7 +112,7 @@ FIXTURE(GraphAssertTest) {
 	}
 
 	TEST("should assert edge info") {
-		ASSERT_EDGE(sample, edge_of("b", "e", ctrl_edge())) {
+		CHECK_EDGE(sample, edge_of("b", "e", ctrl_edge())) {
 			ASSERT_TRUE(edge.getAttr<const char*>("label"));
 			ASSERT_EQ("to", *edge.getAttr<const char*>("label"));
 			ASSERT_FALSE(edge.getAttr<const char*>("cond"));

@@ -1,7 +1,7 @@
 #ifndef HAF54D894_EE19_492A_940E_D0B3449C3016
 #define HAF54D894_EE19_492A_940E_D0B3449C3016
 
-#include "easy_graph/assert/visitor/node_assert_visitor.h"
+#include "easy_graph/checker/visitor/node_check_visitor.h"
 #include "easy_graph/graph/node_id.h"
 #include "easy_graph/graph/graph.h"
 #include "easy_graph/infra/log.h"
@@ -9,8 +9,8 @@
 EG_NS_BEGIN
 
 namespace detail {
-	struct NodeAssert {
-		NodeAssert(const Graph& graph, const NodeId& nodeId)
+	struct NodeChecker {
+		NodeChecker(const Graph& graph, const NodeId& nodeId)
 		: graph(graph), nodeId(nodeId) {
 		}
 
@@ -18,7 +18,7 @@ namespace detail {
 		auto operator | (USER_ASSERT && nodeAssert) {
 			auto node = graph.findNode(nodeId);
 			if (!node) EG_FATAL("Node(%s) not found in graph(%s)", nodeId, graph.getName());
-			NodeAssertVisitor visitor(*node);
+			NodeCheckVisitor visitor(*node);
 			graph.accept(visitor);
 			try {
 				std::forward<USER_ASSERT>(nodeAssert)(visitor);
@@ -34,7 +34,7 @@ namespace detail {
 	};
 }
 
-#define ASSERT_NODE(GRAPH, NODE_ID)  ::EG_NS::detail::NodeAssert(GRAPH, NODE_ID) | [&](const NodeAssertVisitor& node)
+#define CHECK_NODE(GRAPH, NODE_ID)  ::EG_NS::detail::NodeChecker(GRAPH, NODE_ID) | [&](const NodeCheckVisitor& node)
 
 EG_NS_END
 
