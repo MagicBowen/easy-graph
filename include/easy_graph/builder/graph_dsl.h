@@ -34,8 +34,7 @@ namespace detail {
 #define DATA_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, data_edge()) -> __VA_ARGS__
 #define CTRL_CHAIN(...)       ::EG_NS::ChainBuilder(BUILDER, ctrl_edge()) -> __VA_ARGS__
 
-#define HAS_NODE(N, ...)        auto N = ::EG_NS::node_of(#N, ##__VA_ARGS__);		\
-							    BUILDER->addNode(N)
+#define HAS_NODE(N, ...)        const auto& N = *(BUILDER.buildNode(::EG_NS::node_of(#N, ##__VA_ARGS__)));		\
 
 #define GRAPH(G, ...)         ::EG_NS::Graph G = ::EG_NS::detail::GraphDefiner(#G, ##__VA_ARGS__) | [&](auto && BUILDER)
 

@@ -25,7 +25,9 @@ struct ChainBuilder {
 
 		template<typename NODE, IS_SAME_CONCEPT(NODE, Node)>
 		ChainBuilder& Node(NODE && node) {
-			return chain.linkTo(std::forward<NODE>(node), fromLink);
+			chain.linkTo(std::forward<NODE>(node), fromLink);
+			fromLink.reset(specifiedEdgeType);
+			return chain;
 		}
 
 		template<typename ...PARAMS>
@@ -39,7 +41,7 @@ struct ChainBuilder {
 
 		template<typename ...PARAMS>
 		ChainBuilder& Edge(PARAMS && ...params) {
-			fromLink = std::move(link_of(defaultEdgeType, std::forward<PARAMS>(params)...));
+			fromLink = std::move(link_of(specifiedEdgeType, std::forward<PARAMS>(params)...));
 			return chain;
 		}
 
@@ -55,7 +57,7 @@ struct ChainBuilder {
 
 	private:
 		ChainBuilder& chain;
-		const EdgeType& defaultEdgeType;
+		const EdgeType& specifiedEdgeType;
 		Link fromLink;
 	} linker;
 
@@ -63,13 +65,12 @@ struct ChainBuilder {
 
 private:
 	template<typename NODE>
-	ChainBuilder& linkTo(NODE && node, Link& link) {
+	void linkTo(NODE && node, Link& link) {
 		Node* currentNode = graphBuilder.buildNode(std::forward<NODE>(node));
 		if (prevNode) {
 			graphBuilder.buildEdge(*prevNode, *currentNode, link);
 		}
 		prevNode = currentNode;
-		return *this;
 	}
 
 	const Node* findNode(const NodeId&) const;

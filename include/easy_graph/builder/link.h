@@ -13,6 +13,8 @@ struct EdgeType;
 struct Link {
 	explicit Link(const EdgeType&);
 
+	void reset(const EdgeType&);
+
 	void setPorts(const PortPair&);
 	void setPort(const PortId&);
 
