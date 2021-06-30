@@ -2,7 +2,15 @@
 
 EG_NS_BEGIN
 
-Link::Link(const EdgeType& type) : type(&type) {
+Link::Link(const EdgeType& type) {
+	this->reset(type);
+}
+
+void Link::reset(const EdgeType& type) {
+	this->type = &type;
+	srcPortId = UNDEFINED_PORT_ID;
+	dstPortId = UNDEFINED_PORT_ID;
+	attrs.clear();
 }
 
 void Link::setPorts(const PortPair& pp) {

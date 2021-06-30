@@ -17,7 +17,7 @@ const Node* ChainBuilder::findNode(const NodeId& id) const {
 }
 
 ChainBuilder::LinkBuilder::LinkBuilder(ChainBuilder& chain, const EdgeType& defaultEdgeType)
-: chain(chain), defaultEdgeType(defaultEdgeType), fromLink(defaultEdgeType){
+: chain(chain), specifiedEdgeType(defaultEdgeType), fromLink(defaultEdgeType){
 }
 
 EG_NS_END
